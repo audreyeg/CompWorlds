@@ -3,11 +3,18 @@ class SceneManager {
         this.game = game;
         this.game.camera = this;
         this.x = 0;
-
-        this.loadLevelOne();    
+        this.loadTown();    
+        this.cowboy;
     };
 
-    loadLevelOne()
+    loadTown()
+    {
+        this.x = 0;
+        gameEngine.addEntity(new Town(gameEngine,0,0));
+        this.cowboy = new  OverWorldPlayer(gameEngine,0,450);
+        gameEngine.addEntity(this.cowboy);
+    }
+    loadFightScene()
     {
         this.x = 0;
         this.coyote = new coyote(gameEngine,486,450);
@@ -36,6 +43,21 @@ class SceneManager {
         gameEngine.addEntity(new groundMid(gameEngine,756,684));
         this.fight = new Fight(gameEngine,this.cowboy,this.coyote);
         gameEngine.addEntity(this.fight);
-        //gameEngine.addEntity(new Crit(gameEngine,300,300));
     }
+    update()
+    {
+        if(this.cowboy.x < 0)
+        {
+            this.clearEntities();
+            this.loadFightScene();
+        }
+    }
+    draw()
+    {
+
+    }
+    clearEntities() 
+    {
+        this.game.entities = [];
+    };
 }

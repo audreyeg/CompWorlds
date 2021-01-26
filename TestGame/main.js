@@ -10,6 +10,7 @@ ASSET_MANAGER.queueDownload("./sprites/health.png");
 ASSET_MANAGER.queueDownload("./sprites/cowboy.png");
 ASSET_MANAGER.queueDownload("./sprites/crit.png");
 ASSET_MANAGER.queueDownload("./sprites/HealthPickup.png");
+ASSET_MANAGER.queueDownload("./sprites/TownConceptV3.png");
 
 ASSET_MANAGER.downloadAll(function () {
 	var canvas = document.getElementById('gameWorld');
@@ -18,6 +19,6 @@ ASSET_MANAGER.downloadAll(function () {
 	gameEngine.init(ctx);
 
 	new SceneManager(gameEngine);
-
+	gameEngine.addEntity(new SceneManager(gameEngine));
 	gameEngine.start();
 });
