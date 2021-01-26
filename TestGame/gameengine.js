@@ -106,8 +106,10 @@ class GameEngine {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.ctx.save();
         for (var i = 0; i < this.entities.length; i++) {
+            //console.log(this.entities[i]);
             this.entities[i].draw(this.ctx);
         }
+        this.camera.draw();
     };
 
     update() {
@@ -115,7 +117,7 @@ class GameEngine {
 
         for (var i = 0; i < entitiesCount; i++) {
             var entity = this.entities[i];
-
+             //console.log(this.entities[i]);
             if (!entity.removeFromWorld) {
                 entity.update();
             }
@@ -126,6 +128,7 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         }
+        this.camera.update();
     };
 
     loop() {
