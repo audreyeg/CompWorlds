@@ -17,7 +17,7 @@ class Fight {
         this.wait = 0;
         this.crit = false;
         this.attacking = false;
-
+        this.end = false;
     }
 
     draw(ctx) 
@@ -119,7 +119,7 @@ class Fight {
                 this.enemy.turn = false;
             }
         }
-        else if(this.player.dead || this.enemy.dead )
+        else if(this.player.dead || this.enemy.dead)
         {
 
             if(!this.dialoug && this.player.dead)
@@ -131,9 +131,10 @@ class Fight {
             }
             else if(!this.dialoug && this.enemy.dead)
             {
-                this.dialogBox = new dialog(gameEngine,100,100,"You Have Killed The Coyote!");
-                this.dialoug = true;
-                this.game.addEntity(this.dialogBox);
+               // this.dialogBox = new dialog(gameEngine,100,100,"You Have Killed The Coyote!");
+               // this.dialoug = true;
+               // this.game.addEntity(this.dialogBox);
+                this.end = true;
             }
         }
         else

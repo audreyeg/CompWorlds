@@ -3,8 +3,14 @@ class SceneManager {
         this.game = game;
         this.game.camera = this;
         this.x = 0;
-        this.loadTown();    
+        this.entityStorage = [];
+        this.storageSize;   
         this.cowboy;
+        this.fight = false;
+        this.fightScene;
+        this.overworld = true;
+
+        this.loadTown(); 
     };
 
     loadTown()
@@ -41,15 +47,32 @@ class SceneManager {
         gameEngine.addEntity(new groundMid(gameEngine,588,684));
         gameEngine.addEntity(new groundMid(gameEngine,672,684));
         gameEngine.addEntity(new groundMid(gameEngine,756,684));
-        this.fight = new Fight(gameEngine,this.cowboy,this.coyote);
-        gameEngine.addEntity(this.fight);
+        this.fightScene = new Fight(gameEngine,this.cowboy,this.coyote);
+        gameEngine.addEntity(this.fightScene);
     }
     update()
     {
-        if(this.cowboy.x < 0)
+        if(this.overworld && this.cowboy.x > 700)
         {
+            this.fight = true;
+            this.overworld = false;
+            console.log(this.game.entities);
+            this.storageSize = gameEngine.entities.length;
+            for(var i = 0; i < this.storageSize ; i++)
+            {
+                var entity = gameEngine.entities[i];
+                this.entityStorage.push(entity); 
+            }
             this.clearEntities();
             this.loadFightScene();
+        }
+        if(this.fight)
+        {
+            if(this.fightScene.end)
+            {
+                this.reloadEntites();
+                this.fight = false;
+            }
         }
     }
     draw()
@@ -58,6 +81,23 @@ class SceneManager {
     }
     clearEntities() 
     {
-        this.game.entities = [];
-    };
+        gameEngine.entities = [];
+    }
+    reloadEntites()
+    {
+        this.clearEntities();
+        this.storageSize = this.entityStorage.length;
+        //console.log(this.storageSize);
+        for(var i = 0; i < this.storageSize; i++)
+        {
+            gameEngine.addEntity(this.entityStorage[i]);
+            if(this.entityStorage[i] instanceof OverWorldPlayer)
+            {
+                this.cowboy = this.entityStorage[i];
+            }
+        }
+        console.log(this.game.entities);
+        this.fightScene = null;
+        this.entityStorage = [];
+    }
 }

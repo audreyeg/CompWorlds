@@ -22,7 +22,7 @@ class coyote{
         this.delay = 0;
         this.returnTime = 0;
         this.turn;
-        this.health = 50;
+        this.health = 5;
     };
     update()
     {
