@@ -1,18 +1,13 @@
-class Desert { 
+class Town { 
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
-
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/coyote.png");
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/TownConceptV3.png");
     };
 
     update() {
 
     };
-
-    drawMinimap(ctx, mmX, mmY) {
-    }
-
     draw(ctx) {
-        
+        ctx.drawImage(this.spritesheet,0,0,700,350,0,0,1400,700);
     };
 };

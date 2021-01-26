@@ -193,3 +193,83 @@ class CowBoy {
     this.y += 90;
   }
 }
+class OverWorldPlayer
+{
+  constructor(game,x,y)
+  {
+    Object.assign(this, {game, x, y});
+
+    this.x = x;
+    this.y = y;
+    this.game = game;
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+    this.horizontalWalking = new Animator(this.spritesheet,2,88,20,31,3,.33,1,false,true);
+    this.upWalking = new Animator(this.spritesheet,5,59,18,27,3,.33,4,false,true);
+    this.downWalking = new Animator(this.spritesheet,6,3,18,27,3,.33,1,false,true);
+    this.updateBB();
+    this.facingState = 0; //0 = right, 1 = left 2 = up 3 = down
+    this.velocity = { x: 0, y: 0 };
+    this.SCALE = 4;
+    
+  }
+  update()
+  {
+    if(this.game.left && !this.game.right&& !this.game.up && !this.game.down)
+    {
+        this.velocity.x = -2; 
+        this.facingState = 1;
+    }
+    else if (this.game.right && !this.game.left&& !this.game.up && !this.game.down)
+    {
+        this.velocity.x = 2; 
+        this.facingState = 0;
+    }
+    else if (this.game.up && !this.game.down&& !this.game.left && !this.game.right)
+    {
+        this.velocity.y = -2; 
+        this.facingState = 2;
+    }
+    else if (this.game.down && !this.game.up && !this.game.left && !this.game.right)
+    {
+        this.velocity.y = 2; 
+        this.facingState = 3;
+    }
+    else
+    {
+      this.velocity.x = 0;
+      this.velocity.y = 0;
+    }
+    this.x += this.velocity.x;
+    this.y += this.velocity.y;
+  }
+  draw(ctx)
+  {
+    if(this.velocity. x == 0 && this.velocity.y == 0 && this.facingState == 0)
+    {
+      ctx.drawImage(this.spritesheet,2,88,20,31,this.x,this.y,20 * this.SCALE,31 * this.SCALE);
+    }
+    else if(this.facingState == 0)
+    {
+      this.horizontalWalking.drawFrame(this.game.clockTick,ctx,this.x,this.y,this.SCALE);
+    }
+    else if(this.facingState == 1)
+    {
+      ctx.scale(-1,1);
+      this.horizontalWalking.drawFrame(this.game.clockTick,ctx,-this.x - (20 * this.SCALE),this.y,this.SCALE);
+      ctx.restore();
+    }
+    else if(this.facingState == 2)
+    {
+      this.upWalking.drawFrame(this.game.clockTick,ctx,this.x,this.y,this.SCALE);
+    }
+    else if(this.facingState == 3)
+    {
+      this.downWalking.drawFrame(this.game.clockTick,ctx,this.x,this.y,this.SCALE);
+    }
+  }
+  updateBB() 
+  {
+    this.lastBB = this.BB;
+    this.BB = new BoundingBox(this.x, this.y,20,31);
+  }
+}
