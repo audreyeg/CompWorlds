@@ -12,9 +12,9 @@ class SceneManager {
 
         this.loadTown(); 
         // TODO: Delete the below. For testing only.
-        this.saveEntities();
-        this.clearEntities();
-        this.loadBank(); 
+        // this.saveEntities();
+        // this.clearEntities();
+        // this.loadBank(); 
     };
 
     loadBank() {
