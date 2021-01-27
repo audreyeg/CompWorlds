@@ -239,6 +239,13 @@ class OverWorldPlayer {
           if (entity instanceof Saloon) {
             //  entity.visible = false;
             that.game.camera.loadSaloon();
+              that.x = 400;
+              that.y = 700;
+              if (that.x >= 680) 
+                {
+                  console.log(that.x);
+                  that.velocity.x -= 10; 
+                }
           }
           if (entity instanceof Sheriff) {
             //  entity.visible = false;
