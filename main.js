@@ -17,6 +17,26 @@ ASSET_MANAGER.queueDownload("./sprites/saloon.png");
 ASSET_MANAGER.queueDownload("./sprites/sheriff.png");
 ASSET_MANAGER.queueDownload("./sprites/bank.png");
 ASSET_MANAGER.queueDownload("./sprites/floor.png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (14).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (15).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (16).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (21).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (22).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (24).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (27).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (23).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (26).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (30).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (33).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (29).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (31).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Static Objects/Other/Money (1).png");
+ASSET_MANAGER.queueDownload("./sprites/Cage_grey_standard_staying_3.png");
+ASSET_MANAGER.queueDownload("./sprites/Cage_grey_broken_staying_3.png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Static Objects/Other/Wheel 2.png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (36).png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Static Objects/Other/Crate.png");
+ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Static Objects/Other/Barrel.png");
 
 ASSET_MANAGER.downloadAll(function () {
 	var canvas = document.getElementById('gameWorld');

@@ -115,9 +115,10 @@ class GameEngine {
     update() {
         var entitiesCount = this.entities.length;
 
+        // console.log(this.entities);
         for (var i = 0; i < entitiesCount; i++) {
             var entity = this.entities[i];
-             //console.log(this.entities[i]);
+            //  console.log(this.entities[i]);
             if (!entity.removeFromWorld) {
                 entity.update();
             }
