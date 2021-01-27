@@ -209,7 +209,7 @@ class OverWorldPlayer
     this.updateBB();
     this.facingState = 0; //0 = right, 1 = left 2 = up 3 = down
     this.velocity = { x: 0, y: 0 };
-    this.SCALE = 4;
+    this.SCALE = 2;
     
   }
   update()
