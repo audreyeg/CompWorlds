@@ -193,6 +193,8 @@ class CowBoy {
     this.y += 90;
   }
 }
+
+
 class OverWorldPlayer
 {
   constructor(game,x,y)
@@ -239,6 +241,32 @@ class OverWorldPlayer
       this.velocity.x = 0;
       this.velocity.y = 0;
     }
+
+          //collision
+          var that = this;
+          this.game.entities.forEach(function (entity) {
+            if (entity.BB && that.BB.collide(entity.BB)) 
+              {
+             if (entity instanceof House) 
+                {
+                  that.y -= 5;
+                  that.x -= 1;
+                }
+            if (entity instanceof Saloon) 
+              {
+                 entity.visible = false;
+              }
+              if (entity instanceof Sheriff) 
+              {
+                 entity.visible = false;
+              }
+              if (entity instanceof Bank) 
+              {
+                 entity.visible = false;
+              }
+            }
+            that.updateBB();
+          });
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
