@@ -12,6 +12,11 @@ ASSET_MANAGER.queueDownload("./sprites/crit.png");
 ASSET_MANAGER.queueDownload("./sprites/HealthPickup.png");
 ASSET_MANAGER.queueDownload("./sprites/TownConceptV3.png");
 ASSET_MANAGER.queueDownload("./sprites/DesertTileSet.png");
+ASSET_MANAGER.queueDownload("./sprites/house.png");
+ASSET_MANAGER.queueDownload("./sprites/saloon.png");
+ASSET_MANAGER.queueDownload("./sprites/sheriff.png");
+ASSET_MANAGER.queueDownload("./sprites/bank.png");
+ASSET_MANAGER.queueDownload("./sprites/floor.png");
 
 ASSET_MANAGER.downloadAll(function () {
 	var canvas = document.getElementById('gameWorld');
