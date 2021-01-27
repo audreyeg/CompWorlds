@@ -33,6 +33,22 @@ class SceneManager {
             gameEngine.addEntity(new Road(gameEngine,32 * i,464));
         }
         //gameEngine.addEntity(new groundCen(gameEngine,0,366));
+        //saloon
+        gameEngine.addEntity(new Floor(gameEngine, 45, 150, 975, 550));
+        gameEngine.addEntity(new Saloon(gameEngine, 0, 25, true));
+
+        //sheriff
+        gameEngine.addEntity(new Floor(gameEngine, 575, 60, 975, 550));
+        gameEngine.addEntity(new Sheriff(gameEngine, 520, 25, true));
+
+        //bank
+        gameEngine.addEntity(new Floor(gameEngine, 1100, 50, 470, 600));
+        gameEngine.addEntity(new Bank(gameEngine, 1075, 20, true));
+
+        gameEngine.addEntity(new House(gameEngine, 5, 545, 350, 150));
+        gameEngine.addEntity(new House(gameEngine, 405, 545, 200, 150));
+        gameEngine.addEntity(new House(gameEngine, 650, 545, 250, 150));
+        gameEngine.addEntity(new House(gameEngine, 1000, 545, 400, 150));
         gameEngine.addEntity(this.cowboy);
     }
     loadFightScene()
