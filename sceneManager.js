@@ -6,9 +6,11 @@ class SceneManager {
         this.entityStorage = [];
         this.storageSize;   
         this.cowboy;
-        this.fight = false;
+        // this.fight = false;
+        // this.overworld = true;
+        // The above is replaced with the following, which is changed whenever a new scene is loaded
+        this.sceneLoaded = "overworld";
         this.fightScene;
-        this.overworld = true;
 
         this.loadTown(); 
         // TODO: Delete the below. For testing only.
@@ -18,6 +20,10 @@ class SceneManager {
     };
 
     loadBank() {
+        this.saveEntities();
+        this.clearEntities();
+        this.sceneLoaded = "bank";
+
         var TILE_WIDTH = 128;
 
         // Make and left sides of screen
@@ -63,6 +69,10 @@ class SceneManager {
     }
 
     loadSheriff() {
+        this.saveEntities();
+        this.clearEntities();
+        this.sceneLoaded = "sheriff";
+        
         var TILE_WIDTH = 128;
 
 
@@ -105,6 +115,10 @@ class SceneManager {
     }
 
     loadSaloon() {
+        this.saveEntities();
+        this.clearEntities();
+        this.sceneLoaded = "saloon";
+
         var TILE_WIDTH = 128;
 
         // Make corners
@@ -156,6 +170,10 @@ class SceneManager {
 
     loadTown()
     {
+        this.saveEntities();
+        this.clearEntities();
+        this.sceneLoaded = "overworld";
+
         this.x = 0;
         gameEngine.addEntity(new Town(gameEngine,0,0));
         this.cowboy = new  OverWorldPlayer(gameEngine,0,450);
@@ -194,6 +212,10 @@ class SceneManager {
     }
     loadFightScene()
     {
+        this.saveEntities();
+        this.clearEntities();
+        this.sceneLoaded = "fight";
+
         this.x = 0;
         this.coyote = new coyote(gameEngine,486,450);
         this.cowboy = new CowBoy(gameEngine,160,400);
@@ -224,23 +246,20 @@ class SceneManager {
     }
     update()
     {
-        if(this.overworld && this.cowboy.x > 700)
+        if(this.sceneLoaded == "overworld" && this.cowboy.x > 700)
         {
-            this.fight = true;
-            this.overworld = false;
-            this.saveEntities();
-            this.clearEntities();
+            // The following is replaced with this.sceneLoaded = "fight", which is set in the loadFightScene() method
+            // this.fight = true;
+            // this.overworld = false;
             this.loadFightScene();
         }
-        if(this.fight)
+        if((this.fight && this.fightScene.end) || (this.cowboy.y > 700 && (this.sceneLoaded == "bank" || this.sceneLoaded == "saloon" || this.sceneLoaded == "sheriff" )))
         {
-            if(this.fightScene.end)
-            {
-                this.reloadEntites();
-                this.fight = false;
-            }
+            this.reloadEntites();
+            this.sceneLoaded = "overworld";
         }
     }
+    
     draw()
     {
 

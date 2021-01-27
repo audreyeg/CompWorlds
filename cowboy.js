@@ -1,303 +1,283 @@
 class CowBoy {
-    constructor(game,x,y) {
-    	Object.assign(this, {game, x, y});
-    	
-        
-        // Starting Coordinates
-        this.x = x;
-        this.y = y;
-        this.game = game;
-       
-       //this.game.animation = this;
-       this.spritesheet = ASSET_MANAGER.getAsset("./sprites/cowboy.png");
+  constructor(game, x, y) {
+    Object.assign(this, { game, x, y });
 
-        this.facing = 0; //0 = right, 1 = left
-        this.state = 0; //0 = idle, 1 = running
-        this.fire = 0; //0 = not shooting, 1 = shooting, 2 = dead
-        this.health = 50;
-        this.dead = false;
-        this.gravity = 9.8/60;
-        this.velocity = { x: 0, y: 0 };
-        this.onGround = false;
-        this.attacking = false;
-        this.turn;
 
-        this.updateBB();
+    // Starting Coordinates
+    this.x = x;
+    this.y = y;
+    this.game = game;
 
-        //cowboy's animations
-        this.animations = [];
+    //this.game.animation = this;
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/cowboy.png");
 
-        //spritesheet, xStart, yStart, width, height, frameCount, frameDuration, framePadding, reverse, loop
+    this.facing = 0; //0 = right, 1 = left
+    this.state = 0; //0 = idle, 1 = running
+    this.fire = 0; //0 = not shooting, 1 = shooting, 2 = dead
+    this.health = 50;
+    this.dead = false;
+    this.gravity = 9.8 / 60;
+    this.velocity = { x: 0, y: 0 };
+    this.onGround = false;
+    this.attacking = false;
+    this.turn;
 
-        //idle + facing right
-        this.animations.push(new Animator(this.spritesheet, 9, 9, 62, 90, 2, .5, 2, false, true));
-        //move right + facing right
-  		  this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true));
-       
-       //idle + facing left 
-       this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
-       //moving left and facing left
-       this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true));
+    this.updateBB();
 
-       //idle + facing up
-		   this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
-		//moving up and facing up 
-	    	this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 15, 0.1, 2.5, false, true));
+    //cowboy's animations
+    this.animations = [];
 
-       //idle + facing down 
-       this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
-       //moving down and facing down
-       this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 15, 0.1, 2.5, false, true));
-        //shooting
-        this.animations.push(new Animator(this.spritesheet, 478,213, 113, 90,4,1/4, 0, false, true));
+    //spritesheet, xStart, yStart, width, height, frameCount, frameDuration, framePadding, reverse, loop
 
-        //dead
-        this.animations.push(new Animator(this.spritesheet, 253,564, 345-253, 613-564, 1, 0.1, 2, false, true));
-    }
+    //idle + facing right
+    this.animations.push(new Animator(this.spritesheet, 9, 9, 62, 90, 2, .5, 2, false, true));
+    //move right + facing right
+    this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true));
+
+    //idle + facing left 
+    this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
+    //moving left and facing left
+    this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true));
+
+    //idle + facing up
+    this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
+    //moving up and facing up 
+    this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 15, 0.1, 2.5, false, true));
+
+    //idle + facing down 
+    this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
+    //moving down and facing down
+    this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 15, 0.1, 2.5, false, true));
+    //shooting
+    this.animations.push(new Animator(this.spritesheet, 478, 213, 113, 90, 4, 1 / 4, 0, false, true));
+
+    //dead
+    this.animations.push(new Animator(this.spritesheet, 253, 564, 345 - 253, 613 - 564, 1, 0.1, 2, false, true));
+  }
 
   draw(ctx) {
-  		//idle, face right, not shooting
-  		if (this.state == 0 && this.facing == 0 && this.fire == 0) {
-  			this.animations[0].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
-  		}
-  		 //idle, face right, shooting
-  		else if (this.state == 0 && this.facing == 0 && this.fire == 1){
-  			this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
-  		} 
-  		//move right, face right, not shooting
-  		 else if (this.state == 1 && this.facing == 0 && this.fire == 0) {
-  			this.animations[1].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-  		} 
-  		//move right, face right, shooting
-  		else if (this.state == 1 && this.facing == 0 && this.fire == 1) {
-			this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 3);
-  		} 
-  		//idle, face left, not shooting
-  		else if (this.state == 0 && this.facing == 1 && this.fire == 0){
-  			ctx.scale(-1,1);
-  			this.animations[2].drawFrame(this.game.clockTick, ctx, -this.x - 44, this.y, 1);
-  			ctx.restore();
-  		} 
-  		//idle, face left, shooting 
-  		else if (this.state == 0 && this.facing == 1 && this.fire == 1){
-  			ctx.scale(-1,1);
-  			this.animations[8].drawFrame(this.game.clockTick, ctx, -this.x - 60, this.y, 1);
-  			ctx.restore();
-  		}
-  		 //move left, face left, not shooting
-  		else if (this.state == 1 && this.facing == 1 && this.fire == 0){
-  			ctx.scale(-1,1);
-  			this.animations[3].drawFrame(this.game.clockTick, ctx, -this.x - 44, this.y, 1);
-  			ctx.restore();
-  		}
-  		//move left, face left, shooting 
-  		else if (this.state == 1 && this.facing == 1 && this.fire == 1){
-  			ctx.scale(-1,1);
-  			this.animations[8].drawFrame(this.game.clockTick, ctx, -this.x - 60, this.y, 1);
-  			ctx.restore();
-  		} 
-  		else if (this.state == 0 && this.facing == 3) {
-  			this.animations[4].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-  		} 
-  		//moving up, not shooting
-  		else if (this.state == 1 && this.facing == 3 && this.fire == 0) {
-  			this.animations[5].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-  		} 
-  		//moving up, shooting
-  		else if (this.state == 1 && this.facing == 3 && this.fire == 1) {
-  			this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-  		}
-  		else if (this.state == 0 && this.facing == 4) {
-  			this.animations[6].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-  		}
-  		//moving down, not shooting
-  		 else if (this.state == 1 && this.facing == 4 && this.fire == 0) {
-  			this.animations[7].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-  		} 
-  		//moving down, shooting
-  		else if (this.state == 1 && this.facing == 4 && this.fire == 1){
-  			this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-  		}
-      //dead 
-      else if (this.state == 2) {
-        this.animations[9].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
-      }
+    //idle, face right, not shooting
+    if (this.state == 0 && this.facing == 0 && this.fire == 0) {
+      this.animations[0].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
     }
+    //idle, face right, shooting
+    else if (this.state == 0 && this.facing == 0 && this.fire == 1) {
+      this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
+    }
+    //move right, face right, not shooting
+    else if (this.state == 1 && this.facing == 0 && this.fire == 0) {
+      this.animations[1].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+    }
+    //move right, face right, shooting
+    else if (this.state == 1 && this.facing == 0 && this.fire == 1) {
+      this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 3);
+    }
+    //idle, face left, not shooting
+    else if (this.state == 0 && this.facing == 1 && this.fire == 0) {
+      ctx.scale(-1, 1);
+      this.animations[2].drawFrame(this.game.clockTick, ctx, -this.x - 44, this.y, 1);
+      ctx.restore();
+    }
+    //idle, face left, shooting 
+    else if (this.state == 0 && this.facing == 1 && this.fire == 1) {
+      ctx.scale(-1, 1);
+      this.animations[8].drawFrame(this.game.clockTick, ctx, -this.x - 60, this.y, 1);
+      ctx.restore();
+    }
+    //move left, face left, not shooting
+    else if (this.state == 1 && this.facing == 1 && this.fire == 0) {
+      ctx.scale(-1, 1);
+      this.animations[3].drawFrame(this.game.clockTick, ctx, -this.x - 44, this.y, 1);
+      ctx.restore();
+    }
+    //move left, face left, shooting 
+    else if (this.state == 1 && this.facing == 1 && this.fire == 1) {
+      ctx.scale(-1, 1);
+      this.animations[8].drawFrame(this.game.clockTick, ctx, -this.x - 60, this.y, 1);
+      ctx.restore();
+    }
+    else if (this.state == 0 && this.facing == 3) {
+      this.animations[4].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+    }
+    //moving up, not shooting
+    else if (this.state == 1 && this.facing == 3 && this.fire == 0) {
+      this.animations[5].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+    }
+    //moving up, shooting
+    else if (this.state == 1 && this.facing == 3 && this.fire == 1) {
+      this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+    }
+    else if (this.state == 0 && this.facing == 4) {
+      this.animations[6].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+    }
+    //moving down, not shooting
+    else if (this.state == 1 && this.facing == 4 && this.fire == 0) {
+      this.animations[7].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+    }
+    //moving down, shooting
+    else if (this.state == 1 && this.facing == 4 && this.fire == 1) {
+      this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+    }
+    //dead 
+    else if (this.state == 2) {
+      this.animations[9].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
+    }
+  }
 
-    updateBB() {
-    	this.lastBB = this.BB;
-    	this.BB = new BoundingBox(this.x, this.y, 62*2, 90*2);
-    }
-    update() {
-      if(!this.dead)
-        {
-        if(this.timer == 0)
-        {
-          this.state = 0; 
-          this.facing = 0;
-          this.fire = 0;
-          this.attacking = false;
-        }
-        else
-        {
-          this.timer --;
-        }
-        if(!this.onGround)
-        {
-            this.velocity.y += this.gravity;
-        }
-        if(this.game.interact)
-        {
-          //this.attack();
-        }
-          //collision
-          var that = this;
-          this.game.entities.forEach(function (entity) {
-            if (entity.BB && that.BB.collide(entity.BB)) {
-              if(entity instanceof groundCen || entity instanceof groundRig || entity instanceof groundLeft && that.velocity.y != 0)
-                  {
-                      that.velocity.y = 0;
-                      //that.y = entity.y - 118;
-                      that.onGround = true;
-                  }
-            }
-          });
+  updateBB() {
+    this.lastBB = this.BB;
+    this.BB = new BoundingBox(this.x, this.y, 62 * 2, 90 * 2);
+  }
+  update() {
+    if (!this.dead) {
+      if (this.timer == 0) {
+        this.state = 0;
+        this.facing = 0;
+        this.fire = 0;
+        this.attacking = false;
       }
-        if(!this.dead)
-        {
-          this.updateBB();
+      else {
+        this.timer--;
+      }
+      if (!this.onGround) {
+        this.velocity.y += this.gravity;
+      }
+      if (this.game.interact) {
+        //this.attack();
+      }
+      //collision
+      var that = this;
+      this.game.entities.forEach(function (entity) {
+        if (entity.BB && that.BB.collide(entity.BB)) {
+          if (entity instanceof groundCen || entity instanceof groundRig || entity instanceof groundLeft && that.velocity.y != 0) {
+            that.velocity.y = 0;
+            //that.y = entity.y - 118;
+            that.onGround = true;
+          }
         }
+      });
+    }
+    if (!this.dead) {
+      this.updateBB();
+    }
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
-  attack()
-  {
+  attack() {
     this.state = 0;
-    this.facing = 0; 
+    this.facing = 0;
     this.fire = 1;
     this.timer = 52;
     this.attacking = true;
   }
-  heal(amount)
-  {
+  heal(amount) {
     this.health += amount;
-    if(this.health > 50)
-    {
+    if (this.health > 50) {
       this.health = 50;
     }
   }
-  killed()
-  {
+  killed() {
     this.state = 2;
-    this.BB = new BoundingBox(this.x, this.y, 62*2, 90);
+    this.BB = new BoundingBox(this.x, this.y, 62 * 2, 90);
     this.y += 90;
   }
 }
 
 
-class OverWorldPlayer
-{
-  constructor(game,x,y)
-  {
-    Object.assign(this, {game, x, y});
+class OverWorldPlayer {
+  constructor(game, x, y) {
+    Object.assign(this, { game, x, y });
 
     this.x = x;
     this.y = y;
     this.game = game;
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
-    this.horizontalWalking = new Animator(this.spritesheet,2,88,20,31,3,.33,1,false,true);
-    this.upWalking = new Animator(this.spritesheet,5,59,18,27,3,.33,4,false,true);
-    this.downWalking = new Animator(this.spritesheet,6,3,18,27,3,.33,1,false,true);
+    this.horizontalWalking = new Animator(this.spritesheet, 2, 88, 20, 31, 3, .33, 1, false, true);
+    this.upWalking = new Animator(this.spritesheet, 5, 59, 18, 27, 3, .33, 4, false, true);
+    this.downWalking = new Animator(this.spritesheet, 6, 3, 18, 27, 3, .33, 1, false, true);
     this.updateBB();
     this.facingState = 0; //0 = right, 1 = left 2 = up 3 = down
     this.velocity = { x: 0, y: 0 };
     this.SCALE = 2;
-    
+
   }
-  update()
-  {
-    if(this.game.left && !this.game.right&& !this.game.up && !this.game.down)
+  update() {
+    if (this.game.left && !this.game.right && !this.game.up && !this.game.down)
     {
-        this.velocity.x = -2; 
-        this.facingState = 1;
+      this.velocity.x = -2;
+      this.facingState = 1;
     }
-    else if (this.game.right && !this.game.left&& !this.game.up && !this.game.down)
+    else if (this.game.right && !this.game.left && !this.game.up && !this.game.down)
     {
-        this.velocity.x = 2; 
-        this.facingState = 0;
+      this.velocity.x = 2;
+      this.facingState = 0;
     }
-    else if (this.game.up && !this.game.down&& !this.game.left && !this.game.right)
+    else if (this.game.up && !this.game.down && !this.game.left && !this.game.right)
     {
-        this.velocity.y = -2; 
-        this.facingState = 2;
+      this.velocity.y = -2;
+      this.facingState = 2;
     }
     else if (this.game.down && !this.game.up && !this.game.left && !this.game.right)
     {
-        this.velocity.y = 2; 
-        this.facingState = 3;
+      this.velocity.y = 2;
+      this.facingState = 3;
     }
-    else
-    {
+    else {
       this.velocity.x = 0;
       this.velocity.y = 0;
     }
 
-          //collision
-          var that = this;
-          this.game.entities.forEach(function (entity) {
-            if (entity.BB && that.BB.collide(entity.BB)) 
-              {
-             if (entity instanceof House) 
-                {
-                  that.y -= 5;
-                  that.x -= 1;
-                }
-            if (entity instanceof Saloon) 
-              {
-                 entity.visible = false;
-              }
-              if (entity instanceof Sheriff) 
-              {
-                 entity.visible = false;
-              }
-              if (entity instanceof Bank) 
-              {
-                 entity.visible = false;
-              }
-            }
-            that.updateBB();
-          });
+    //collision
+    var that = this;
+    this.game.entities.forEach(function (entity) {
+      if (entity.BB && that.BB.collide(entity.BB)) {
+        if (entity instanceof House) {
+          that.y -= 5;
+          that.x -= 1;
+        }
+        if (that.game.camera.sceneLoaded == "overworld") {
+          if (entity instanceof Saloon) {
+            //  entity.visible = false;
+            that.game.camera.loadSaloon();
+          }
+          if (entity instanceof Sheriff) {
+            //  entity.visible = false;
+            that.game.camera.loadSheriff();
+  
+          }
+          if (entity instanceof Bank) {
+            //  entity.visible = false;
+            that.game.camera.loadBank();
+  
+          }
+        }
+      }
+      that.updateBB();
+    });
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
-  draw(ctx)
-  {
-    if(this.velocity. x == 0 && this.velocity.y == 0 && this.facingState == 0)
-    {
-      ctx.drawImage(this.spritesheet,2,88,20,31,this.x,this.y,20 * this.SCALE,31 * this.SCALE);
+  draw(ctx) {
+    if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
+      ctx.drawImage(this.spritesheet, 2, 88, 20, 31, this.x, this.y, 20 * this.SCALE, 31 * this.SCALE);
     }
-    else if(this.facingState == 0)
-    {
-      this.horizontalWalking.drawFrame(this.game.clockTick,ctx,this.x,this.y,this.SCALE);
+    else if (this.facingState == 0) {
+      this.horizontalWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
-    else if(this.facingState == 1)
-    {
-      ctx.scale(-1,1);
-      this.horizontalWalking.drawFrame(this.game.clockTick,ctx,-this.x - (20 * this.SCALE),this.y,this.SCALE);
+    else if (this.facingState == 1) {
+      ctx.scale(-1, 1);
+      this.horizontalWalking.drawFrame(this.game.clockTick, ctx, -this.x - (20 * this.SCALE), this.y, this.SCALE);
       ctx.restore();
     }
-    else if(this.facingState == 2)
-    {
-      this.upWalking.drawFrame(this.game.clockTick,ctx,this.x,this.y,this.SCALE);
+    else if (this.facingState == 2) {
+      this.upWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
-    else if(this.facingState == 3)
-    {
-      this.downWalking.drawFrame(this.game.clockTick,ctx,this.x,this.y,this.SCALE);
+    else if (this.facingState == 3) {
+      this.downWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
   }
-  updateBB() 
-  {
+  updateBB() {
     this.lastBB = this.BB;
-    this.BB = new BoundingBox(this.x, this.y,20,31);
+    this.BB = new BoundingBox(this.x, this.y, 20, 31);
   }
 }
