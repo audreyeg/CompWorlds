@@ -18,6 +18,21 @@ class SceneManager {
         this.x = 0;
         gameEngine.addEntity(new Town(gameEngine,0,0));
         this.cowboy = new  OverWorldPlayer(gameEngine,0,450);
+        for(var i = 0; i < 3; i++)
+        {
+            gameEngine.addEntity(new DesertGround(gameEngine,256 * 0,256 * i));
+            gameEngine.addEntity(new DesertGround(gameEngine,256 * 1,256 * i));
+            gameEngine.addEntity(new DesertGround(gameEngine,256 * 2,256 * i));
+            gameEngine.addEntity(new DesertGround(gameEngine,256 * 3,256 * i));
+            gameEngine.addEntity(new DesertGround(gameEngine,256 * 4,256 * i));
+            gameEngine.addEntity(new DesertGround(gameEngine,256 * 5,256 * i));
+        }
+        for(var i = 0; i < 44; i++ )
+        {
+            gameEngine.addEntity(new Road(gameEngine,32 * i,400));
+            gameEngine.addEntity(new Road(gameEngine,32 * i,464));
+        }
+        //gameEngine.addEntity(new groundCen(gameEngine,0,366));
         gameEngine.addEntity(this.cowboy);
     }
     loadFightScene()
@@ -56,7 +71,6 @@ class SceneManager {
         {
             this.fight = true;
             this.overworld = false;
-            console.log(this.game.entities);
             this.storageSize = gameEngine.entities.length;
             for(var i = 0; i < this.storageSize ; i++)
             {
