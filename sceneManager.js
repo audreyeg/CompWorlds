@@ -2,94 +2,43 @@ class SceneManager {
     constructor(game) {
         this.game = game;
         this.game.camera = this;
+
+        this.cowboy = new Character(this.game);
+
+        this.scenes = [];
+        this.scenes["town"] = new TownScene(game, this.cowboy);
+        this.scenes["bank"] = new BankScene(game, this.cowboy);
+        this.scenes["saloon"] = new SaloonScene(game, this.cowboy);
+        this.scenes["sheriff"] = new SheriffScene(game, this.cowboy);
+
         this.x = 0;
-        this.scenes = new SceneLoader();
-        this.currentScene = 0;
-        this.nextScene = 0;
-        this.loadingScene = [];
-        this.entityStorage = [];
-        this.changeScene(0);
+
+        this.currentScene = null;
+        this.sceneStack = [];
+
+        this.loadScene(this.scenes["town"]);
     };
-    changeScene(newScene)
-    {
-        this.loadingScene = this.scenes.scenes[newScene];
-        //console.log(this.loadingScene);
-        this.scenes.scenes[this.currentScene] = this.game.entities;
-        this.game.entities = this.loadingScene;
+
+    update() { }
+    draw() { }
+
+    // TODO: Maybe combine the next two methods
+    // Note: Do not use this to load a scene already present in the scenestack. TODO: Make this impossible
+    loadScene(scene) {
+        this.sceneStack.push(this.currentScene);
+        this.game.entities = scene.getEntities();
+        this.currentScene = scene;
+    }
+
+    // Note: Do not use on an empty scenestack. TODO: Make this impossible
+    popScene() {
+        var newScene = this.sceneStack.pop();
+        this.game.entities = newScene.getEntities();
         this.currentScene = newScene;
     }
 
-
-
-
-
-    loadFightScene(enemy)
-    {
-        this.saveEntities();
-        this.clearEntities();
-        this.sceneLoaded = "fight";
-        this.fightChar = new CowBoy(gameEngine,160,400,this.scenes.cowboy);
-        this.enemy = enemy;
-        //this.enemy = new coyote(gameEngine,486,450);
-        this.x = 0;
-        gameEngine.addEntity(this.fightChar);
-        gameEngine.addEntity(this.enemy);
-        gameEngine.addEntity(new groundLeft(gameEngine,0,600));
-        gameEngine.addEntity(new groundCen(gameEngine,84,600));
-        gameEngine.addEntity(new groundCen(gameEngine,168,600));
-        gameEngine.addEntity(new groundCen(gameEngine,252,600));
-        gameEngine.addEntity(new groundCen(gameEngine,336,600));
-        gameEngine.addEntity(new groundCen(gameEngine,420,600));
-        gameEngine.addEntity(new groundCen(gameEngine,504,600));
-        gameEngine.addEntity(new groundCen(gameEngine,588,600));
-        gameEngine.addEntity(new groundCen(gameEngine,672,600));
-        gameEngine.addEntity(new groundRig(gameEngine,756,600));
-        gameEngine.addEntity(new groundLside(gameEngine,0,684));
-        gameEngine.addEntity(new groundMid(gameEngine,84,684));
-        gameEngine.addEntity(new groundMid(gameEngine,168,684));
-        gameEngine.addEntity(new groundMid(gameEngine,252,684));
-        gameEngine.addEntity(new groundMid(gameEngine,336,684));
-        gameEngine.addEntity(new groundMid(gameEngine,420,684));
-        gameEngine.addEntity(new groundMid(gameEngine,504,684));
-        gameEngine.addEntity(new groundMid(gameEngine,588,684));
-        gameEngine.addEntity(new groundMid(gameEngine,672,684));
-        gameEngine.addEntity(new groundMid(gameEngine,756,684));
-        this.fightScene = new Fight(gameEngine,this.fightChar,this.enemy);
-        gameEngine.addEntity(this.fightScene);
-    }
-    update()
-    {
-    }
-    
-    draw()
-    {
-    }
-    clearEntities() 
-    {
-        gameEngine.entities = [];
-    }
-    saveEntities() {
-        this.storageSize = gameEngine.entities.length;
-        for(var i = 0; i < this.storageSize ; i++)
-        {
-            var entity = gameEngine.entities[i];
-            this.entityStorage.push(entity); 
-        }
-    }
-    reloadEntites()
-    {
-        this.clearEntities();
-        this.storageSize = this.entityStorage.length;
-        //console.log(this.storageSize);
-        for(var i = 0; i < this.storageSize; i++)
-        {
-            gameEngine.addEntity(this.entityStorage[i]);
-            if(this.entityStorage[i] instanceof Character)
-            {
-                this.cowboy = this.entityStorage[i];
-            }
-        }
-        this.fightScene = null;
-        this.entityStorage = [];
+    createFightSceneWithEnemy(enemy) {
+        console.log(enemy);
+        return new FightScene(this.game, this.cowboy, enemy);
     }
 }
