@@ -10,12 +10,12 @@ class npc{
         this.updateBB();
         this.number = 0;
         this.dead = false
-        this.gravity = 9.8/60;
+        //this.gravity = 9.8/60;
         this.velocity = { x: 0, y: 0 };
     };
     update()
     {
-        this.velocity.y += this.gravity;
+        //this.velocity.y += this.gravity;
         if(this.dead)
         {
             this.removeFromWorld = true;
@@ -37,7 +37,7 @@ class npc{
     }
     draw(ctx)
     {
-        ctx.drawImage(this.spritesheet,60,89,13,25,this.x,this.y,50,60);
+        ctx.drawImage(this.spritesheet,30,89,13,25,this.x,this.y,50,60);
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);

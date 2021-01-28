@@ -1,6 +1,8 @@
 class Fight {
     constructor(game,player,enemy) 
     {
+        console.log(enemy);
+
         Object.assign(this, {game, player, enemy});
         this.player = player;
         this.enemy = enemy;
@@ -134,7 +136,7 @@ class Fight {
                // this.dialogBox = new dialog(gameEngine,100,100,"You Have Killed The Coyote!");
                // this.dialoug = true;
                // this.game.addEntity(this.dialogBox);
-                this.game.camera.reloadEntites();
+               this.game.camera.fightEnd = true;
             }
         }
         else
