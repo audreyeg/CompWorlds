@@ -5,10 +5,6 @@ class Scene {
         this.character = character;
         this.entities = [];
     };
-
-    getEntities() {
-        return [...this.entities];  // This syntax just copies the array
-    }
 }
 
 class FightScene extends Scene {

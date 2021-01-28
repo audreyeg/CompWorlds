@@ -16,7 +16,7 @@ class saloonLZ
                 if (entity instanceof OverWorldPlayer) 
                 {
                     entity.y += 10;
-                    that.game.camera.loadScene(that.game.camera.scenes["saloon"]);
+                    that.game.camera.loadScene("saloon");
                 }
             }
         });
@@ -46,7 +46,7 @@ class sheriffLZ
                 if (entity instanceof OverWorldPlayer) 
                 {
                     entity.y += 10;
-                    that.game.camera.loadScene(that.game.camera.scenes["sheriff"]);
+                    that.game.camera.loadScene("sheriff");
                 }
             }
         });
@@ -76,7 +76,7 @@ class bankLZ
                 if (entity instanceof OverWorldPlayer) 
                 {
                     entity.y += 10;
-                    that.game.camera.loadScene(that.game.camera.scenes["bank"]);
+                    that.game.camera.loadScene("bank");
                 }
             }
         });
@@ -106,7 +106,7 @@ class townLZ
                 if (entity instanceof OverWorldPlayer) 
                 {
                     entity.y -= 10;
-                    that.game.camera.popScene();
+                    that.game.camera.loadScene("town");
                 }
             }
         });

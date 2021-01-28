@@ -14,27 +14,18 @@ class SceneManager {
         this.x = 0;
 
         this.currentScene = null;
-        this.sceneStack = [];
+        // this.sceneStack = [];
 
-        this.loadScene(this.scenes["town"]);
+        this.loadScene("town");
     };
 
     update() { }
     draw() { }
 
-    // TODO: Maybe combine the next two methods
-    // Note: Do not use this to load a scene already present in the scenestack. TODO: Make this impossible
     loadScene(scene) {
-        this.sceneStack.push(this.currentScene);
-        this.game.entities = scene.getEntities();
-        this.currentScene = scene;
-    }
-
-    // Note: Do not use on an empty scenestack. TODO: Make this impossible
-    popScene() {
-        var newScene = this.sceneStack.pop();
-        this.game.entities = newScene.getEntities();
-        this.currentScene = newScene;
+        var sceneToLoad = this.scenes[scene]
+        this.game.entities = sceneToLoad.entities;
+        this.currentScene = sceneToLoad;
     }
 
     createFightSceneWithEnemy(enemy) {
