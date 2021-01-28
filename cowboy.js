@@ -201,7 +201,6 @@ class OverWorldPlayer {
     this.lastX;
     this.lastY;
     this.stun = 0;
-    this.timer = 0;
     //this.playerInventory = Inventory();
 
   }
@@ -254,21 +253,16 @@ class OverWorldPlayer {
         }
         if (entity instanceof npc) 
         {
-          that.timer = 100;
           var str = "";
           str += "hello. I am an NPC";
           document.getElementById("chat").innerHTML = str;
+          var response = "Okay";
+     	  document.getElementById("response").innerHTML = response;
         }
       }
-      
       that.updateBB();
     });
-    if (that.timer != 0) {
-          that.timer --;
-        }
-    else if (that.timer == 0) {
-       document.getElementById("chat").innerHTML = "";
-    }
+ 
 
     this.lastX = this.x;
     this.lastY = this.y;
@@ -428,7 +422,7 @@ Inventory = function(){
     for(var i = 0 ; i < self.items.length; i++){
       let item = Item.List[self.items[i].id];
       let onclick = "Item.List['" + item.id + "'].event()";
-      str += "<button onclick=\"" + onclick + "\">" + item.name + " x" + self.items[i].amount + "</button>";
+      str += "<button onclick=\"" + onclick + "\" >" + item.name + " x" + self.items[i].amount + "</button>";
     }
 
     document.getElementById("inventory").innerHTML = str;
