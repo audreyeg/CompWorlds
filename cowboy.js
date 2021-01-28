@@ -201,6 +201,8 @@ class OverWorldPlayer {
     this.lastX;
     this.lastY;
     this.stun = 0;
+    this.timer = 0;
+    //this.playerInventory = Inventory();
 
   }
     update() {
@@ -240,15 +242,34 @@ class OverWorldPlayer {
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
-        if (entity instanceof Saloon) 
+        if (entity instanceof Heal) 
         {
-        // that.push();
+          playerInventory.addItem("medpac", 1);
+          entity.removeFromWorld = true;
         }
-      
+         if (entity instanceof Coin) 
+        {
+          playerInventory.addItem("coin", 1);
+          entity.removeFromWorld = true;
+        }
+        if (entity instanceof npc) 
+        {
+          that.timer = 100;
+          var str = "";
+          str += "hello. I am an NPC";
+          document.getElementById("chat").innerHTML = str;
+        }
       }
       
       that.updateBB();
     });
+    if (that.timer != 0) {
+          that.timer --;
+        }
+    else if (that.timer == 0) {
+       document.getElementById("chat").innerHTML = "";
+    }
+
     this.lastX = this.x;
     this.lastY = this.y;
     this.x += this.velocity.x;
@@ -280,6 +301,7 @@ class OverWorldPlayer {
   updateBB() {
     this.lastBB = this.BB;
     this.BB = new BoundingBox(this.x + 5, this.y + 20, 30, 35);
+
   }
   push()
   {
@@ -304,10 +326,11 @@ class Character
     this.health = 50;
     this.damage = 5;
     this.armor = 5;
-    this.maxHealth = 50;
+    this.maxHealth = 100;
     this.x = 0;
     this.y = 0;
     this.speed = 2;
+    console.log(this.health);
   } 
   takeDamage(amt)
   {
@@ -354,3 +377,90 @@ class Character
 
   }
 }
+
+//INVENTORY
+
+Inventory = function(){
+    var self = {
+        items:[] //{id:"itemId",amount:1}
+
+    }
+
+    //add item to inentory 
+    self.addItem = function(id,amount){
+    for(var i = 0 ; i < self.items.length; i++){
+      if(self.items[i].id === id){
+        self.items[i].amount += amount;
+        self.refreshRender();
+        return;
+      }
+    }
+    self.items.push({id:id,amount:amount});
+    self.refreshRender();
+    }
+
+    //remove item from inventory 
+    self.removeItem = function(id,amount){
+    for(var i = 0 ; i < self.items.length; i++){
+      if(self.items[i].id === id){
+        self.items[i].amount -= amount;
+        if(self.items[i].amount <= 0)
+          self.items.splice(i,1);
+        self.refreshRender();
+        return;
+      }
+    }    
+    }
+
+    //see if item is already in inventory 
+    self.hasItem = function(id,amount){
+    for(var i = 0 ; i < self.items.length; i++){
+      if(self.items[i].id === id){
+        return self.items[i].amount >= amount;
+      }
+    }  
+    return false;
+    }
+
+    //make buttons for items
+  self.refreshRender = function(){
+    var str = "";
+    for(var i = 0 ; i < self.items.length; i++){
+      let item = Item.List[self.items[i].id];
+      let onclick = "Item.List['" + item.id + "'].event()";
+      str += "<button onclick=\"" + onclick + "\">" + item.name + " x" + self.items[i].amount + "</button>";
+    }
+
+    document.getElementById("inventory").innerHTML = str;
+  }
+
+
+  return self;
+}
+
+//define inventory items and how they're used
+Item = function(id,name,event){
+  var self = {
+    id:id,
+    name:name,
+    event:event,
+  }
+  Item.List[self.id] = self;
+  return self;
+}
+Item.List = {};
+
+//health pacs will increase health and be removed upon use 
+Item("medpac","MedPac",function(){
+  this.health += 10;
+  console.log(this.health);
+  playerInventory.removeItem("medpac",1);
+});
+
+//right now coins will be dropped if clicked on 
+Item("coin","Coin",function(){
+  playerInventory.removeItem("coin",1);
+  dropx = gameEngine.camera.scenes.cowboy.x;
+  dropy = gameEngine.camera.scenes.cowboy.y;
+  gameEngine.addEntity(new Coin(gameEngine, dropx + 50, dropy + 50));
+});
