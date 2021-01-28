@@ -1,5 +1,7 @@
 ﻿
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,11 +42,26 @@
     <div id="inventory">
     </div>
 
-     <div id="chat";>
+     <div id="chat">
     </div>
+
+    <button id = "response" onclick = "change(this)" style = "color: red; font-family: Papyrus"></button>
 
     <script>
         playerInventory = Inventory();
+        function change(btn) {
+        //btn.style.display = 'none';
+        var clicked = true;
+        responded(clicked);
+
+        function responded(clicked) 
+          {
+            if (clicked) {
+            document.getElementById("response").innerHTML = "";
+            document.getElementById("chat").innerHTML = "";
+            }
+            }
+        }
     </script>
 </body>
 </html>
