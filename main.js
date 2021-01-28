@@ -37,6 +37,7 @@ ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Static Objects/Other/Whe
 ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (36).png");
 ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Static Objects/Other/Crate.png");
 ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Static Objects/Other/Barrel.png");
+ASSET_MANAGER.queueDownload("./sprites/coin.png");
 
 ASSET_MANAGER.downloadAll(function () {
 	var canvas = document.getElementById('gameWorld');
