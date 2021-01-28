@@ -53,6 +53,12 @@ class SceneLoader
         this.newScene.push(new fightLZ(gameEngine,1165,450,50,50));
         this.newScene.push(new fightLZ(gameEngine,1065,450,50,50));
         this.newScene.push(new fightLZ(gameEngine,1265,450,50,50));
+
+        this.newScene.push(new Heal(gameEngine, 200, 400));
+        this.newScene.push(new Heal(gameEngine, 800, 400));
+        this.newScene.push(new Coin(gameEngine, 500, 400));
+        this.newScene.push(new Coin(gameEngine, 100, 400));
+
         this.scenes.push(this.newScene);
     }
     loadBank() {
@@ -193,6 +199,7 @@ class SceneLoader
             this.newScene.push(new Barrel(gameEngine, 1.75 * TILE_WIDTH, (i + 0.1) * TILE_WIDTH, false));
         }
 
+        this.newScene.push(new npc(gameEngine, 500, 400));
         // Add beep bop boop bep cowboy
         this.newScene.push(new OverWorldPlayer(gameEngine,350,700,this.cowboy));
         this.newScene.push(new townLZ(gameEngine,350,750,50,25));
