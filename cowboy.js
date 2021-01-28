@@ -1,13 +1,12 @@
 class CowBoy {
-  constructor(game, x, y) {
-    Object.assign(this, { game, x, y });
+  constructor(game, x, y,stats) {
+    Object.assign(this, { game, x, y,stats });
 
-
+    this.stats = stats;
     // Starting Coordinates
     this.x = x;
     this.y = y;
     this.game = game;
-
     //this.game.animation = this;
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/cowboy.png");
 
@@ -185,9 +184,9 @@ class CowBoy {
 
 
 class OverWorldPlayer {
-  constructor(game, x, y) {
-    Object.assign(this, { game, x, y });
-
+  constructor(game, x, y,stats) {
+    Object.assign(this, { game, x, y,stats});
+    this.stats = stats;
     this.x = x;
     this.y = y;
     this.game = game;
@@ -199,70 +198,63 @@ class OverWorldPlayer {
     this.facingState = 0; //0 = right, 1 = left 2 = up 3 = down
     this.velocity = { x: 0, y: 0 };
     this.SCALE = 2;
+    this.lastX;
+    this.lastY;
+    this.stun = 0;
 
   }
-  update() {
-    if (this.game.left && !this.game.right && !this.game.up && !this.game.down)
+    update() {
+    if(this.stun == 0)
     {
-      this.velocity.x = -2;
-      this.facingState = 1;
+      if (this.game.left && !this.game.right && !this.game.up && !this.game.down)
+      {
+        this.velocity.x = -this.stats.speed * 3;
+        this.facingState = 1;
+      }
+      else if (this.game.right && !this.game.left && !this.game.up && !this.game.down)
+      {
+        this.velocity.x = this.stats.speed * 3;
+        this.facingState = 0;
+      }
+      else if (this.game.up && !this.game.down && !this.game.left && !this.game.right)
+      {
+        this.velocity.y = -this.stats.speed * 3;
+        this.facingState = 2;
+      }
+      else if (this.game.down && !this.game.up && !this.game.left && !this.game.right)
+      {
+        this.velocity.y = this.stats.speed * 3;
+        this.facingState = 3;
+      }
+      else {
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+      }
     }
-    else if (this.game.right && !this.game.left && !this.game.up && !this.game.down)
+    else
     {
-      this.velocity.x = 2;
-      this.facingState = 0;
-    }
-    else if (this.game.up && !this.game.down && !this.game.left && !this.game.right)
-    {
-      this.velocity.y = -2;
-      this.facingState = 2;
-    }
-    else if (this.game.down && !this.game.up && !this.game.left && !this.game.right)
-    {
-      this.velocity.y = 2;
-      this.facingState = 3;
-    }
-    else {
-      this.velocity.x = 0;
-      this.velocity.y = 0;
+      this.stun--;
     }
 
     //collision
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
-        if (entity instanceof House) {
-          that.y -= 5;
-          that.x -= 1;
+        if (entity instanceof Saloon) 
+        {
+        // that.push();
         }
-        if (that.game.camera.sceneLoaded == "overworld") {
-          if (entity instanceof Saloon) {
-            //  entity.visible = false;
-            that.game.camera.loadSaloon();
-              that.x = 400;
-              that.y = 700;
-              if (that.x >= 680) 
-                {
-                  console.log(that.x);
-                  that.velocity.x -= 10; 
-                }
-          }
-          if (entity instanceof Sheriff) {
-            //  entity.visible = false;
-            that.game.camera.loadSheriff();
-  
-          }
-          if (entity instanceof Bank) {
-            //  entity.visible = false;
-            that.game.camera.loadBank();
-  
-          }
-        }
+      
       }
+      
       that.updateBB();
     });
+    this.lastX = this.x;
+    this.lastY = this.y;
     this.x += this.velocity.x;
     this.y += this.velocity.y;
+    this.stats.setX(this.x);
+    this.stats.setY(this.y);
   }
   draw(ctx) {
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
@@ -286,5 +278,77 @@ class OverWorldPlayer {
   updateBB() {
     this.lastBB = this.BB;
     this.BB = new BoundingBox(this.x, this.y, 20, 31);
+  }
+  push()
+  {
+    if(this.stun == 0)
+    {
+      this.x = this.lastY;
+      this.x = this.lastX;
+      console.log(this.velocity.y);
+      this.velocity.x = -(this.velocity.x);
+      this.velocity.y = -(this.velocity.y);
+     console.log(this.velocity.y);
+     this.stun = 5;
+    }
+  }
+}
+class Character
+{
+  constructor(game) 
+  {
+    Object.assign(this, {game});
+    this.game = game;
+    this.health = 50;
+    this.damage = 5;
+    this.armor = 5;
+    this.maxHealth = 50;
+    this.x = 0;
+    this.y = 0;
+    this.speed = 2;
+  } 
+  takeDamage(amt)
+  {
+    this.health -= amt;
+    if(this.health <= 0)
+    {
+      this.health = 0;
+    }
+  }
+  heal(amt)
+  {
+    this.health += amt;
+    if(this.health >= this.maxHealth)
+    {
+      this.health = this.maxHealth;''
+    }
+  }
+  increaseMaxHP(amt)
+  {
+    this.maxHealth += amt;
+  }
+  setArmor(amt)
+  {
+    this.armor = amt;
+  }
+  setDamage(amt)
+  {
+    this.damage = amt;
+  }
+  setX(x)
+  {
+    this.x = x;
+  }
+  setY(y)
+  {
+    this.y = y;
+  }
+  update()
+  {
+
+  }
+  draw()
+  {
+
   }
 }
