@@ -6,6 +6,7 @@ class SceneManager {
         this.entityStorage = [];
         this.storageSize;   
         this.cowboy = new Character(this.game);
+
         // this.fight = false;
         // this.overworld = true;
         // The above is replaced with the following, which is changed whenever a new scene is loaded

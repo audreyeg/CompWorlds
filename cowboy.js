@@ -7,7 +7,6 @@ class CowBoy {
     this.x = x;
     this.y = y;
     this.game = game;
-
     //this.game.animation = this;
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/cowboy.png");
 
