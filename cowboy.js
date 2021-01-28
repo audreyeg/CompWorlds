@@ -275,10 +275,12 @@ class OverWorldPlayer {
     else if (this.facingState == 3) {
       this.downWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
+    ctx.strokeStyle = 'Red';
+    ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
   }
   updateBB() {
     this.lastBB = this.BB;
-    this.BB = new BoundingBox(this.x, this.y, 20, 31);
+    this.BB = new BoundingBox(this.x + 5, this.y + 20, 30, 35);
   }
   push()
   {

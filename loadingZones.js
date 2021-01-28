@@ -15,8 +15,8 @@ class saloonLZ
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    entity.y += 5;
-                    that.game.camera.loadSaloon();
+                    entity.y += 10;
+                    that.game.camera.changeScene(1);
                 }
             }
         });
@@ -45,8 +45,8 @@ class sheriffLZ
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    entity.y += 5;
-                    that.game.camera.loadSheriff();
+                    entity.y += 10;
+                    that.game.camera.changeScene(2);
                 }
             }
         });
@@ -75,8 +75,8 @@ class bankLZ
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    entity.y += 5;
-                    that.game.camera.loadBank();
+                    entity.y += 10;
+                    that.game.camera.changeScene(3);
                 }
             }
         });
@@ -88,3 +88,64 @@ class bankLZ
     }
 
 }
+class townLZ
+{
+    constructor(game,x,y,w,h)
+    {
+        Object.assign(this, { game, x, y,w,h});
+        this.game = game;
+        this.BB = new BoundingBox(x,y,w,h);
+    }
+    update()
+    {
+        var that = this;
+        this.game.entities.forEach(function (entity) 
+        {
+            if (entity.BB && that.BB.collide(entity.BB)) 
+            {
+                if (entity instanceof OverWorldPlayer) 
+                {
+                    entity.y -= 10;
+                    that.game.camera.changeScene(0);
+                }
+            }
+        });
+    }
+    draw(ctx)
+    {
+        ctx.strokeStyle = 'Red';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+    }
+
+}
+class fightLZ
+{
+    constructor(game,x,y,w,h)
+    {
+        Object.assign(this, { game, x, y,w,h});
+        this.game = game;
+        this.BB = new BoundingBox(x,y,w,h);
+    }
+    update()
+    {
+        var that = this;
+        this.game.entities.forEach(function (entity) 
+        {
+            if (entity.BB && that.BB.collide(entity.BB)) 
+            {
+                if (entity instanceof OverWorldPlayer) 
+                {
+                    that.removeFromWorld = true;
+                    that.game.camera.loadFightScene(new coyote(gameEngine,486,450));
+                }
+            }
+        });
+    }
+    draw(ctx)
+    {
+        ctx.strokeStyle = 'Red';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+    }
+
+}
+
