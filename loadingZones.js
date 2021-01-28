@@ -136,7 +136,7 @@ class fightLZ
                 if (entity instanceof OverWorldPlayer) 
                 {
                     that.removeFromWorld = true;
-                    that.game.camera.loadScene(that.game.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450)));
+                    that.game.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450));
                 }
             }
         });

@@ -460,7 +460,7 @@ Item("medpac","MedPac",function(){
 //right now coins will be dropped if clicked on 
 Item("coin","Coin",function(){
   playerInventory.removeItem("coin",1);
-  dropx = gameEngine.camera.scenes.cowboy.x;
-  dropy = gameEngine.camera.scenes.cowboy.y;
+  dropx = gameEngine.camera.cowboy.x;
+  dropy = gameEngine.camera.cowboy.y;
   gameEngine.addEntity(new Coin(gameEngine, dropx + 50, dropy + 50));
 });

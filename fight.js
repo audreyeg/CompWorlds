@@ -136,7 +136,7 @@ class Fight {
                // this.dialogBox = new dialog(gameEngine,100,100,"You Have Killed The Coyote!");
                // this.dialoug = true;
                // this.game.addEntity(this.dialogBox);
-                this.game.camera.popScene();
+               this.game.camera.fightEnd = true;
             }
         }
         else
