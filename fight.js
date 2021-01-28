@@ -27,7 +27,7 @@ class Fight {
       ctx.fillText("health: ", 5, 25);
       ctx.font = "30px Papyrus";
       ctx.fillStyle = "Red";
-      ctx.fillText(this.player.health, 55, 25);
+      ctx.fillText(this.player.stats.health, 55, 25);
       ctx.font = "15px Papyrus";
       ctx.fillStyle = "Red";
       ctx.fillText("Enemy health: ", 500, 25);
@@ -71,7 +71,7 @@ class Fight {
                 this.dialogBox.removeFromWorld = true;
                 this.dialoug = false;
                 this.delay = 120;
-                this.player.heal(25);
+                this.player.stats.heal(25);
                 gameEngine.addEntity(new Heal(gameEngine,this.player.x,this.player.y));
                 gameEngine.addEntity(new Heal(gameEngine,this.player.x + 30,this.player.y - 20));
                 gameEngine.addEntity(new Heal(gameEngine,this.player.x + 60,this.player.y));
@@ -134,7 +134,7 @@ class Fight {
                // this.dialogBox = new dialog(gameEngine,100,100,"You Have Killed The Coyote!");
                // this.dialoug = true;
                // this.game.addEntity(this.dialogBox);
-                this.end = true;
+                this.game.camera.reloadEntites();
             }
         }
         else
@@ -147,16 +147,16 @@ class Fight {
             {
                 if(this.defending)
                 {
-                    this.player.health -= 5;
+                    this.player.stats.takeDamage(5);
                     this.defending = false;
                 }
                 else
                 {
-                    this.player.health -= 25;
+                    this.player.stats.takeDamage(25);
                 }
                 gameEngine.addEntity(new Crit(gameEngine,this.enemy.x,this.enemy.y));
                 this.crit = false;
-                if(this.player.health <= 0)
+                if(this.player.stats.health <= 0)
                 {
                     this.player.dead = true;
                 }
@@ -165,12 +165,12 @@ class Fight {
             {
                 if(this.defending)
                 {
-                    this.player.health -= 1;
+                    this.player.stats.takeDamage(1);
                     this.defending = false;
                 }
                 else
                 {
-                    this.player.health -= 5;
+                    this.player.stats.takeDamage(5);
                 }
                 if(this.player.health <= 0)
                 {

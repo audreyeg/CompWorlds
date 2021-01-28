@@ -3,225 +3,34 @@ class SceneManager {
         this.game = game;
         this.game.camera = this;
         this.x = 0;
+        this.scenes = new SceneLoader();
+        this.currentScene = 0;
+        this.nextScene = 0;
+        this.loadingScene = [];
         this.entityStorage = [];
-        this.storageSize;   
-        this.cowboy = new Character(this.game);
-
-        // this.fight = false;
-        // this.overworld = true;
-        // The above is replaced with the following, which is changed whenever a new scene is loaded
-        this.sceneLoaded = "overworld";
-        this.fightScene;
-        this.fightChar;
-        this.enemy;
-
-        this.loadTown(); 
-        // TODO: Delete the below. For testing only.
-        // this.saveEntities();
-        // this.clearEntities();
-        // this.loadBank(); 
+        this.changeScene(0);
     };
-
-    loadBank() {
-        this.saveEntities();
-        this.clearEntities();
-        this.sceneLoaded = "bank";
-
-        var TILE_WIDTH = 128;
-
-        // Make and left sides of screen
-        for (var i = 0; i < 6; i++) {
-            gameEngine.addEntity(new CenterHouseFadeLeft(gameEngine, 0 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new HouseLeftWall(gameEngine, 0 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new CenterHouseFadeRight(gameEngine, 5 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new HouseRightWall(gameEngine, 5 * TILE_WIDTH, i * TILE_WIDTH, false));
-        
-        }
-
-        // Make center columns
-        for (var i = 1; i < 5; i++) {
-            for (var j = 0; j < 6; j++) {
-                gameEngine.addEntity(new CenterHouse(gameEngine, i * TILE_WIDTH, j * TILE_WIDTH, false));
-            }
-            gameEngine.addEntity(new HouseTopWall(gameEngine, i * TILE_WIDTH, 0 * TILE_WIDTH, false));
-            gameEngine.addEntity(new HouseTopWall(gameEngine, i * TILE_WIDTH, 5 * TILE_WIDTH, true));
-        }
-
-        // Make corners
-        gameEngine.addEntity(new HouseTopLeftCornerCrossBeam(gameEngine, 0 * TILE_WIDTH, 0 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseTopRightCornerCrossBeam(gameEngine, 5 * TILE_WIDTH, 0 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseTopLeftCornerCrossBeam(gameEngine, 5 * TILE_WIDTH, 5 * TILE_WIDTH, true));
-        gameEngine.addEntity(new HouseTopRightCornerCrossBeam(gameEngine, 0 * TILE_WIDTH, 5 * TILE_WIDTH, true));
-
-        gameEngine.addEntity(new HouseLeftWall(gameEngine, 3 * TILE_WIDTH, 0 * TILE_WIDTH, false));
-        // TODO: Put door here!
-        // gameEngine.addEntity(new HouseLeftWall(gameEngine, 3 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseBottomLeftCornerBeam(gameEngine, 3 * TILE_WIDTH, 2 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseBottomWall(gameEngine, 4 * TILE_WIDTH, 2 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseBottomWall(gameEngine, 5 * TILE_WIDTH, 2 * TILE_WIDTH, false));
-        
-        gameEngine.addEntity(new Money(gameEngine, 4 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new Money(gameEngine, 4.5 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new Money(gameEngine, 4 * TILE_WIDTH, 1.5 * TILE_WIDTH, false));
-        gameEngine.addEntity(new Money(gameEngine, 4.5 * TILE_WIDTH, 1.5 * TILE_WIDTH, false));
-
-
-        // Add beep bop boop bep cowboy
-        gameEngine.addEntity(new OverWorldPlayer(gameEngine,384,700,this.cowboy));
-
-    }
-
-    loadSheriff() {
-        this.saveEntities();
-        this.clearEntities();
-        this.sceneLoaded = "sheriff";
-        
-        var TILE_WIDTH = 128;
-
-
-        // Make and left sides of screen
-        for (var i = 0; i < 6; i++) {
-            gameEngine.addEntity(new CenterHouseFadeLeft(gameEngine, 0 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new HouseLeftWall(gameEngine, 0 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new CenterHouseFadeRight(gameEngine, 5 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new HouseRightWall(gameEngine, 5 * TILE_WIDTH, i * TILE_WIDTH, false));
-        }
-
-        // Make center columns
-        for (var i = 1; i < 5; i++) {
-            for (var j = 0; j < 6; j++) {
-                gameEngine.addEntity(new CenterHouse(gameEngine, i * TILE_WIDTH, j * TILE_WIDTH, false));
-            }
-            gameEngine.addEntity(new HouseBottomWall(gameEngine, i * TILE_WIDTH, 0 * TILE_WIDTH, true));
-            gameEngine.addEntity(new HouseTopWall(gameEngine, i * TILE_WIDTH, 5 * TILE_WIDTH, true));
-        }
-
-        // Make corners
-        gameEngine.addEntity(new HouseBottomRightCornerBeam(gameEngine, 0 * TILE_WIDTH, 0 * TILE_WIDTH, true));
-        gameEngine.addEntity(new HouseBottomLeftCornerBeam(gameEngine, 5 * TILE_WIDTH, 0 * TILE_WIDTH, true));
-        gameEngine.addEntity(new HouseTopRightCornerCrossBeam(gameEngine, 0 * TILE_WIDTH, 5 * TILE_WIDTH, true));
-        gameEngine.addEntity(new HouseTopLeftCornerCrossBeam(gameEngine, 5 * TILE_WIDTH, 5 * TILE_WIDTH, true));
-
-        gameEngine.addEntity(new HouseBottomWall(gameEngine, 0 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new ClosedCage(gameEngine, 1 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseBottomLeftCornerBeam(gameEngine, 2 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new ClosedCage(gameEngine, 3 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseLeftWall(gameEngine, 2 * TILE_WIDTH, 0 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseBottomLeftCornerBeam(gameEngine, 4 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new OpenCage(gameEngine, 4.9 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseLeftWall(gameEngine, 4 * TILE_WIDTH, 0 * TILE_WIDTH, false));
-        
-
-        // Add beep bop boop bep cowboy
-        gameEngine.addEntity(new OverWorldPlayer(gameEngine,384,700,this.cowboy));
-    }
-
-    loadSaloon() {
-        this.saveEntities();
-        this.clearEntities();
-        this.sceneLoaded = "saloon";
-
-        var TILE_WIDTH = 128;
-
-        // Make corners
-        gameEngine.addEntity(new HouseTopLeftRoundCorner(gameEngine, 0 * TILE_WIDTH, 0 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseTopRightRoundCorner(gameEngine, 5 * TILE_WIDTH, 0 * TILE_WIDTH, false));
-        gameEngine.addEntity(new HouseTopLeftRoundCorner(gameEngine, 5 * TILE_WIDTH, 5 * TILE_WIDTH, true));
-        gameEngine.addEntity(new HouseTopRightRoundCorner(gameEngine, 0 * TILE_WIDTH, 5 * TILE_WIDTH, true));
-
-        // Make and left sides of screen
-        for (var i = 1; i < 5; i++) {
-            gameEngine.addEntity(new CenterHouseFadeLeft(gameEngine, 0 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new HouseLeftWall(gameEngine, 0 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new CenterHouseFadeRight(gameEngine, 5 * TILE_WIDTH, i * TILE_WIDTH, false));
-            gameEngine.addEntity(new HouseLeftWall(gameEngine, 5 * TILE_WIDTH, i * TILE_WIDTH, true));
-        
-        }
-
-        // Make center columns
-        for (var i = 1; i < 5; i++) {
-            for (var j = 0; j < 6; j++) {
-                gameEngine.addEntity(new CenterHouse(gameEngine, i * TILE_WIDTH, j * TILE_WIDTH, j === 5));
-            }
-            gameEngine.addEntity(new HouseTopWall(gameEngine, i * TILE_WIDTH, 0 * TILE_WIDTH, false));
-            gameEngine.addEntity(new HouseTopWall(gameEngine, i * TILE_WIDTH, 5 * TILE_WIDTH, true));
-        }
-
-        gameEngine.addEntity(new WheelTable(gameEngine, 5 * TILE_WIDTH, 1 * TILE_WIDTH, true));
-        gameEngine.addEntity(new WheelTable(gameEngine, 5 * TILE_WIDTH, 2.5 * TILE_WIDTH, true));
-        gameEngine.addEntity(new WheelTable(gameEngine, 5 * TILE_WIDTH, 4 * TILE_WIDTH, true));
-
-        gameEngine.addEntity(new LeftWallWoodThing(gameEngine, 0.1 * TILE_WIDTH, 1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new LeftWallWoodThing(gameEngine, 0.1 * TILE_WIDTH, 2 * TILE_WIDTH, false));
-        gameEngine.addEntity(new LeftWallWoodThing(gameEngine, 0.1 * TILE_WIDTH, 3 * TILE_WIDTH, false));
-        
-        gameEngine.addEntity(new Crate(gameEngine, 1 * TILE_WIDTH, 0.1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new Crate(gameEngine, 1 * TILE_WIDTH, 1.1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new Crate(gameEngine, 1 * TILE_WIDTH, 2.1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new Crate(gameEngine, 1 * TILE_WIDTH, 3.1 * TILE_WIDTH, false));
-        gameEngine.addEntity(new Crate(gameEngine, 1 * TILE_WIDTH, 4.1 * TILE_WIDTH, false));
-        
-        for (var i = 0; i < 5; i += 0.5) {
-            gameEngine.addEntity(new Barrel(gameEngine, 1.75 * TILE_WIDTH, (i + 0.1) * TILE_WIDTH, false));
-        }
-
-        // Add beep bop boop bep cowboy
-        gameEngine.addEntity(new OverWorldPlayer(gameEngine,384,700,this.cowboy));
-        
-    }
-
-    loadTown()
+    changeScene(newScene)
     {
-        this.saveEntities();
-        this.clearEntities();
-        this.sceneLoaded = "overworld";
-
-        this.x = 0;
-        gameEngine.addEntity(new Town(gameEngine,0,0));
-        for(var i = 0; i < 3; i++)
-        {
-            gameEngine.addEntity(new DesertGround(gameEngine,256 * 0,256 * i));
-            gameEngine.addEntity(new DesertGround(gameEngine,256 * 1,256 * i));
-            gameEngine.addEntity(new DesertGround(gameEngine,256 * 2,256 * i));
-            gameEngine.addEntity(new DesertGround(gameEngine,256 * 3,256 * i));
-            gameEngine.addEntity(new DesertGround(gameEngine,256 * 4,256 * i));
-            gameEngine.addEntity(new DesertGround(gameEngine,256 * 5,256 * i));
-        }
-        for(var i = 0; i < 44; i++ )
-        {
-            gameEngine.addEntity(new Road(gameEngine,32 * i,400));
-            gameEngine.addEntity(new Road(gameEngine,32 * i,464));
-        }
-        //gameEngine.addEntity(new groundCen(gameEngine,0,366));
-        //saloon
-        //gameEngine.addEntity(new Floor(gameEngine, 45, 150, 975, 550));
-        gameEngine.addEntity(new Saloon(gameEngine, 0, 25, true));
-
-        //sheriff
-        //gameEngine.addEntity(new Floor(gameEngine, 575, 60, 975, 550));
-        gameEngine.addEntity(new Sheriff(gameEngine, 520, 25, true));
-
-        //bank
-        //gameEngine.addEntity(new Floor(gameEngine, 1100, 50, 470, 600));
-        gameEngine.addEntity(new Bank(gameEngine, 1075, 20, true));
-
-        gameEngine.addEntity(new House(gameEngine, 5, 545, 350, 150));
-        gameEngine.addEntity(new House(gameEngine, 405, 545, 200, 150));
-        gameEngine.addEntity(new House(gameEngine, 650, 545, 250, 150));
-        gameEngine.addEntity(new House(gameEngine, 1000, 545, 400, 150));
-        gameEngine.addEntity(new OverWorldPlayer(gameEngine,0,450,this.cowboy));
-        gameEngine.addEntity(new saloonLZ(gameEngine,170,355,55,25));
-        gameEngine.addEntity(new sheriffLZ(gameEngine,700,255,55,25));
-        gameEngine.addEntity(new bankLZ(gameEngine,1165,300,23,25));
-        console.log(gameEngine.entities);
+        this.loadingScene = this.scenes.scenes[newScene];
+        //console.log(this.loadingScene);
+        this.scenes.scenes[this.currentScene] = this.game.entities;
+        this.game.entities = this.loadingScene;
+        this.currentScene = newScene;
     }
-    loadFightScene()
+
+
+
+
+
+    loadFightScene(enemy)
     {
         this.saveEntities();
         this.clearEntities();
         this.sceneLoaded = "fight";
-        this.fightChar = new CowBoy(gameEngine,160,400,this.cowboy);
-        this.enemy = new coyote(gameEngine,486,450);
+        this.fightChar = new CowBoy(gameEngine,160,400,this.scenes.cowboy);
+        this.enemy = enemy;
+        //this.enemy = new coyote(gameEngine,486,450);
         this.x = 0;
         gameEngine.addEntity(this.fightChar);
         gameEngine.addEntity(this.enemy);
@@ -250,23 +59,10 @@ class SceneManager {
     }
     update()
     {
-        if(this.sceneLoaded == "overworld" && this.cowboy.x > 700)
-        {
-            // The following is replaced with this.sceneLoaded = "fight", which is set in the loadFightScene() method
-            this.fight = true;
-            // this.overworld = false;
-            //this.loadFightScene();
-        }
-        if((this.cowboy.y > 700 && (this.sceneLoaded == "bank" || this.sceneLoaded == "saloon" || this.sceneLoaded == "sheriff" )))
-        {
-            this.reloadEntites();
-            this.sceneLoaded = "overworld";
-        }
     }
     
     draw()
     {
-
     }
     clearEntities() 
     {
