@@ -4,6 +4,7 @@ class Scene {
         this.game = game;
         this.character = character;
         this.entities = [];
+        this.inventory = new SceneInventory(this.game,this); 
     };
 }
 
@@ -41,6 +42,7 @@ class FightScene extends Scene {
         console.log(this.enemy)
         this.fightScene = new Fight(gameEngine,this.fightChar,this.enemy);
         this.entities.push(this.fightScene);
+        this.entities.push(this.inventory);
     }
 
 }
@@ -87,10 +89,12 @@ class BankScene extends Scene {
         this.entities.push(new Money(gameEngine, 4.5 * TILE_WIDTH, 1 * TILE_WIDTH, false));
         this.entities.push(new Money(gameEngine, 4 * TILE_WIDTH, 1.5 * TILE_WIDTH, false));
         this.entities.push(new Money(gameEngine, 4.5 * TILE_WIDTH, 1.5 * TILE_WIDTH, false));
+        this.entities.push(new Chest(gameEngine, 2.5 * TILE_WIDTH, .5 * TILE_WIDTH, false));
     
         // Add beep bop boop bep cowboy
         this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
+        this.entities.push(this.inventory);
     }
 }
 
@@ -138,6 +142,7 @@ class SheriffScene extends Scene {
         // Add beep bop boop bep cowboy
         this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
+        this.entities.push(this.inventory);
     }
 }
 
@@ -194,6 +199,7 @@ class SaloonScene extends Scene {
         // Add beep bop boop bep cowboy
         this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
+        this.entities.push(this.inventory);
     }
 }
 
@@ -247,5 +253,6 @@ class TownScene extends Scene {
         this.entities.push(new Heal(gameEngine, 800, 400));
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
+        this.entities.push(this.inventory);
     }
 }

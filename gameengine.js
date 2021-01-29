@@ -122,7 +122,7 @@ class GameEngine {
             //console.log(this.entities[i]);
             this.entities[i].draw(this.ctx);
         }
-        this.camera.draw();
+        this.camera.draw(this.ctx);
     };
 
     update() {

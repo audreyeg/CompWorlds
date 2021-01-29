@@ -74,9 +74,9 @@ class Fight {
                 this.dialoug = false;
                 this.delay = 120;
                 this.player.stats.heal(25);
-                gameEngine.addEntity(new Heal(gameEngine,this.player.x,this.player.y));
-                gameEngine.addEntity(new Heal(gameEngine,this.player.x + 30,this.player.y - 20));
-                gameEngine.addEntity(new Heal(gameEngine,this.player.x + 60,this.player.y));
+                gameEngine.addEntity(new Heal(gameEngine,this.player.x,this.player.y,true));
+                gameEngine.addEntity(new Heal(gameEngine,this.player.x + 30,this.player.y - 20,true));
+                gameEngine.addEntity(new Heal(gameEngine,this.player.x + 60,this.player.y,true));
             }
             if(this.enemy.health <= 0)
             {
@@ -107,9 +107,9 @@ class Fight {
                 this.enemy.turn = false;
                 this.defending = false;
                 this.delay = 120;
-                gameEngine.addEntity(new Heal(gameEngine,this.enemy.x,this.enemy.y));
-                gameEngine.addEntity(new Heal(gameEngine,this.enemy.x + 30,this.enemy.y - 20));
-                gameEngine.addEntity(new Heal(gameEngine,this.enemy.x + 60,this.enemy.y));
+                gameEngine.addEntity(new Heal(gameEngine,this.enemy.x,this.enemy.y,true));
+                gameEngine.addEntity(new Heal(gameEngine,this.enemy.x + 30,this.enemy.y - 20,true));
+                gameEngine.addEntity(new Heal(gameEngine,this.enemy.x + 60,this.enemy.y,true));
             }
             else
             {

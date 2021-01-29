@@ -201,43 +201,57 @@ class OverWorldPlayer {
     this.lastX;
     this.lastY;
     this.stun = 0;
+    this.cooldown = 0;
     //this.playerInventory = Inventory();
 
   }
     update() {
     if(this.stun == 0)
     {
-      if (this.game.left && !this.game.right && !this.game.up && !this.game.down)
-      {
-        this.velocity.x = -this.stats.speed * 3;
-        this.facingState = 1;
-      }
-      else if (this.game.right && !this.game.left && !this.game.up && !this.game.down)
+      if (this.game.right)
       {
         this.velocity.x = this.stats.speed * 3;
+        this.velocity.y = 0;
         this.facingState = 0;
       }
-      else if (this.game.up && !this.game.down && !this.game.left && !this.game.right)
+      else if (this.game.left)
+      {
+        this.velocity.x = -this.stats.speed * 3;
+        this.velocity.y = 0;
+        this.facingState = 1;
+      }
+      else if (this.game.up)
       {
         this.velocity.y = -this.stats.speed * 3;
+        this.velocity.x = 0;
         this.facingState = 2;
       }
-      else if (this.game.down && !this.game.up && !this.game.left && !this.game.right)
+      else if (this.game.down )
       {
         this.velocity.y = this.stats.speed * 3;
+        this.velocity.x = 0;
         this.facingState = 3;
       }
       else {
         this.velocity.x = 0;
         this.velocity.y = 0;
       }
-      if(this.game.One)
+      if(this.cooldown <= 0)
       {
-        playerInventory.use("coin");
+        if(this.game.One)
+        {
+          playerInventory.use("coin");
+          this.cooldown = 60;
+        }
+        if(this.game.Two)
+        {
+          playerInventory.use("medpac");
+          this.cooldown = 60;
+        }
       }
-      if(this.game.Two)
+      else
       {
-        playerInventory.use("medpac");
+        this.cooldown--;
       }
     }
     else
@@ -268,7 +282,6 @@ class OverWorldPlayer {
      	  document.getElementById("response").innerHTML = response;
         }
       }
-      that.updateBB();
     });
  
 
@@ -276,8 +289,10 @@ class OverWorldPlayer {
     this.lastY = this.y;
     this.x += this.velocity.x;
     this.y += this.velocity.y;
+    that.updateBB();
     this.stats.setX(this.x);
     this.stats.setY(this.y);
+    this.stats.setFacing(this.facingState);
   }
   draw(ctx) {
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
@@ -332,6 +347,7 @@ class Character
     this.x = 0;
     this.y = 0;
     this.speed = 2;
+    this.facing;
     console.log(this.health);
     playerInventory.addItem("coin",0);
     playerInventory.addItem("medpac",0);
@@ -371,6 +387,10 @@ class Character
   setY(y)
   {
     this.y = y;
+  }
+  setFacing(face)
+  {
+    this.faceing = face;
   }
   update()
   {
@@ -432,7 +452,7 @@ Inventory = function(){
       var but = i + 1;
       let item = Item.List[self.items[i].id];
       let onclick = "Item.List['" + item.id + "'].event()";
-      str += "<button onclick=\"" + onclick + "\" >" + but + " " + item.name + " x" + self.items[i].amount + "</button>";
+      str += "<button onclick=\"" + onclick + "\" >" + but + ") " + item.name + " x" + self.items[i].amount + "</button>";
     }
 
     document.getElementById("inventory").innerHTML = str;
@@ -460,9 +480,12 @@ Item.List = {};
 
 //health pacs will increase health and be removed upon use 
 Item("medpac","MedPac",function(){
-  gameEngine.camera.cowboy.health += 10;
-  console.log(this.health);
-  playerInventory.removeItem("medpac",1);
+  if(playerInventory.hasItem("medpac",0))
+  {
+    gameEngine.camera.cowboy.health += 10;
+    console.log(this.health);
+    playerInventory.removeItem("medpac",1);
+  }
 });
 
 //right now coins will be dropped if clicked on 
@@ -472,6 +495,22 @@ Item("coin","Coin",function(){
     playerInventory.removeItem("coin",1);
     dropx = gameEngine.camera.cowboy.x;
     dropy = gameEngine.camera.cowboy.y;
-    gameEngine.addEntity(new Coin(gameEngine, dropx + 50, dropy + 50));
+    facing = gameEngine.camera.cowboy.faceing;
+    if(facing == 0)
+    {
+      gameEngine.addEntity(new Coin(gameEngine, dropx + 50, dropy));
+    }
+    else if(facing == 1)
+    {
+      gameEngine.addEntity(new Coin(gameEngine, dropx - 30, dropy));
+    }
+    else if(facing == 2)
+    {
+      gameEngine.addEntity(new Coin(gameEngine, dropx, dropy -25));
+    }
+    else if(facing == 3)
+    {
+      gameEngine.addEntity(new Coin(gameEngine, dropx, dropy + 60));
+    }
   }
 });

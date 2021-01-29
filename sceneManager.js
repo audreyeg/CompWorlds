@@ -19,6 +19,7 @@ class SceneManager {
 
         this.currentScene = null;
         // this.sceneStack = [];
+        this.inventory = null;
 
         this.loadScene("town");
     };
@@ -31,12 +32,33 @@ class SceneManager {
             this.loadScene(this.currentScene);
         }
     }
-    draw() { }
+    draw(ctx) 
+    { 
+        /*
+        ctx.font = "15px Papyrus";
+        ctx.fillStyle = "Red";
+        ctx.fillText("Coins: ", 5, 25);
+        ctx.font = "30px Papyrus";
+        ctx.fillStyle = "Red";
+        ctx.fillText(this.inventory.checkItem("coin"), 55, 25);
+        */
+    }
 
     loadScene(scene) {
         var sceneToLoad = this.scenes[scene]
         this.game.entities = sceneToLoad.entities;
         this.currentScene = scene;
+        var temp = this.game.entities.length
+        for (var i = 0; i < temp; i++) 
+        {
+          console.log(this.game.entities[i]);
+          var temp2 = this.game.entities[i];
+          if(temp2 instanceof SceneInventory) 
+          {
+              console.log(temp2);
+              this.inventory = temp2;
+          }
+      }
     }
 
     createFightSceneWithEnemy(enemy) 
