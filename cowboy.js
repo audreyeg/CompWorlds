@@ -231,6 +231,14 @@ class OverWorldPlayer {
         this.velocity.x = 0;
         this.velocity.y = 0;
       }
+      if(this.game.One)
+      {
+        playerInventory.use("coin");
+      }
+      if(this.game.Two)
+      {
+        playerInventory.use("medpac");
+      }
     }
     else
     {
@@ -325,6 +333,8 @@ class Character
     this.y = 0;
     this.speed = 2;
     console.log(this.health);
+    playerInventory.addItem("coin",0);
+    playerInventory.addItem("medpac",0);
   } 
   takeDamage(amt)
   {
@@ -376,8 +386,7 @@ class Character
 
 Inventory = function(){
     var self = {
-        items:[] //{id:"itemId",amount:1}
-
+        items:[], //{id:"itemId",amount:1}
     }
 
     //add item to inentory 
@@ -399,7 +408,7 @@ Inventory = function(){
       if(self.items[i].id === id){
         self.items[i].amount -= amount;
         if(self.items[i].amount <= 0)
-          self.items.splice(i,1);
+          self.items[i].amount = 0;
         self.refreshRender();
         return;
       }
@@ -410,7 +419,7 @@ Inventory = function(){
     self.hasItem = function(id,amount){
     for(var i = 0 ; i < self.items.length; i++){
       if(self.items[i].id === id){
-        return self.items[i].amount >= amount;
+        return self.items[i].amount > amount;
       }
     }  
     return false;
@@ -420,12 +429,17 @@ Inventory = function(){
   self.refreshRender = function(){
     var str = "";
     for(var i = 0 ; i < self.items.length; i++){
+      var but = i + 1;
       let item = Item.List[self.items[i].id];
       let onclick = "Item.List['" + item.id + "'].event()";
-      str += "<button onclick=\"" + onclick + "\" >" + item.name + " x" + self.items[i].amount + "</button>";
+      str += "<button onclick=\"" + onclick + "\" >" + but + " " + item.name + " x" + self.items[i].amount + "</button>";
     }
 
     document.getElementById("inventory").innerHTML = str;
+  }
+  self.use = function(id)
+  {
+    Item.List[id].event();  
   }
 
 
@@ -446,15 +460,18 @@ Item.List = {};
 
 //health pacs will increase health and be removed upon use 
 Item("medpac","MedPac",function(){
-  this.health += 10;
+  gameEngine.camera.cowboy.health += 10;
   console.log(this.health);
   playerInventory.removeItem("medpac",1);
 });
 
 //right now coins will be dropped if clicked on 
 Item("coin","Coin",function(){
-  playerInventory.removeItem("coin",1);
-  dropx = gameEngine.camera.cowboy.x;
-  dropy = gameEngine.camera.cowboy.y;
-  gameEngine.addEntity(new Coin(gameEngine, dropx + 50, dropy + 50));
+  if(playerInventory.hasItem("coin",0))
+  {
+    playerInventory.removeItem("coin",1);
+    dropx = gameEngine.camera.cowboy.x;
+    dropy = gameEngine.camera.cowboy.y;
+    gameEngine.addEntity(new Coin(gameEngine, dropx + 50, dropy + 50));
+  }
 });

@@ -61,6 +61,13 @@ class GameEngine {
                 case "KeyC":
                     that.three = true;
                     break;
+                    case "ArrowLeft":
+                case "Digit1":
+                    that.One = true;
+                    break;
+                case "Digit2":
+                    that.Two = true;
+                    break;
             }
         }, false);
 
@@ -93,6 +100,12 @@ class GameEngine {
                     break;
                 case "KeyC":
                     that.three = false;
+                    break;
+                case "Digit1":
+                    that.One = false;
+                    break;
+                case "Digit2":
+                    that.Two = false;
                     break;
             }
         }, false);
