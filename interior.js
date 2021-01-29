@@ -11,6 +11,7 @@ class InteriorTile {
         offscreenCtx.rotate(Math.PI);
         offscreenCtx.drawImage(this.spritesheet, 0, 0, this.spriteWidth, this.spriteWidth, 0, 0, -this.spriteWidth, -this.spriteWidth);
         offscreenCtx.restore();
+        this.BB;
     };
 
     update() {
@@ -160,4 +161,43 @@ class Barrel extends InteriorTile {
     draw(ctx) {
         ctx.drawImage((this.rotate180) ? this.offscreenCanvas : this.spritesheet,0,0,136,152,this.x,this.y,this.spriteWidth,this.spriteWidth);
     };
+}; 
+class Chest extends InteriorTile { 
+    constructor(game, x, y, rotate180) {
+        super(game, x, y, rotate180, "./sprites/png/Separate/128/Animated Objects/Chest/Chest (4).png", 64);
+        this.BB = new BoundingBox(this.x,this.y,60,58);
+    };
+    draw(ctx) {
+        ctx.drawImage((this.rotate180) ? this.offscreenCanvas : this.spritesheet,0,0,136,152,this.x,this.y,this.spriteWidth,this.spriteWidth);
+        ctx.strokeStyle = 'Red';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+    };
+    update()
+    {
+        var that = this;
+    this.game.entities.forEach(function (entity) {
+      if (entity.BB && that.BB.collide(entity.BB)) {
+         if (entity instanceof Coin) 
+        {
+          entity.removeFromWorld = true;
+          var inventory;
+          var temp = that.game.entities.length
+          for (var i = 0; i < temp; i++) 
+          {
+            console.log(that.game.entities[i]);
+            var temp2 = that.game.entities[i];
+            if(temp2 instanceof SceneInventory) 
+            {
+                console.log(temp2);
+                inventory = temp2;
+            }
+        }
+          console.log(inventory);
+          inventory.addNewItem("coin");
+        }
+
+      }
+    });
+    }
+
 }; 

@@ -61,6 +61,13 @@ class GameEngine {
                 case "KeyC":
                     that.three = true;
                     break;
+                    case "ArrowLeft":
+                case "Digit1":
+                    that.One = true;
+                    break;
+                case "Digit2":
+                    that.Two = true;
+                    break;
             }
         }, false);
 
@@ -94,6 +101,12 @@ class GameEngine {
                 case "KeyC":
                     that.three = false;
                     break;
+                case "Digit1":
+                    that.One = false;
+                    break;
+                case "Digit2":
+                    that.Two = false;
+                    break;
             }
         }, false);
     };
@@ -109,7 +122,7 @@ class GameEngine {
             //console.log(this.entities[i]);
             this.entities[i].draw(this.ctx);
         }
-        this.camera.draw();
+        this.camera.draw(this.ctx);
     };
 
     update() {
