@@ -202,6 +202,7 @@ class OverWorldPlayer {
     this.lastY;
     this.stun = 0;
     this.cooldown = 0;
+    this.talking = false;
     //this.playerInventory = Inventory();
 
   }
@@ -260,6 +261,7 @@ class OverWorldPlayer {
     }
 
     //collision
+    this.talking = false;
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
@@ -273,13 +275,28 @@ class OverWorldPlayer {
           playerInventory.addItem("coin", 1);
           entity.removeFromWorld = true;
         }
-        if (entity instanceof npc) 
+        if (entity instanceof npc && entity.saloon) 
         {
+          that.talking = true;
           var str = "";
-          str += "hello. I am an NPC";
+          str += "Howdy Partner!";
           document.getElementById("chat").innerHTML = str;
-          var response = "Okay";
-     	  document.getElementById("response").innerHTML = response;
+          var response1 = "What is this place?";
+          var response2 = "Have you seen my hat?";
+          document.getElementById("response1").innerHTML = response1;
+          document.getElementById("response2").innerHTML = response2;
+
+          if (userresponded ) {
+             var user = response;
+          }
+          switch (user) {
+            case 1:
+              document.getElementById("chat").innerHTML = "The saloon!";
+            break;
+            case 2:
+               document.getElementById("chat").innerHTML = "Nope";
+            break;
+          }
         }
       }
     });
@@ -293,6 +310,14 @@ class OverWorldPlayer {
     this.stats.setX(this.x);
     this.stats.setY(this.y);
     this.stats.setFacing(this.facingState);
+
+    if (!this.talking) {
+        response = 0;
+        document.getElementById("chat").innerHTML = "";
+        document.getElementById("response1").innerHTML = "";
+        document.getElementById("response2").innerHTML = "";
+    }
+
   }
   draw(ctx) {
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
