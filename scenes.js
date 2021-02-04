@@ -195,7 +195,7 @@ class SaloonScene extends Scene {
             this.entities.push(new Barrel(gameEngine, 1.75 * TILE_WIDTH, (i + 0.1) * TILE_WIDTH, false));
         }
 
-        this.entities.push(new npc(gameEngine, 500, 400));
+        this.entities.push(new npc(gameEngine, 500, 400, "saloon"));
         // Add beep bop boop bep cowboy
         this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));

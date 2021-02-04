@@ -2,6 +2,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,24 +42,31 @@
     <div id="inventory">
     </div>
 
-     <div id="chat">
+     <div id="chat" style = "color: black; font-family: Papyrus">
     </div>
 
-    <button id = "response" onclick = "change(this)" style = "color: red; font-family: Papyrus"></button>
+    <button id = "response1" onclick = "change(this, 1)" style = "color: red; font-family: Papyrus"></button>
+    <button id = "response2" onclick = "change(this, 2)" style = "color: red; font-family: Papyrus"></button>
 
     <script>
+    	var userresponded = false;
+    	var response = 0;
         playerInventory = Inventory();
-        function change(btn) {
-        //btn.style.display = 'none';
-        var clicked = true;
-        responded(clicked);
 
-        function responded(clicked) 
-          {
-            if (clicked) {
-            document.getElementById("response").innerHTML = "";
-            document.getElementById("chat").innerHTML = "";
-            }
+        function change(btn, option) {
+        	this.userresponded = true;
+      	  	var clicked = true;
+      	  	this.response = option;
+      	  	console.log(response);
+       	 	responded(clicked);
+
+     	function responded(clicked) 
+          	{
+            	if (clicked) {
+            	document.getElementById("response1").innerHTML = "";
+            	document.getElementById("response2").innerHTML = "";
+            	document.getElementById("chat").innerHTML = "";
+            	}
             }
         }
     </script>

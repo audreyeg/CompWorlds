@@ -1,6 +1,6 @@
 class npc{
 
-    constructor(game, x, y) {
+    constructor(game, x, y, place) {
         Object.assign(this, { game, x, y });
         this.game.npc = this;
         // spritesheet
@@ -12,7 +12,12 @@ class npc{
         this.dead = false
         //this.gravity = 9.8/60;
         this.velocity = { x: 0, y: 0 };
+        this.location = place;
+        if (this.location = "saloon"){
+            this.saloon = true;
+        }
     };
+
     update()
     {
         //this.velocity.y += this.gravity;
