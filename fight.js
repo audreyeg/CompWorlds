@@ -137,6 +137,7 @@ class Fight {
                // this.dialoug = true;
                // this.game.addEntity(this.dialogBox);
                this.game.camera.fightEnd = true;
+               this.game.camera.missions.missions["Bank"].state = 1;
             }
         }
         else

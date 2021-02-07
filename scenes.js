@@ -253,6 +253,7 @@ class TownScene extends Scene {
         this.entities.push(new Heal(gameEngine, 800, 400));
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
+        this.entities.push(new Coin(gameEngine, 300, 400));
         this.entities.push(this.inventory);
     }
 }

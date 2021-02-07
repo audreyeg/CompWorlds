@@ -14,6 +14,7 @@ class SceneManager {
         this.scenes["saloon"] = new SaloonScene(game, this.cowboy);
         this.scenes["sheriff"] = new SheriffScene(game, this.cowboy);
         this.scenes["fight"] = new FightScene(game, this.cowboy, new coyote(gameEngine,486,450));
+        this.missions = new MissionManager(game);
 
         this.x = 0;
 
@@ -31,6 +32,7 @@ class SceneManager {
             this.fightEnd = false;
             this.loadScene(this.currentScene);
         }
+        this.missions.missions["Bank"].update();
     }
     draw(ctx) 
     { 
@@ -42,6 +44,7 @@ class SceneManager {
         ctx.fillStyle = "Red";
         ctx.fillText(this.inventory.checkItem("coin"), 55, 25);
         */
+       this.missions.missions["Bank"].draw(ctx);
     }
 
     loadScene(scene) {
