@@ -13,8 +13,13 @@ class npc{
         //this.gravity = 9.8/60;
         this.velocity = { x: 0, y: 0 };
         this.location = place;
-        if (this.location = "saloon"){
+        this.saloon = false;
+        this.bartender = false;
+        if (this.location == "saloon"){
             this.saloon = true;
+        }
+        else if (this.location == "bartender"){
+            this.bartender = true;
         }
     };
 
