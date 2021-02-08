@@ -203,6 +203,7 @@ class OverWorldPlayer {
     this.stun = 0;
     this.cooldown = 0;
     this.talking = false;
+    //this.user = 0;
     //this.playerInventory = Inventory();
 
   }
@@ -275,29 +276,105 @@ class OverWorldPlayer {
           playerInventory.addItem("coin", 1);
           entity.removeFromWorld = true;
         }
+        //saloon NPC
         if (entity instanceof npc && entity.saloon) 
         {
           that.talking = true;
           var str = "";
           str += "Howdy Partner!";
+          //npc line
           document.getElementById("chat").innerHTML = str;
           var response1 = "What is this place?";
           var response2 = "Have you seen my hat?";
+          //the 2 button responses user can have 
           document.getElementById("response1").innerHTML = response1;
           document.getElementById("response2").innerHTML = response2;
 
-          if (userresponded ) {
+          if (userresponded) {
              var user = response;
+             //that.user = response;
+
+             //var convo = 1;
           }
-          switch (user) {
-            case 1:
-              document.getElementById("chat").innerHTML = "The saloon!";
-            break;
-            case 2:
-               document.getElementById("chat").innerHTML = "Nope";
-            break;
-          }
+                  switch (user) {
+                  	//if user selected option 1 ("what is this place?")
+                    case 1:
+                      document.getElementById("chat").innerHTML = "The saloon!";
+                      //additional responses from user
+                      var response1 = "Can I buy a drink?";
+                      document.getElementById("response1").innerHTML = response1;
+                      var response2 = "Big nice";
+                      document.getElementById("response2").innerHTML = response2;
+                      //var user2 = response;
+
+
+                      switch (user) {
+                      	case 1: 
+                      	document.getElementById("chat").innerHTML = "test";
+                      	break;
+                      	case 2: 
+                      	document.getElementById("chat").innerHTML = "another test";
+                      	break;
+                      }
+                       break;
+                    case 2:
+                    //if user selected option 2 ("have you seen  my hat?")
+                       document.getElementById("chat").innerHTML = "Nope";
+                         document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                      break;
+                 }
         }
+
+        //saloon bartender 
+           if (entity instanceof npc && entity.bartender) 
+        {
+          that.talking = true;
+          var str = "";
+          str += "Buy a drink for 2 coins?";
+          //npc line
+          document.getElementById("chat").innerHTML = str;
+          var response1 = "Yes";
+          var response2 = "No";
+          //the 2 button respnses user can have 
+          document.getElementById("response1").innerHTML = response1;
+          document.getElementById("response2").innerHTML = response2;
+
+          
+
+          if (userresponded) {
+             var user = response;
+             //var convo = 1;
+          }
+                  switch (user) {
+                  	//user selected first button which is ("yes")
+                    case 1:
+                    //check if user has enough coins to buy beer
+                      if (playerInventory.check("coin", 2)) {
+                        	playerInventory.addItem("beer", 1);
+                          	playerInventory.removeItem("coin", 2);
+                            console.log("case 1 ");
+                          	document.getElementById("chat").innerHTML = "Drink up! No refunds";
+                            console.log("case 1 again");
+                            document.getElementById("response1").innerHTML = "";
+                        	 document.getElementById("response2").innerHTML = "";
+                        }
+                        else {
+                             //if user does not have 2 coins have this response instead
+                        	document.getElementById("chat").innerHTML = "Nice try, come back when you have some coin";
+                       		document.getElementById("response1").innerHTML = "";
+                        	document.getElementById("response2").innerHTML = "";
+                        }
+                       break;
+                       //user selected first button which is ("no")
+                    case 2:
+                       document.getElementById("chat").innerHTML = "Then stop loitering";
+                         document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                      break;
+                 }
+        }
+        
       }
     });
  
@@ -311,6 +388,7 @@ class OverWorldPlayer {
     this.stats.setY(this.y);
     this.stats.setFacing(this.facingState);
 
+    //to clear buttons/npc chat
     if (!this.talking) {
         response = 0;
         document.getElementById("chat").innerHTML = "";
@@ -460,6 +538,15 @@ Inventory = function(){
     }    
     }
 
+    self.check = function(id, amount) {
+      for(var i = 0 ; i < self.items.length; i++){
+      if(self.items[i].id === id){
+        return self.items[i].amount >= amount;
+      }
+    }  
+    return true;
+    }
+
     //see if item is already in inventory 
     self.hasItem = function(id,amount){
     for(var i = 0 ; i < self.items.length; i++){
@@ -510,6 +597,14 @@ Item("medpac","MedPac",function(){
     gameEngine.camera.cowboy.health += 10;
     console.log(this.health);
     playerInventory.removeItem("medpac",1);
+  }
+});
+
+//beer
+Item("beer","Beer",function(){
+  if(playerInventory.hasItem("beer",0))
+  {
+    playerInventory.removeItem("beer",1);
   }
 });
 
