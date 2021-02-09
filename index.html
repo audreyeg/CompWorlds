@@ -1,4 +1,5 @@
 ﻿
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +26,29 @@
     <script type="text/javascript" src="./inventory.js"></script>
     <script type="text/javascript" src="./main.js"></script>
     <script type="text/javascript" src="./scenes.js"></script>
-    <script type="text/javascript" src="./missionManager.js"></script>
+
+<style>
+    #townSong 
+    {
+        background-color: tan;
+        color: red;
+        font-family: Papyrus;
+        bottom: 0;
+        left: 0;
+        top: 200;
+        position: absolute;
+        width: 1400px;
+        height: 770px;
+        text-align: center; 
+        font-size: 100px;
+        overflow:hidden;
+
+    }
+
+
+</style>
+
+
 </head>
 <body>
     <div>
@@ -69,8 +92,18 @@
             	document.getElementById("chat").innerHTML = "";
             	}
             }
-
-        
+            function playTownMusic() {
+                document.getElementById("townAudio").play();
+                townSong.style.visibility = "hidden";
+            }
+  
     </script>
+  
+
+    <input type="button" value="START GAME" id = "townSong" onclick="playTownMusic()">
+    <audio loop id="townAudio" src="./townSong.mp3"></audio>
+    <audio loop id="saloonAudio" src="./saloonSong.mp3"></audio>
+     <audio loop id="fightAudio" src="./fightSong.mp3"></audio>
+
 </body>
 </html>
