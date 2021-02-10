@@ -51,7 +51,7 @@ class CowBoy {
     this.animations.push(new Animator(this.spritesheet, 478, 213, 113, 90, 4, 1 / 4, 0, false, true));
 
     //dead
-    this.animations.push(new Animator(this.spritesheet, 253, 564, 345 - 253, 613 - 564, 1, 0.1, 2, false, true));
+    this.animations.push(new Animator(this.spritesheet, 253, 564, 345 - 253, 613 - 564, 1, 0.1, 0, false, true));
   }
 
   draw(ctx) {
@@ -262,6 +262,7 @@ class OverWorldPlayer {
     }
 
     //collision
+    // this.userCount = 0;
     this.talking = false;
     var that = this;
     this.game.entities.forEach(function (entity) {
@@ -280,6 +281,7 @@ class OverWorldPlayer {
         if (entity instanceof npc && entity.saloon) 
         {
           that.talking = true;
+          var stateResponse = 0;
           var str = "";
           str += "Howdy Partner!";
           //npc line
@@ -292,37 +294,56 @@ class OverWorldPlayer {
 
           if (userresponded) {
              var user = response;
-             //that.user = response;
-
-             //var convo = 1;
+             if (user == 1 && userCount == 1){
+                stateResponse = 1;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+              else if (user == 2 && userCount == 1){
+                stateResponse = 2;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+              else if (user == 1 && userCount == 2){
+                stateResponse = 3;
+                console.log(user);
+               console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+             else  if (user == 2 && userCount == 2){
+                stateResponse = 4;
+                console.log(user);
+               console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
           }
-                  switch (user) {
+                  switch (stateResponse) {
                   	//if user selected option 1 ("what is this place?")
-                    case 1:
+                      case 1:
                       document.getElementById("chat").innerHTML = "The saloon!";
                       //additional responses from user
                       var response1 = "Can I buy a drink?";
                       document.getElementById("response1").innerHTML = response1;
                       var response2 = "Big nice";
                       document.getElementById("response2").innerHTML = response2;
-                      //var user2 = response;
-
-
-                      switch (user) {
-                      	case 1: 
-                      	document.getElementById("chat").innerHTML = "test";
-                      	break;
-                      	case 2: 
-                      	document.getElementById("chat").innerHTML = "another test";
-                      	break;
-                      }
-                       break;
-                    case 2:
-                    //if user selected option 2 ("have you seen  my hat?")
-                       document.getElementById("chat").innerHTML = "Nope";
+                      break;
+                      case 2: 
+                        document.getElementById("chat").innerHTML = "Nope";
                          document.getElementById("response1").innerHTML = "";
                         document.getElementById("response2").innerHTML = "";
-                      break;
+                        break;
+                      case 3: 
+                        document.getElementById("chat").innerHTML = "You have to go to the bartender for that";
+                        document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                        break;
+                      case 4:
+                         document.getElementById("chat").innerHTML = "Okay bye!";
+                        document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                        break;
                  }
         }
 
@@ -330,6 +351,7 @@ class OverWorldPlayer {
            if (entity instanceof npc && entity.bartender) 
         {
           that.talking = true;
+           var stateResponse = 0;
           var str = "";
           str += "Buy a drink for 2 coins?";
           //npc line
@@ -345,29 +367,44 @@ class OverWorldPlayer {
           if (userresponded) {
              var user = response;
              //var convo = 1;
+              if (user == 1 && userCount == 1 && (playerInventory.check("coin", 2))){
+                flag = true;
+                console.log(flag);
+                stateResponse = 1;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+             else if (user == 1 && userCount == 1 && !(playerInventory.check("coin", 2)) && !(flag)){
+                stateResponse = 2;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+              else if (user == 2 && userCount == 1){
+                stateResponse = 3;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
           }
-                  switch (user) {
+                  switch (stateResponse) {
                   	//user selected first button which is ("yes")
                     case 1:
-                    //check if user has enough coins to buy beer
-                      if (playerInventory.check("coin", 2)) {
-                        	playerInventory.addItem("beer", 1);
-                          	playerInventory.removeItem("coin", 2);
-                            console.log("case 1 ");
-                          	document.getElementById("chat").innerHTML = "Drink up! No refunds";
-                            console.log("case 1 again");
+                            document.getElementById("chat").innerHTML = "Drink up! No refunds";
                             document.getElementById("response1").innerHTML = "";
-                        	 document.getElementById("response2").innerHTML = "";
-                        }
-                        else {
+                           document.getElementById("response2").innerHTML = "";
+                            // playerInventory.addItem("beer", 1);
+                            // playerInventory.removeItem("coin", 2);
+                           break;
+                    case 2:
                              //if user does not have 2 coins have this response instead
                         	document.getElementById("chat").innerHTML = "Nice try, come back when you have some coin";
                        		document.getElementById("response1").innerHTML = "";
                         	document.getElementById("response2").innerHTML = "";
-                        }
                        break;
                        //user selected first button which is ("no")
-                    case 2:
+                    case 3:
                        document.getElementById("chat").innerHTML = "Then stop loitering";
                          document.getElementById("response1").innerHTML = "";
                         document.getElementById("response2").innerHTML = "";
@@ -394,9 +431,16 @@ class OverWorldPlayer {
         document.getElementById("chat").innerHTML = "";
         document.getElementById("response1").innerHTML = "";
         document.getElementById("response2").innerHTML = "";
+        userCount = 0;
+          if (flag) {
+         playerInventory.addItem("beer", 1);
+        playerInventory.removeItem("coin", 2);
+        flag = false;
     }
 
+    }
   }
+
   draw(ctx) {
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
       ctx.drawImage(this.spritesheet, 2, 88, 20, 31, this.x, this.y, 20 * this.SCALE, 31 * this.SCALE);
