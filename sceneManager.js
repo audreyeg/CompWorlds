@@ -17,6 +17,7 @@ class SceneManager {
 
         this.x = 0;
 
+        this.missions = new MissionManager(this.game);
         this.currentScene = null;
         // this.sceneStack = [];
         this.inventory = null;
@@ -33,6 +34,7 @@ class SceneManager {
             document.getElementById("fightAudio").pause();
             document.getElementById("townAudio").play();
         }
+        this.missions.missions["Bank"].update();
     }
     draw(ctx) 
     { 
@@ -44,6 +46,7 @@ class SceneManager {
         ctx.fillStyle = "Red";
         ctx.fillText(this.inventory.checkItem("coin"), 55, 25);
         */
+       this.missions.missions["Bank"].draw(ctx);
     }
 
     loadScene(scene) {
@@ -53,11 +56,11 @@ class SceneManager {
         var temp = this.game.entities.length
         for (var i = 0; i < temp; i++) 
         {
-          console.log(this.game.entities[i]);
+          //console.log(this.game.entities[i]);
           var temp2 = this.game.entities[i];
           if(temp2 instanceof SceneInventory) 
           {
-              console.log(temp2);
+              //console.log(temp2);
               this.inventory = temp2;
           }
       }
@@ -65,7 +68,7 @@ class SceneManager {
 
     createFightSceneWithEnemy(enemy) 
     {
-        console.log(enemy);
+        //console.log(enemy);
         var sceneToLoad = new FightScene(this.game, this.cowboy, enemy);
         this.game.entities = sceneToLoad.entities;
         this.fight = true;
