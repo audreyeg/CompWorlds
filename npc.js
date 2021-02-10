@@ -4,7 +4,8 @@ class npc{
         Object.assign(this, { game, x, y });
         this.game.npc = this;
         // spritesheet
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+        //this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloongirl.png");
+        //this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
         this.x = x;
         this.y = y;
         this.updateBB();
@@ -15,11 +16,25 @@ class npc{
         this.location = place;
         this.saloon = false;
         this.bartender = false;
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloongirl.png");
+        this.dancingAnimation = new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true);
+
         if (this.location == "saloon"){
-            this.saloon = true;
+                this.saloon = true;
+                this.startPoint = 0;
+                this.EndPoint = 92;
+                this.wide = 69;
+                this.tall = 181;
+                // this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloongirl.png");
+                // this.dancingAnimation = new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true);
         }
         else if (this.location == "bartender"){
             this.bartender = true;
+            this.startPoint = 30;
+            this.EndPoint = 89;
+            this.wide = 13;
+            this.tall = 25;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
         }
     };
 
@@ -47,7 +62,9 @@ class npc{
     }
     draw(ctx)
     {
-        ctx.drawImage(this.spritesheet,30,89,13,25,this.x,this.y,50,60);
+        ctx.drawImage(this.spritesheet,this.startPoint,this.EndPoint,this.wide,this.tall,this.x,this.y,50,60);
+        //this.dancingAnimation.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
+        ctx.restore();
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
