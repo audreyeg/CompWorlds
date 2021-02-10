@@ -1,5 +1,6 @@
 ﻿
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,6 +71,8 @@
     <script>
     	var userresponded = false;
     	var response = 0;
+        var userCount = 0;
+        var flag = false;
         playerInventory = new Inventory();
 
         //checks to see when the user responds (button is pushed)
@@ -82,6 +85,7 @@
       	  	this.response = option;
             console.log(this.response);
        	 	responded(clicked);
+            this.userCount++;
          }
             //clears the chat/buttons 
      	function responded(clicked) 
