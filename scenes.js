@@ -39,7 +39,7 @@ class FightScene extends Scene {
         this.entities.push(new groundMid(gameEngine,588,684));
         this.entities.push(new groundMid(gameEngine,672,684));
         this.entities.push(new groundMid(gameEngine,756,684));
-        console.log(this.enemy)
+        //console.log(this.enemy)
         this.fightScene = new Fight(gameEngine,this.fightChar,this.enemy);
         this.entities.push(this.fightScene);
         this.entities.push(this.inventory);
@@ -251,6 +251,12 @@ class TownScene extends Scene {
 
         this.entities.push(new Heal(gameEngine, 200, 400));
         this.entities.push(new Heal(gameEngine, 800, 400));
+        this.entities.push(new Coin(gameEngine, 500, 400));
+        this.entities.push(new Coin(gameEngine, 100, 400));
+        this.entities.push(new Coin(gameEngine, 500, 400));
+        this.entities.push(new Coin(gameEngine, 100, 400));
+        this.entities.push(new Coin(gameEngine, 500, 400));
+        this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);

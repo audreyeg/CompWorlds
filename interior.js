@@ -177,22 +177,19 @@ class Chest extends InteriorTile {
         var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
-         if (entity instanceof Coin )//&& that.game.camera.missions.missions["Bank"].state == 1) 
+         if (entity instanceof Coin && that.game.camera.missions.missions["Bank"].state == 1) 
         {
           entity.removeFromWorld = true;
           var inventory;
           var temp = that.game.entities.length
           for (var i = 0; i < temp; i++) 
           {
-            console.log(that.game.entities[i]);
             var temp2 = that.game.entities[i];
             if(temp2 instanceof SceneInventory) 
             {
-                console.log(temp2);
                 inventory = temp2;
             }
         }
-          console.log(inventory);
           inventory.addNewItem("coin");
         }
 

@@ -296,27 +296,27 @@ class OverWorldPlayer {
              var user = response;
              if (user == 1 && userCount == 1){
                 stateResponse = 1;
-                console.log(user);
-                console.log(userCount);
-                console.log("Sr" + stateResponse);
+                //console.log(user);
+                //console.log(userCount);
+                //console.log("Sr" + stateResponse);
              }
               else if (user == 2 && userCount == 1){
                 stateResponse = 2;
-                console.log(user);
-                console.log(userCount);
-                console.log("Sr" + stateResponse);
+                //console.log(user);
+                //console.log(userCount);
+                //console.log("Sr" + stateResponse);
              }
               else if (user == 1 && userCount == 2){
                 stateResponse = 3;
-                console.log(user);
-               console.log(userCount);
-                console.log("Sr" + stateResponse);
+                //console.log(user);
+                //console.log(userCount);
+                //console.log("Sr" + stateResponse);
              }
              else  if (user == 2 && userCount == 2){
                 stateResponse = 4;
-                console.log(user);
-               console.log(userCount);
-                console.log("Sr" + stateResponse);
+                //console.log(user);
+                //console.log(userCount);
+                //console.log("Sr" + stateResponse);
              }
           }
                   switch (stateResponse) {
@@ -331,16 +331,20 @@ class OverWorldPlayer {
                       break;
                       case 2: 
                         document.getElementById("chat").innerHTML = "Nope";
-                         document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response1").innerHTML = "";
                         document.getElementById("response2").innerHTML = "";
                         break;
                       case 3: 
                         document.getElementById("chat").innerHTML = "You have to go to the bartender for that";
                         document.getElementById("response1").innerHTML = "";
                         document.getElementById("response2").innerHTML = "";
+                        if(that.game.camera.missions.missions["Bank"].state == 0)
+                        {
+                          that.game.camera.missions.missions["Bank"].state = 1;
+                        }
                         break;
                       case 4:
-                         document.getElementById("chat").innerHTML = "Okay bye!";
+                        document.getElementById("chat").innerHTML = "Okay bye!";
                         document.getElementById("response1").innerHTML = "";
                         document.getElementById("response2").innerHTML = "";
                         break;
@@ -348,10 +352,10 @@ class OverWorldPlayer {
         }
 
         //saloon bartender 
-           if (entity instanceof npc && entity.bartender) 
+        if (entity instanceof npc && entity.bartender) 
         {
           that.talking = true;
-           var stateResponse = 0;
+          var stateResponse = 0;
           var str = "";
           str += "Buy a drink for 2 coins?";
           //npc line
@@ -393,7 +397,7 @@ class OverWorldPlayer {
                     case 1:
                             document.getElementById("chat").innerHTML = "Drink up! No refunds";
                             document.getElementById("response1").innerHTML = "";
-                           document.getElementById("response2").innerHTML = "";
+                            document.getElementById("response2").innerHTML = "";
                             // playerInventory.addItem("beer", 1);
                             // playerInventory.removeItem("coin", 2);
                            break;
@@ -405,8 +409,8 @@ class OverWorldPlayer {
                        break;
                        //user selected first button which is ("no")
                     case 3:
-                       document.getElementById("chat").innerHTML = "Then stop loitering";
-                         document.getElementById("response1").innerHTML = "";
+                        document.getElementById("chat").innerHTML = "Then stop loitering";
+                        document.getElementById("response1").innerHTML = "";
                         document.getElementById("response2").innerHTML = "";
                       break;
                  }
@@ -433,7 +437,7 @@ class OverWorldPlayer {
         document.getElementById("response2").innerHTML = "";
         userCount = 0;
           if (flag) {
-         playerInventory.addItem("beer", 1);
+        playerInventory.addItem("beer", 1);
         playerInventory.removeItem("coin", 2);
         flag = false;
     }
@@ -473,10 +477,10 @@ class OverWorldPlayer {
     {
       this.x = this.lastY;
       this.x = this.lastX;
-      console.log(this.velocity.y);
+      //console.log(this.velocity.y);
       this.velocity.x = -(this.velocity.x);
       this.velocity.y = -(this.velocity.y);
-     console.log(this.velocity.y);
+     //console.log(this.velocity.y);
      this.stun = 5;
     }
   }
