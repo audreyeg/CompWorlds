@@ -208,7 +208,6 @@ class SaloonScene extends Scene {
 class TownScene extends Scene {
     constructor(game, character) {
         super(game, character)
-
         // Sets up scene
         this.entities.push(new Town(gameEngine,0,0));
         for(var i = 0; i < 3; i++)
@@ -252,10 +251,6 @@ class TownScene extends Scene {
 
         this.entities.push(new Heal(gameEngine, 200, 400));
         this.entities.push(new Heal(gameEngine, 800, 400));
-        this.entities.push(new Coin(gameEngine, 500, 400));
-        this.entities.push(new Coin(gameEngine, 100, 400));
-        this.entities.push(new Coin(gameEngine, 500, 400));
-        this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);
