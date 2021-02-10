@@ -51,7 +51,7 @@ class CowBoy {
     this.animations.push(new Animator(this.spritesheet, 478, 213, 113, 90, 4, 1 / 4, 0, false, true));
 
     //dead
-    this.animations.push(new Animator(this.spritesheet, 253, 564, 345 - 253, 613 - 564, 1, 0.1, 2, false, true));
+    this.animations.push(new Animator(this.spritesheet, 253, 564, 345 - 253, 613 - 564, 1, 0.1, 0, false, true));
   }
 
   draw(ctx) {
@@ -203,6 +203,7 @@ class OverWorldPlayer {
     this.stun = 0;
     this.cooldown = 0;
     this.talking = false;
+    //this.user = 0;
     //this.playerInventory = Inventory();
 
   }
@@ -261,6 +262,7 @@ class OverWorldPlayer {
     }
 
     //collision
+    // this.userCount = 0;
     this.talking = false;
     var that = this;
     this.game.entities.forEach(function (entity) {
@@ -275,29 +277,141 @@ class OverWorldPlayer {
           playerInventory.addItem("coin", 1);
           entity.removeFromWorld = true;
         }
+        //saloon NPC
         if (entity instanceof npc && entity.saloon) 
         {
           that.talking = true;
+          var stateResponse = 0;
           var str = "";
           str += "Howdy Partner!";
+          //npc line
           document.getElementById("chat").innerHTML = str;
           var response1 = "What is this place?";
           var response2 = "Have you seen my hat?";
+          //the 2 button responses user can have 
           document.getElementById("response1").innerHTML = response1;
           document.getElementById("response2").innerHTML = response2;
 
-          if (userresponded ) {
+          if (userresponded) {
              var user = response;
+             if (user == 1 && userCount == 1){
+                stateResponse = 1;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+              else if (user == 2 && userCount == 1){
+                stateResponse = 2;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+              else if (user == 1 && userCount == 2){
+                stateResponse = 3;
+                console.log(user);
+               console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+             else  if (user == 2 && userCount == 2){
+                stateResponse = 4;
+                console.log(user);
+               console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
           }
-          switch (user) {
-            case 1:
-              document.getElementById("chat").innerHTML = "The saloon!";
-            break;
-            case 2:
-               document.getElementById("chat").innerHTML = "Nope";
-            break;
-          }
+                  switch (stateResponse) {
+                  	//if user selected option 1 ("what is this place?")
+                      case 1:
+                      document.getElementById("chat").innerHTML = "The saloon!";
+                      //additional responses from user
+                      var response1 = "Can I buy a drink?";
+                      document.getElementById("response1").innerHTML = response1;
+                      var response2 = "Big nice";
+                      document.getElementById("response2").innerHTML = response2;
+                      break;
+                      case 2: 
+                        document.getElementById("chat").innerHTML = "Nope";
+                         document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                        break;
+                      case 3: 
+                        document.getElementById("chat").innerHTML = "You have to go to the bartender for that";
+                        document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                        break;
+                      case 4:
+                         document.getElementById("chat").innerHTML = "Okay bye!";
+                        document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                        break;
+                 }
         }
+
+        //saloon bartender 
+           if (entity instanceof npc && entity.bartender) 
+        {
+          that.talking = true;
+           var stateResponse = 0;
+          var str = "";
+          str += "Buy a drink for 2 coins?";
+          //npc line
+          document.getElementById("chat").innerHTML = str;
+          var response1 = "Yes";
+          var response2 = "No";
+          //the 2 button respnses user can have 
+          document.getElementById("response1").innerHTML = response1;
+          document.getElementById("response2").innerHTML = response2;
+
+          
+
+          if (userresponded) {
+             var user = response;
+             //var convo = 1;
+              if (user == 1 && userCount == 1 && (playerInventory.check("coin", 2))){
+                flag = true;
+                console.log(flag);
+                stateResponse = 1;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+             else if (user == 1 && userCount == 1 && !(playerInventory.check("coin", 2)) && !(flag)){
+                stateResponse = 2;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+              else if (user == 2 && userCount == 1){
+                stateResponse = 3;
+                console.log(user);
+                console.log(userCount);
+                console.log("Sr" + stateResponse);
+             }
+          }
+                  switch (stateResponse) {
+                  	//user selected first button which is ("yes")
+                    case 1:
+                            document.getElementById("chat").innerHTML = "Drink up! No refunds";
+                            document.getElementById("response1").innerHTML = "";
+                           document.getElementById("response2").innerHTML = "";
+                            // playerInventory.addItem("beer", 1);
+                            // playerInventory.removeItem("coin", 2);
+                           break;
+                    case 2:
+                             //if user does not have 2 coins have this response instead
+                        	document.getElementById("chat").innerHTML = "Nice try, come back when you have some coin";
+                       		document.getElementById("response1").innerHTML = "";
+                        	document.getElementById("response2").innerHTML = "";
+                       break;
+                       //user selected first button which is ("no")
+                    case 3:
+                       document.getElementById("chat").innerHTML = "Then stop loitering";
+                         document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                      break;
+                 }
+        }
+        
       }
     });
  
@@ -311,14 +425,22 @@ class OverWorldPlayer {
     this.stats.setY(this.y);
     this.stats.setFacing(this.facingState);
 
+    //to clear buttons/npc chat
     if (!this.talking) {
         response = 0;
         document.getElementById("chat").innerHTML = "";
         document.getElementById("response1").innerHTML = "";
         document.getElementById("response2").innerHTML = "";
+        userCount = 0;
+          if (flag) {
+         playerInventory.addItem("beer", 1);
+        playerInventory.removeItem("coin", 2);
+        flag = false;
     }
 
+    }
   }
+
   draw(ctx) {
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
       ctx.drawImage(this.spritesheet, 2, 88, 20, 31, this.x, this.y, 20 * this.SCALE, 31 * this.SCALE);
@@ -460,6 +582,15 @@ Inventory = function(){
     }    
     }
 
+    self.check = function(id, amount) {
+      for(var i = 0 ; i < self.items.length; i++){
+      if(self.items[i].id === id){
+        return self.items[i].amount >= amount;
+      }
+    }  
+    return true;
+    }
+
     //see if item is already in inventory 
     self.hasItem = function(id,amount){
     for(var i = 0 ; i < self.items.length; i++){
@@ -510,6 +641,14 @@ Item("medpac","MedPac",function(){
     gameEngine.camera.cowboy.health += 10;
     console.log(this.health);
     playerInventory.removeItem("medpac",1);
+  }
+});
+
+//beer
+Item("beer","Beer",function(){
+  if(playerInventory.hasItem("beer",0))
+  {
+    playerInventory.removeItem("beer",1);
   }
 });
 

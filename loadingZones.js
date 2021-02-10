@@ -1,3 +1,4 @@
+
 class saloonLZ
 {
     constructor(game,x,y,w,h)
@@ -17,6 +18,8 @@ class saloonLZ
                 {
                     entity.y += 10;
                     that.game.camera.loadScene("saloon");
+                     document.getElementById("townAudio").pause();
+                     document.getElementById("saloonAudio").play();
                 }
             }
         });
@@ -107,6 +110,8 @@ class townLZ
                 {
                     entity.y -= 10;
                     that.game.camera.loadScene("town");
+                    document.getElementById("saloonAudio").pause();
+                     document.getElementById("townAudio").play();
                 }
             }
         });
@@ -137,6 +142,8 @@ class fightLZ
                 {
                     that.removeFromWorld = true;
                     that.game.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450));
+                    document.getElementById("townAudio").pause();
+                    document.getElementById("fightAudio").play();
                 }
             }
         });

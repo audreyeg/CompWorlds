@@ -196,6 +196,7 @@ class SaloonScene extends Scene {
         }
 
         this.entities.push(new npc(gameEngine, 500, 400, "saloon"));
+        this.entities.push(new npc(gameEngine, 100, 400, "bartender"));
         // Add beep bop boop bep cowboy
         this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
@@ -207,7 +208,6 @@ class SaloonScene extends Scene {
 class TownScene extends Scene {
     constructor(game, character) {
         super(game, character)
-
         // Sets up scene
         this.entities.push(new Town(gameEngine,0,0));
         for(var i = 0; i < 3; i++)
@@ -253,7 +253,6 @@ class TownScene extends Scene {
         this.entities.push(new Heal(gameEngine, 800, 400));
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
-        this.entities.push(new Coin(gameEngine, 300, 400));
         this.entities.push(this.inventory);
     }
 }
