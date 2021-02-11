@@ -210,6 +210,21 @@ class OverWorldPlayer {
     update() {
     if(this.stun == 0)
     {
+      if(this.talking && this.cooldown <= 0)
+      {
+        if(this.game.response1)
+        {
+          console.log("hi1");
+          var btn = document.getElementById("response1").click();
+          this.cooldown = 60;
+        }
+        else if(this.game.response2)
+        {
+          console.log("hi1");
+          var btn = document.getElementById("response2").click();
+          this.cooldown = 60;
+        }
+      }
       if (this.game.right)
       {
         this.velocity.x = this.stats.speed * 3;
@@ -286,8 +301,8 @@ class OverWorldPlayer {
           str += "Howdy Partner!";
           //npc line
           document.getElementById("chat").innerHTML = str;
-          var response1 = "What is this place?";
-          var response2 = "Have you seen my hat?";
+          var response1 = "Q) What is this place?";
+          var response2 = "E) Have you seen my hat?";
           //the 2 button responses user can have 
           document.getElementById("response1").innerHTML = response1;
           document.getElementById("response2").innerHTML = response2;
@@ -324,9 +339,9 @@ class OverWorldPlayer {
                       case 1:
                       document.getElementById("chat").innerHTML = "The saloon!";
                       //additional responses from user
-                      var response1 = "Can I buy a drink?";
+                      var response1 = "Q) Can I buy a drink?";
                       document.getElementById("response1").innerHTML = response1;
-                      var response2 = "Big nice";
+                      var response2 = "E) Big nice";
                       document.getElementById("response2").innerHTML = response2;
                       break;
                       case 2: 
@@ -360,8 +375,8 @@ class OverWorldPlayer {
           str += "Buy a drink for 2 coins?";
           //npc line
           document.getElementById("chat").innerHTML = str;
-          var response1 = "Yes";
-          var response2 = "No";
+          var response1 = "Q) Yes";
+          var response2 = "E) No";
           //the 2 button respnses user can have 
           document.getElementById("response1").innerHTML = response1;
           document.getElementById("response2").innerHTML = response2;
