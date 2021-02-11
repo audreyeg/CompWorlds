@@ -68,6 +68,12 @@ class GameEngine {
                 case "Digit2":
                     that.Two = true;
                     break;
+                case "KeyQ":
+                    that.response1 = true;
+                    break;
+                case "KeyE":
+                    that.response2 = true;
+                    break;
             }
         }, false);
 
@@ -107,6 +113,13 @@ class GameEngine {
                 case "Digit2":
                     that.Two = false;
                     break;
+                case "KeyQ":
+                    that.response1 = false;
+                    break;
+                case "KeyE":
+                    that.response2 = false;
+                    break;
+                
             }
         }, false);
     };
