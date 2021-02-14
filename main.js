@@ -48,6 +48,28 @@ ASSET_MANAGER.downloadAll(function () {
 
 	gameEngine.init(ctx);
 
+
+
+	// Code to test camera thing
+	/* TODO: DELETE
+	var spriteName = "./sprites/png/Separate/128/Tiles/House/HouseTile (23).png";
+	var camera = new Camera();
+	camera.setRotation(Math.PI / 4);
+	camera.moveToPosition(-1000, 0);
+	camera.pixelScale = 0.5
+	console.log(camera);
+	var thing = new Drawable(gameEngine, 0, 0, 128, 128, spriteName);
+	thing.draw(ctx, camera);
+	var thing = new Drawable(gameEngine, 128, 0, 128, 128, spriteName);
+	thing.draw(ctx, camera);
+	var thing = new Drawable(gameEngine, 256, 0, 128, 128, spriteName);
+	thing.draw(ctx, camera);
+	var thing = new Drawable(gameEngine, 384, 0, 128, 128, spriteName);
+	thing.draw(ctx, camera);
+	*/
+	        
+
+
 	new SceneManager(gameEngine);
 	gameEngine.start();
 });
