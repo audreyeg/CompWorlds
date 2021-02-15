@@ -54,7 +54,7 @@ class Fight {
                 this.dialogBox.removeFromWorld = true;
                 this.dialoug = false;
                 this.player.attack();
-                this.enemy.health -= 5;
+                this.enemy.health -= this.player.stats.damage;
                 this.delay = 120;
             }
             else if(this.game.two)
