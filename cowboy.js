@@ -227,25 +227,25 @@ class OverWorldPlayer {
       }
       if (this.game.right)
       {
-        this.velocity.x = this.stats.speed * 3;
+        this.velocity.x = this.stats.speed ;
         this.velocity.y = 0;
         this.facingState = 0;
       }
       else if (this.game.left)
       {
-        this.velocity.x = -this.stats.speed * 3;
+        this.velocity.x = -this.stats.speed ;
         this.velocity.y = 0;
         this.facingState = 1;
       }
       else if (this.game.up)
       {
-        this.velocity.y = -this.stats.speed * 3;
+        this.velocity.y = -this.stats.speed ;
         this.velocity.x = 0;
         this.facingState = 2;
       }
       else if (this.game.down )
       {
-        this.velocity.y = this.stats.speed * 3;
+        this.velocity.y = this.stats.speed ;
         this.velocity.x = 0;
         this.facingState = 3;
       }
@@ -478,8 +478,12 @@ class OverWorldPlayer {
     else if (this.facingState == 3) {
       this.downWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
-    ctx.strokeStyle = 'Red';
-    ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+   // console.log(PARAMS.DEBUG)
+    if (PARAMS.DEBUG) 
+    {
+      ctx.strokeStyle = 'Red';
+      ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+    }
   }
   updateBB() {
     this.lastBB = this.BB;
@@ -512,7 +516,7 @@ class Character
     this.maxHealth = 100;
     this.x = 0;
     this.y = 0;
-    this.speed = 2;
+    this.speed = 3;
     this.facing;
     console.log(this.health);
     playerInventory.addItem("coin",0);
