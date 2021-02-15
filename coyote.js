@@ -22,6 +22,7 @@ class coyote{
         this.delay = 0;
         this.returnTime = 0;
         this.turn;
+        this.healthMax = (lvl * 10);
         this.health = (lvl * 10);
         this.parent = parent;
         this.baseXP = 25;
@@ -225,12 +226,12 @@ class coyote{
         this.onGround = false;
 
     }
-    heal(amount)
+    heal()
     {
-      this.health += amount;
-      if(this.health > 50)
+      this.health += this.lvl + 5;
+      if(this.health > this.healthMax)
       {
-        this.health = 50;
+        this.health = this.healthMax;
       }
     }
 }

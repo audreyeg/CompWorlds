@@ -538,9 +538,9 @@ class Character
     this.speed = 3;
     this.facing;
     this.drunk = 0;
-    this.lvl = 1;
+    this.lvl = 0;
     this.exp = 0;
-    this.nextLvl = 100;
+    this.nextLvl = 50;
     console.log(this.health);
     playerInventory.addItem("coin",0);
     playerInventory.addItem("medpac",0);
@@ -716,7 +716,7 @@ Item("beer","Beer",function(){
 
 //right now coins will be dropped if clicked on 
 Item("coin","Coin",function(){
-  if(playerInventory.hasItem("coin",0))
+  if(playerInventory.hasItem("coin",0) && gameEngine.camera.fight == false)
   {
     playerInventory.removeItem("coin",1);
     dropx = gameEngine.camera.cowboy.x;
