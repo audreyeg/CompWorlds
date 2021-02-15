@@ -40,6 +40,7 @@ class SceneManager {
             this.currentEnemy = null;
         }
         this.missions.missions["Bank"].update();
+        this.cowboy.update();
     }
     draw(ctx) 
     { 
@@ -52,6 +53,7 @@ class SceneManager {
         ctx.fillText(this.inventory.checkItem("coin"), 55, 25);
         */
        this.missions.missions["Bank"].draw(ctx);
+       this.cowboy.draw(ctx);
     }
 
     loadScene(scene) {
@@ -65,12 +67,10 @@ class SceneManager {
           var temp2 = this.game.entities[i];
           if(temp2 instanceof SceneInventory) 
           {
-              //console.log(temp2);
               this.inventory = temp2;
           }
           if(temp2 instanceof EnemySpawner)
           {
-            console.log(temp2);
             this.enemySpawner = temp2;
           }
       }
@@ -78,7 +78,6 @@ class SceneManager {
 
     createFightSceneWithEnemy(enemy) 
     {
-        //console.log(enemy);
         this.currentEnemy = enemy;
         var sceneToLoad = new FightScene(this.game, this.cowboy, enemy);
         this.game.entities = sceneToLoad.entities;

@@ -57,7 +57,7 @@ class Fight {
                 this.enemy.health -= 5;
                 this.delay = 120;
             }
-            if(this.game.two)
+            else if(this.game.two)
             {
                 this.enemy.turn = true;
                 this.player.turn = false;
@@ -66,7 +66,7 @@ class Fight {
                 this.delay = 120;
                 this.defending = true;
             }
-            if(this.game.three)
+            else if(this.game.three)
             {
                 this.player.turn = false;
                 this.enemy.turn = true;
@@ -136,8 +136,8 @@ class Fight {
                // this.dialogBox = new dialog(gameEngine,100,100,"You Have Killed The Coyote!");
                // this.dialoug = true;
                // this.game.addEntity(this.dialogBox);
+               this.game.camera.cowboy.giveXP(this.enemy.baseXP * this.enemy.lvl);
                this.game.camera.fightEnd = true;
-               //this.game.camera.missions.missions["Bank"].state = 1;
             }
         }
         else
@@ -150,12 +150,12 @@ class Fight {
             {
                 if(this.defending)
                 {
-                    this.player.stats.takeDamage(5);
+                    this.player.stats.takeDamage(this.enemy.damage);
                     this.defending = false;
                 }
                 else
                 {
-                    this.player.stats.takeDamage(25);
+                    this.player.stats.takeDamage(this.enemy.damage * 5);
                 }
                 gameEngine.addEntity(new Crit(gameEngine,this.enemy.x,this.enemy.y));
                 this.crit = false;
@@ -168,12 +168,12 @@ class Fight {
             {
                 if(this.defending)
                 {
-                    this.player.stats.takeDamage(1);
+                    this.player.stats.takeDamage(this.enemy.damage / 5);
                     this.defending = false;
                 }
                 else
                 {
-                    this.player.stats.takeDamage(5);
+                    this.player.stats.takeDamage(this.enemy.damage);
                 }
                 if(this.player.health <= 0)
                 {
