@@ -102,7 +102,7 @@ class Fight {
             }
             else if(this.temp2 == 1)
             {
-                this.enemy.heal(25);
+                this.enemy.heal();
                 this.player.turn = true;
                 this.enemy.turn = false;
                 this.defending = false;
@@ -175,7 +175,7 @@ class Fight {
                 {
                     this.player.stats.takeDamage(this.enemy.damage);
                 }
-                if(this.player.health <= 0)
+                if(this.player.stats.health <= 0)
                 {
                     this.player.dead = true;
                 }
