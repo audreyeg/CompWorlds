@@ -125,11 +125,12 @@ class townLZ
 }
 class fightLZ
 {
-    constructor(game,x,y,w,h)
+    constructor(game,x,y,w,h,enemy)
     {
-        Object.assign(this, { game, x, y,w,h});
+        Object.assign(this, { game, x, y,w,h,enemy});
         this.game = game;
         this.BB = new BoundingBox(x,y,w,h);
+        this.enemy = enemy
     }
     update()
     {
@@ -140,10 +141,12 @@ class fightLZ
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    that.removeFromWorld = true;
-                    that.game.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450));
+                    that.game.camera.enemySpawner.currentEnemies--;
+                    that.game.camera.createFightSceneWithEnemy(that.enemy,that.x,that.y);
                     document.getElementById("townAudio").pause();
                     document.getElementById("fightAudio").play();
+                    //that.removeFromWorld = true;
+                    that.enemy.parent.removeFromWorld = true;
                 }
             }
         });

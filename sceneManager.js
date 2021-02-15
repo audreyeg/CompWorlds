@@ -21,6 +21,8 @@ class SceneManager {
         this.currentScene = null;
         // this.sceneStack = [];
         this.inventory = null;
+        this.enemySpawner = null;
+        this.currentEnemy = null;
 
         this.loadScene("town");
     };
@@ -33,6 +35,8 @@ class SceneManager {
             this.loadScene(this.currentScene);
             document.getElementById("fightAudio").pause();
             document.getElementById("townAudio").play();
+            this.currentEnemy.removeFromWorld = true;
+            this.currentEnemy = null;
         }
         this.missions.missions["Bank"].update();
     }
@@ -63,12 +67,18 @@ class SceneManager {
               //console.log(temp2);
               this.inventory = temp2;
           }
+          if(temp2 instanceof EnemySpawner)
+          {
+            console.log(temp2);
+            this.enemySpawner = temp2;
+          }
       }
     }
 
     createFightSceneWithEnemy(enemy) 
     {
         //console.log(enemy);
+        this.currentEnemy = enemy;
         var sceneToLoad = new FightScene(this.game, this.cowboy, enemy);
         this.game.entities = sceneToLoad.entities;
         this.fight = true;
