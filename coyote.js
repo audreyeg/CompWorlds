@@ -1,6 +1,6 @@
 class coyote{
 
-    constructor(game, x, y,parent) {
+    constructor(game, x, y,parent,lvl) {
         Object.assign(this, { game, x, y });
         this.game.coyote = this;
         // spritesheet
@@ -22,8 +22,11 @@ class coyote{
         this.delay = 0;
         this.returnTime = 0;
         this.turn;
-        this.health = 5;
+        this.health = (lvl * 10);
         this.parent = parent;
+        this.baseXP = 25;
+        this.lvl = lvl;
+        this.damage = 5 * (1 + (this.lvl * .25))
     };
     update()
     {
@@ -233,12 +236,13 @@ class coyote{
 }
 class overWorldCoyote
 {
-    constructor(game,x,y)
+    constructor(game,x,y,lvl)
     {
         this.game = game;
         this.x = x;
         this.y = y;
-        this.BB = new fightLZ(this.game,this.x,this.y + 20,60,30,new coyote(this.game,486,450,this));
+        this.lvl = lvl
+        this.BB = new fightLZ(this.game,this.x,this.y + 20,60,30,new coyote(this.game,486,450,this,this.lvl));
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/coyote.png");
     }
     update()

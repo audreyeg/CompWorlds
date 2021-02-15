@@ -229,25 +229,21 @@ class OverWorldPlayer {
       {
         this.velocity.x = this.stats.speed ;
         this.velocity.y = 0;
-        this.facingState = 0;
       }
       else if (this.game.left)
       {
         this.velocity.x = -this.stats.speed ;
         this.velocity.y = 0;
-        this.facingState = 1;
       }
       else if (this.game.up)
       {
         this.velocity.y = -this.stats.speed ;
         this.velocity.x = 0;
-        this.facingState = 2;
       }
       else if (this.game.down )
       {
         this.velocity.y = this.stats.speed ;
         this.velocity.x = 0;
-        this.facingState = 3;
       }
       else {
         this.velocity.x = 0;
@@ -437,8 +433,30 @@ class OverWorldPlayer {
 
     this.lastX = this.x;
     this.lastY = this.y;
+    if(this.stats.drunk > 0)
+    {
+      this.stats.drunk--;
+      this.velocity.x = -this.velocity.x;
+      this.velocity.y = -this.velocity.y;
+    }
     this.x += this.velocity.x;
     this.y += this.velocity.y;
+    if(this.velocity.x > 0)
+    {
+      this.facingState = 0;
+    }
+    if(this.velocity.x < 0)
+    {
+      this.facingState = 1;
+    }
+    if(this.velocity.y < 0)
+    {
+      this.facingState = 2;
+    }
+    if(this.velocity.y > 0)
+    {
+      this.facingState = 3;
+    }
     that.updateBB();
     this.stats.setX(this.x);
     this.stats.setY(this.y);
@@ -494,13 +512,13 @@ class OverWorldPlayer {
   {
     if(this.stun == 0)
     {
-      this.x = this.lastY;
-      this.x = this.lastX;
+      //this.y = this.lastY;
+      //this.x = this.lastX;
       //console.log(this.velocity.y);
       this.velocity.x = -(this.velocity.x);
       this.velocity.y = -(this.velocity.y);
      //console.log(this.velocity.y);
-     this.stun = 5;
+     this.stun = 1;
     }
   }
 }
@@ -511,20 +529,27 @@ class Character
     Object.assign(this, {game});
     this.game = game;
     this.health = 50;
-    this.damage = 5;
+    this.baseDamage = 5;
+    this.damage;
     this.armor = 5;
     this.maxHealth = 100;
     this.x = 0;
     this.y = 0;
     this.speed = 3;
     this.facing;
+    this.drunk = 0;
+    this.lvl = 1;
+    this.exp = 0;
+    this.nextLvl = 100;
     console.log(this.health);
     playerInventory.addItem("coin",0);
     playerInventory.addItem("medpac",0);
+    this.setDamage(this.baseDamage);
   } 
   takeDamage(amt)
   {
     this.health -= amt;
+    this.health =  Math.ceil(this.health);
     if(this.health <= 0)
     {
       this.health = 0;
@@ -548,7 +573,7 @@ class Character
   }
   setDamage(amt)
   {
-    this.damage = amt;
+    this.damage = Math.ceil(amt);
   }
   setX(x)
   {
@@ -564,11 +589,24 @@ class Character
   }
   update()
   {
-
+    if(this.exp >= this.nextLvl)
+    {
+      this.lvl++;
+      this.exp -= this.nextLvl;
+      this.nextLvl = (1.25 * this.nextLvl)
+      this.setDamage(this.baseDamage * (1 + (this.lvl * .25)));
+    }
   }
-  draw()
+  draw(ctx)
   {
-
+    ctx.font = "15px Papyrus";
+    ctx.fillStyle = "Red";
+    ctx.fillText("Level: " + this.lvl, 5, 725);
+    ctx.fillText("Exp to next lvl: " + (this.nextLvl - this.exp), 5, 740);
+  }
+  giveXP(exp)
+  {
+      this.exp += exp;
   }
 }
 
@@ -672,6 +710,7 @@ Item("beer","Beer",function(){
   if(playerInventory.hasItem("beer",0))
   {
     playerInventory.removeItem("beer",1);
+    gameEngine.camera.cowboy.drunk = 600;
   }
 });
 
