@@ -593,7 +593,7 @@ class Character
     {
       this.lvl++;
       this.exp -= this.nextLvl;
-      this.nextLvl = (1.25 * this.nextLvl)
+      this.nextLvl = Math.floor(1.25 * this.nextLvl);
       this.setDamage(this.baseDamage * (1 + (this.lvl * .25)));
     }
   }
@@ -606,7 +606,7 @@ class Character
   }
   giveXP(exp)
   {
-      this.exp += exp;
+      this.exp += Math.ceil(exp);
   }
 }
 

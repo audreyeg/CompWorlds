@@ -27,7 +27,11 @@ class coyote{
         this.parent = parent;
         this.baseXP = 25;
         this.lvl = lvl;
-        this.damage = 5 * (1 + (this.lvl * .25))
+        this.damage = 5 * (1 + (this.lvl * .25));
+        this.reward = "medpac";
+        this.rewardMin = 1;
+        this.spread = 1;
+        this.chance = 10;
     };
     update()
     {
@@ -37,27 +41,7 @@ class coyote{
         }
         if(this.stunTime == 0 && this.attackTime == 0 && !this.dialoug && this.returnTime == 0)
         {
-            if(this.game.interact && this.delay == 0)
-            {
-               // this.attack();
-            }
-            /*
-            else if(this.game.left && !this.game.right)
-            {
-                this.velocity.x = -2; 
-                this.facingState = 0;
-            }
-            else if (this.game.right && !this.game.left)
-            {
-                this.velocity.x = 2; 
-                this.facingState = 1;
-            }
-            */
-            else
-            {
-                this.velocity.x = 0;
-            }
- 
+                this.velocity.x = 0; 
         }
         if(this.stunTime > 0)
         {
@@ -99,46 +83,12 @@ class coyote{
         this.game.entities.forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB)) 
             {
-                if(entity instanceof npc && that.collideTime == 0  && that.attacking == false)
-                {
-                    that.velocity.x = -that.velocity.x;
-                    that.velocity.y = -that.velocity.y;
-                    that.stunTime = 60;
-                    that.collideTime = 10;
-                }
-                else if (entity instanceof npc && that.collideTime == 0  && that.attacking == true)
-                {
-                    entity.dead = true;
-                }
                 if(entity instanceof groundCen || entity instanceof groundRig || entity instanceof groundLeft && that.velocity.y != 0)
                 {
                     that.velocity.y = 0;
                     that.y = entity.y - 118;
                     that.onGround = true;
                 }
-                if(entity instanceof medPack && that.attacking)
-                {
-                    that.delay = 2;
-                }
-                if(entity instanceof medPack && !that.dialoug && that.delay == 0)
-                {
-                    that.velocity.x = 0;
-                    that.velocity.y = 0;
-                    that.dialoug = true;
-                    that.dialougBox = new dialog(gameEngine,100,100,"Press Space To Pick Up");
-                    gameEngine.addEntity(that.dialougBox);
-                }
-                if(entity instanceof medPack && that.dialoug)
-                {
-                    if(that.game.interact)
-                    {
-                        entity.removeFromWorld = true;
-                        that.dialougBox.removeFromWorld = true;
-                        that.dialoug = false;
-                        that.delay = 10;
-                    }
-                }
-
             }
         });
         if(this.x > 486)

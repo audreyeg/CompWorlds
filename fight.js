@@ -8,8 +8,7 @@ class Fight {
         this.enemy = enemy;
         this.player.turn = true;
         this.enemy.turn = false;
-        this.dialoug = false
-        this.dialogBox;
+        this.dialoug = false;
         this.delay = 0;
         this.defending = false;
         this.charging = false;
@@ -44,15 +43,14 @@ class Fight {
             if(!this.dialoug)
             {
                 this.dialoug = true;
-                this.dialogBox = new dialog(gameEngine,100,100,"Z)Attack X)Defend C)Heal");
-                this.game.addEntity(this.dialogBox);
+                document.getElementById("chat").innerHTML = "Z)Attack X)Defend C)Heal";
             }
             if(this.game.one)
             {
                 this.enemy.turn = true;
                 this.player.turn = false;
-                this.dialogBox.removeFromWorld = true;
                 this.dialoug = false;
+                document.getElementById("chat").innerHTML = "";
                 this.player.attack();
                 this.enemy.health -= this.player.stats.damage;
                 this.delay = 120;
@@ -61,7 +59,7 @@ class Fight {
             {
                 this.enemy.turn = true;
                 this.player.turn = false;
-                this.dialogBox.removeFromWorld = true;
+                document.getElementById("chat").innerHTML = "";
                 this.dialoug = false;
                 this.delay = 120;
                 this.defending = true;
@@ -70,7 +68,7 @@ class Fight {
             {
                 this.player.turn = false;
                 this.enemy.turn = true;
-                this.dialogBox.removeFromWorld = true;
+                document.getElementById("chat").innerHTML = "";
                 this.dialoug = false;
                 this.delay = 120;
                 this.player.stats.heal(25);
@@ -126,18 +124,30 @@ class Fight {
 
             if(!this.dialoug && this.player.dead)
             {
-                this.dialogBox = new dialog(gameEngine,100,100,"You Have Died!");
                 this.dialoug = true;
-                this.game.addEntity(this.dialogBox);
+                document.getElementById("chat").innerHTML = "You Have Died!";
                 this.player.killed();
             }
             else if(!this.dialoug && this.enemy.dead)
             {
-               // this.dialogBox = new dialog(gameEngine,100,100,"You Have Killed The Coyote!");
-               // this.dialoug = true;
-               // this.game.addEntity(this.dialogBox);
-               this.game.camera.cowboy.giveXP(this.enemy.baseXP * this.enemy.lvl);
-               this.game.camera.fightEnd = true;
+                var drop = Math.floor(Math.random() * this.enemy.chance);
+               this.dialoug = true;
+               document.getElementById("chat").innerHTML = "Killing the coyote granted " + this.enemy.baseXP * this.enemy.lvl + " EXP! " ;
+               if(drop == 1)
+               {
+                   var amount = this.enemy.rewardMin + Math.floor((Math.random() * this.enemy.spread));
+                   playerInventory.addItem(this.enemy.reward,amount);
+                   document.getElementById("chat").innerHTML += "<br>You looted " + amount + " " + this.enemy.reward + "s";
+               }
+               document.getElementById("chat").innerHTML += "<br>Press Space To Continue.";
+            }
+            else if(this.enemy.dead)
+            {
+                if(this.game.interact)
+                {
+                    this.game.camera.cowboy.giveXP(this.enemy.baseXP * this.enemy.lvl);
+                     this.game.camera.fightEnd = true;
+                }
             }
         }
         else
