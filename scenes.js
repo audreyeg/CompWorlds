@@ -257,6 +257,6 @@ class TownScene extends Scene {
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);
-        this.entities.push(new EnemySpawner(gameEngine));
+        this.entities.push(new EnemySpawner(gameEngine,0,1500,400,350,5,1));
     }
 }
