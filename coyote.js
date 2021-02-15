@@ -247,7 +247,7 @@ class overWorldCoyote
     }
     draw(ctx)
     {
-        ctx.drawImage(this.spritesheet,0,0,136,120,this.x ,this.y,36.25 * 2,30 * 2);
-        this.BB.draw(ctx);
+            ctx.drawImage(this.spritesheet,0,0,136,120,this.x ,this.y,36.25 * 2,30 * 2);
+            this.BB.draw(ctx);
     }
 }

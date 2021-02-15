@@ -26,8 +26,11 @@ class saloonLZ
     }
     draw(ctx)
     {
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     }
 
 }
@@ -56,8 +59,11 @@ class sheriffLZ
     }
     draw(ctx)
     {
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     }
 
 }
@@ -86,8 +92,11 @@ class bankLZ
     }
     draw(ctx)
     {
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     }
 
 }
@@ -118,8 +127,11 @@ class townLZ
     }
     draw(ctx)
     {
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     }
 
 }
@@ -152,8 +164,11 @@ class fightLZ
     }
     draw(ctx)
     {
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     }
 
 }

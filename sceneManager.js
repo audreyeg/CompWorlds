@@ -28,6 +28,7 @@ class SceneManager {
     };
 
     update() {
+        PARAMS.DEBUG = document.getElementById("debug").checked;
         if(this.fight && this.fightEnd)
         {
             this.fight = false;

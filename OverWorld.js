@@ -92,8 +92,11 @@ class Saloon {
     draw(ctx)
     {
         ctx.drawImage(this.spritesheet,0,0,952,1024,this.x,this.y,400,350);
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     }
 
 }
@@ -124,8 +127,11 @@ class Sheriff {
     draw(ctx)
     {
         ctx.drawImage(this.spritesheet,0,0,894,512,this.x,this.y,400,250);
-        ctx.strokeStyle = 'Red';
-         ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     }
 }
 
@@ -154,8 +160,11 @@ class Bank {
     draw(ctx)
     {
         ctx.drawImage(this.spritesheet,0,0,1438,1086,this.x,this.y,200,300);
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
 
     }
 }

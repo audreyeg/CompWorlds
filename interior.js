@@ -169,8 +169,11 @@ class Chest extends InteriorTile {
     };
     draw(ctx) {
         ctx.drawImage((this.rotate180) ? this.offscreenCanvas : this.spritesheet,0,0,136,152,this.x,this.y,this.spriteWidth,this.spriteWidth);
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     };
     update()
     {
