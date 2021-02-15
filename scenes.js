@@ -245,9 +245,6 @@ class TownScene extends Scene {
         this.entities.push(new saloonLZ(gameEngine,170,355,55,25));
         this.entities.push(new sheriffLZ(gameEngine,700,255,55,25));
         this.entities.push(new bankLZ(gameEngine,1165,300,23,25));
-        this.entities.push(new fightLZ(gameEngine,1165,450,50,50));
-        this.entities.push(new fightLZ(gameEngine,1065,450,50,50));
-        this.entities.push(new fightLZ(gameEngine,1265,450,50,50));
 
         this.entities.push(new Heal(gameEngine, 200, 400));
         this.entities.push(new Heal(gameEngine, 800, 400));
@@ -260,5 +257,6 @@ class TownScene extends Scene {
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);
+        this.entities.push(new EnemySpawner(gameEngine));
     }
 }
