@@ -111,7 +111,7 @@ class townLZ
                     entity.y -= 10;
                     that.game.camera.loadScene("town");
                     document.getElementById("saloonAudio").pause();
-                     document.getElementById("townAudio").play();
+                    document.getElementById("townAudio").play();
                 }
             }
         });
@@ -145,7 +145,6 @@ class fightLZ
                     that.game.camera.createFightSceneWithEnemy(that.enemy,that.x,that.y);
                     document.getElementById("townAudio").pause();
                     document.getElementById("fightAudio").play();
-                    //that.removeFromWorld = true;
                     that.enemy.parent.removeFromWorld = true;
                 }
             }
