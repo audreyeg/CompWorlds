@@ -16,8 +16,8 @@ class npc{
         this.location = place;
         this.saloon = false;
         this.bartender = false;
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloongirl.png");
-        this.dancingAnimation = new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true);
+        this.cop = false;
+        this.banker = false;
 
         if (this.location == "saloon"){
                 this.saloon = true;
@@ -25,11 +25,27 @@ class npc{
                 this.EndPoint = 92;
                 this.wide = 69;
                 this.tall = 181;
-                // this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloongirl.png");
+                 this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloongirl.png");
                 // this.dancingAnimation = new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true);
         }
         else if (this.location == "bartender"){
             this.bartender = true;
+            this.startPoint = 30;
+            this.EndPoint = 89;
+            this.wide = 13;
+            this.tall = 25;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+        }
+        else if (this.location == "cop"){
+            this.cop = true;
+            this.startPoint = 30;
+            this.EndPoint = 89;
+            this.wide = 13;
+            this.tall = 25;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+        }
+         else if (this.location == "banker"){
+            this.banker = true;
             this.startPoint = 30;
             this.EndPoint = 89;
             this.wide = 13;

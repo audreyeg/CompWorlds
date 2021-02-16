@@ -261,6 +261,11 @@ class OverWorldPlayer {
           playerInventory.use("medpac");
           this.cooldown = 60;
         }
+        if(this.game.Three)
+        {
+          playerInventory.use("beer");
+          this.cooldown = 60;
+        }
       }
       else
       {
@@ -424,6 +429,133 @@ class OverWorldPlayer {
                         document.getElementById("response1").innerHTML = "";
                         document.getElementById("response2").innerHTML = "";
                       break;
+                 }
+        }
+        //sherrif 
+        if (entity instanceof npc && entity.cop) 
+        {
+          that.talking = true;
+          var stateResponse = 0;
+          var str = "";
+          str += "Need something?";
+          //npc line
+          document.getElementById("chat").innerHTML = str;
+          var response1 = "Q) Yes";
+          var response2 = "E) No";
+          //the 2 button respnses user can have 
+          document.getElementById("response1").innerHTML = response1;
+          document.getElementById("response2").innerHTML = response2;
+
+          
+
+          if (userresponded) {
+             var user = response;
+             //var convo = 1;
+	              if (user == 1 && userCount == 1){
+	                stateResponse = 1;
+	                console.log(user);
+	                console.log(userCount);
+	                console.log("Sr" + stateResponse);
+	             }
+	               else if (user == 1 && userCount == 2){
+	                stateResponse = 2;
+	                console.log(user);
+	                console.log(userCount);
+	                console.log("Sr" + stateResponse);
+	             }
+	              else if ((user == 2 && userCount == 1) || (user == 2 && userCount == 2)){
+	                stateResponse = 3;
+	                console.log(user);
+	                console.log(userCount);
+	                console.log("Sr" + stateResponse);
+	             }
+
+          }
+                  switch (stateResponse) {
+                  	//user selected first button which is ("yes")
+                    case 1:
+                            document.getElementById("chat").innerHTML = "Well... If you'd like a mission I have one for you.";
+                            var response1 = "Q) Yes, that's why I'm here.";
+                            document.getElementById("response1").innerHTML = response1;
+                             var response2 = "E) No, I don't feel like it";
+                            document.getElementById("response2").innerHTML = response2;
+                           break;
+                    case 2:
+                             //yes to mission
+                        	document.getElementById("chat").innerHTML = "Go kill one of those coyotes for me then come back here when you've done it.";
+                       		document.getElementById("response1").innerHTML = "";
+                        	document.getElementById("response2").innerHTML = "";
+
+                       if(that.game.camera.missions.missions["KillCoyote"].state == 0)
+                        {
+                          that.game.camera.missions.missions["KillCoyote"].state = 1;
+                        }
+
+                       break;
+                    case 3:
+                        document.getElementById("chat").innerHTML = "I ought you lock you up.";
+                        document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                      break;
+                    case 4:
+                        document.getElementById("chat").innerHTML = "Thanks, now I get the day off.";
+                        document.getElementById("response1").innerHTML = "";
+                        document.getElementById("response2").innerHTML = "";
+                      break;
+                 }
+        }
+        //banker
+         if (entity instanceof npc && entity.banker) 
+        {
+          that.talking = true;
+          var stateResponse = 0;
+          var str = "";
+          str += "1..2...3... AH! When did you get here?";
+          //npc line
+          document.getElementById("chat").innerHTML = str;
+          var response1 = "Q) Literally just now. ";
+          var response2 = "E) What are you doing?";
+          //the 2 button respnses user can have 
+          document.getElementById("response1").innerHTML = response1;
+          document.getElementById("response2").innerHTML = response2;
+
+          
+
+          if (userresponded) {
+             var user = response;
+             //var convo = 1;
+	              if (user == 1 && userCount == 1){
+	                stateResponse = 1;
+	                console.log(user);
+	                console.log(userCount);
+	                console.log("Sr" + stateResponse);
+	             }
+	               else if (user == 2 && userCount == 1){
+	                stateResponse = 2;
+	                console.log(user);
+	                console.log(userCount);
+	                console.log("Sr" + stateResponse);
+	             }
+	             else if (userCount >= 2) {
+	             document.getElementById("chat").innerHTML = "";
+	             	document.getElementById("response1").innerHTML = "";
+                   document.getElementById("response2").innerHTML = "";
+	             }
+
+          }
+                  switch (stateResponse) {
+                    case 1:
+                            document.getElementById("chat").innerHTML = "You should really announce yourself, instead of sneaking up.";
+                            var response1 = "Q) Sorry";
+                            document.getElementById("response1").innerHTML = response1;
+                             var response2 = "E) ...";
+                            document.getElementById("response2").innerHTML = response2;
+                           break;
+                    case 2:
+                        	document.getElementById("chat").innerHTML = "Counting my coins of course.";
+                       		document.getElementById("response1").innerHTML = "";
+                        	document.getElementById("response2").innerHTML = "";
+                       break;
                  }
         }
         
@@ -603,6 +735,10 @@ class Character
     ctx.fillStyle = "Red";
     ctx.fillText("Level: " + this.lvl, 5, 725);
     ctx.fillText("Exp to next lvl: " + (this.nextLvl - this.exp), 5, 740);
+    ctx.fillText("Health: " + this.health, 5, 755);
+      if (this.drunk != 0) {
+    	  document.getElementById("chat").innerHTML = "<br>Effects of beer will wear off in " + this.drunk;
+    }
   }
   giveXP(exp)
   {

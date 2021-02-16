@@ -5,6 +5,7 @@ class MissionManager
         this.game = game;
         this.missions = [];
         this.missions["Bank"] = new BankerMission(this.game);
+        this.missions["KillCoyote"] = new KillCoyoteMission(this.game);
     }
 }
 class Missions
@@ -38,6 +39,39 @@ class BankerMission  extends Missions
                     this.state = 2;
                 }
             }
+        }
+    }
+    draw(ctx)
+    {
+        if(this.state == 1)
+        {
+            ctx.font = "15px Papyrus";
+            ctx.fillStyle = "Red";
+            ctx.fillText("Put Two Coins Into The Chest", 5, 25);
+        }
+    }
+}
+
+class KillCoyoteMission  extends Missions 
+{
+    constructor(game)
+    {
+        super(game,"Kill Coyote");
+        this.flags["Killed"] = false;
+        this.state = 0;
+        this.killed = coyotesKilled;
+        killCoyoteMissionActive = true;
+    }
+    update()
+    {
+        if(this.state == 1)
+        {
+            if(this.killed < coyotesKilled)
+            {
+                  this.state = 2;
+            }
+            console.log(this.state);
+            console.log("coyotes killed:" + coyotesKilled);
         }
     }
     draw(ctx)
