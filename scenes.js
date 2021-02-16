@@ -95,6 +95,7 @@ class BankScene extends Scene {
         this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
+        this.entities.push(new npc(gameEngine, 384, 300, "banker"));
     }
 }
 
@@ -143,6 +144,7 @@ class SheriffScene extends Scene {
         this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
+        this.entities.push(new npc(gameEngine, 384, 300, "cop"));
     }
 }
 
