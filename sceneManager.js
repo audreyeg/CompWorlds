@@ -39,20 +39,12 @@ class SceneManager {
             this.currentEnemy.removeFromWorld = true;
             this.currentEnemy = null;
         }
-        this.missions.missions["Bank"].update();
+        this.missions.missions["KillCoyote"].update();
         this.cowboy.update();
     }
     draw(ctx) 
     { 
-        /*
-        ctx.font = "15px Papyrus";
-        ctx.fillStyle = "Red";
-        ctx.fillText("Coins: ", 5, 25);
-        ctx.font = "30px Papyrus";
-        ctx.fillStyle = "Red";
-        ctx.fillText(this.inventory.checkItem("coin"), 55, 25);
-        */
-       this.missions.missions["Bank"].draw(ctx);
+       this.missions.missions["KillCoyote"].draw(ctx);
        this.cowboy.draw(ctx);
     }
 

@@ -28,8 +28,6 @@ class BankerMission  extends Missions
     }
     update()
     {
-        //console.log(this.game.camera.currentScene);
-        //console.log(this.game.camera.inventory.checkItem("coin"));
         if(this.state == 1)
         {
             if(this.game.camera.currentScene == "bank")
@@ -80,7 +78,7 @@ class KillCoyoteMission  extends Missions
         {
             ctx.font = "15px Papyrus";
             ctx.fillStyle = "Red";
-            ctx.fillText("Put Two Coins Into The Chest", 5, 25);
+            ctx.fillText("Kill One Coyote", 5, 25);
         }
     }
 }
