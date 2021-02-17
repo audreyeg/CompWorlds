@@ -22,7 +22,7 @@ class coyote{
         this.delay = 0;
         this.returnTime = 0;
         this.turn;
-        this.healthMax = (lvl * 10);
+        this.healthMax = (lvl * 1);
         this.health = (lvl * 10);
         this.parent = parent;
         this.baseXP = 25;
