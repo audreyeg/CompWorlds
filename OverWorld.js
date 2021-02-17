@@ -53,6 +53,11 @@ class DesertPlant extends Drawable
     collision(player)
     {
         player.stats.health--;
+        if(player.stats.health == 0)
+        {
+            player.removeFromWorld = true;
+            document.getElementById("chat").innerHTML = "Dont bring a gun to a cactus fight!";
+        }
     }
 }
 class DesertWell extends Drawable
