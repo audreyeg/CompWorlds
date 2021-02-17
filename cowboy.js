@@ -184,8 +184,8 @@ class CowBoy {
 
 
 class OverWorldPlayer {
-  constructor(game, x, y, stats) {
-    Object.assign(this, { game, x, y, stats });
+  constructor(game, x, y, stats, camera=null) {
+    Object.assign(this, { game, x, y, stats, camera });
     this.stats = stats;
     this.x = x;
     this.y = y;
@@ -590,6 +590,8 @@ class OverWorldPlayer {
       }
 
     }
+
+
   }
 
   draw(ctx) {

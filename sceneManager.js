@@ -13,6 +13,7 @@ class SceneManager {
         this.scenes["bank"] = new BankScene(game, this.cowboy);
         this.scenes["saloon"] = new SaloonScene(game, this.cowboy);
         this.scenes["sheriff"] = new SheriffScene(game, this.cowboy);
+        this.scenes["desert"] = new Desert(game, this.cowboy);
         this.scenes["fight"] = new FightScene(game, this.cowboy, new coyote(gameEngine,486,450));
 
         this.x = 0;

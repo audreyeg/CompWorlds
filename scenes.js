@@ -4,7 +4,9 @@ class Scene {
         this.game = game;
         this.character = character;
         this.entities = [];
-        this.inventory = new SceneInventory(this.game,this); 
+        this.inventory = new SceneInventory(this.game,this);
+
+        this.camera = new Camera();  // Used in desert scene, TODO: use in more scenes
     };
 }
 
@@ -214,12 +216,12 @@ class TownScene extends Scene {
         this.entities.push(new Town(gameEngine,0,0));
         for(var i = 0; i < 3; i++)
         {
-            this.entities.push(new DesertGround(gameEngine,256 * 0,256 * i));
-            this.entities.push(new DesertGround(gameEngine,256 * 1,256 * i));
-            this.entities.push(new DesertGround(gameEngine,256 * 2,256 * i));
-            this.entities.push(new DesertGround(gameEngine,256 * 3,256 * i));
-            this.entities.push(new DesertGround(gameEngine,256 * 4,256 * i));
-            this.entities.push(new DesertGround(gameEngine,256 * 5,256 * i));
+            this.entities.push(new DesertGround(gameEngine,256 * 0,256 * -i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 1,256 * -i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 2,256 * -i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 3,256 * -i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 4,256 * -i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 5,256 * -i, this.camera));
         }
         for(var i = 0; i < 44; i++ )
         {
@@ -247,6 +249,7 @@ class TownScene extends Scene {
         this.entities.push(new saloonLZ(gameEngine,170,355,55,25));
         this.entities.push(new sheriffLZ(gameEngine,700,255,55,25));
         this.entities.push(new bankLZ(gameEngine,1165,300,23,25));
+        this.entities.push(new desertLZ(gameEngine,1370,415,23,100));
 
         this.entities.push(new Heal(gameEngine, 200, 400));
         this.entities.push(new Heal(gameEngine, 800, 400));
@@ -260,5 +263,72 @@ class TownScene extends Scene {
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);
         this.entities.push(new EnemySpawner(gameEngine,0,1500,400,350,5,1));
+    }
+}
+
+class Desert extends Scene {
+    constructor(game, character) {
+        super(game, character);
+
+        // this.camera.pixelScale = 128;
+
+        this.camera.setEntityToFollow(character);
+        this.entities.push(this.camera);
+
+        for (var i = -20; i < 20; i++) {
+            for (var j = -20; j < 20; j++) {
+                this.entities.push(new DesertGround(gameEngine, i * 128, j * 128, this.camera));
+
+            }
+        }
+
+        var things = {};
+        for (var i = 0; i < 40; i++) {
+            // Add skull
+            var x = Math.random() * 40 - 20;
+            var y = Math.random() * 40 - 20;
+            while (things[JSON.stringify(x) + JSON.stringify(y)] != undefined) {
+                x = Math.random() * 40 - 20;
+                y = Math.random() * 40 - 20;
+            }
+            var thing = new DesertSkull(gameEngine, x * 128, y * 128, this.camera);
+            this.entities.push(thing);
+            things[JSON.stringify(x) + JSON.stringify(y)] = thing;
+            
+            // Add plant
+            x = Math.random() * 40 - 20;
+            y = Math.random() * 40 - 20;
+            while (things[JSON.stringify(x) + JSON.stringify(y)] != undefined) {
+                x = Math.random() * 40 - 20;
+                y = Math.random() * 40 - 20;
+            }
+            thing = new DesertPlant(gameEngine, x * 128, y * 128, this.camera);
+            this.entities.push(thing);
+            things[JSON.stringify(x) + JSON.stringify(y)] = thing;
+        }
+        for (var i = 0; i < 5; i++) {
+            // Add Well
+            var x = Math.random() * 40 - 20;
+            var y = Math.random() * 40 - 20;
+            while (things[JSON.stringify(x) + JSON.stringify(y)] != undefined) {
+                x = Math.random() * 39 - 20;
+                y = Math.random() * 39 - 20;
+            }
+            // Add enemy spawner
+            var thing = new DesertWell(gameEngine, x * 128, y * 128, this.camera);
+            this.entities.push(thing);
+
+            var thing = new EnemySpawner(gameEngine,x * 128,2000,y * 128,2000,5,1);
+        
+            this.entities.push(thing);
+            things[JSON.stringify(x) + JSON.stringify(y)] = thing;
+        }
+
+
+        // Add beep bop boop bep cowboy
+        this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character, this.camera));
+        this.entities.push(new townLZ(gameEngine,350,750,50,25));
+        this.entities.push(this.inventory);
+
     }
 }
