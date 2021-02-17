@@ -56,13 +56,31 @@ class Drawable {
     constructor( x, y, camera, sx, sy, sdx, sdy, dx, dy, tileSprite ) {
         Object.assign(this, { x, y, camera, sx, sy, sdx, sdy, dx, dy, tileSprite });
         this.spritesheet = ASSET_MANAGER.getAsset(tileSprite);
-        
+        this.BB = null;
         this.rotations = [];
+        this.xPos;
+        this.yPos
 
     }
 
     update()
-    {}
+    {
+        if(this.BB != null)
+        {
+            this.updateBB()
+            var that = this;
+            gameEngine.entities.forEach(function (entity) 
+            {
+                if (entity.BB && that.BB.collide(entity.BB)) 
+                {
+                    if (entity instanceof OverWorldPlayer) 
+                    {
+                        that.collision(entity);
+                    }
+                }
+            });
+        }
+    }
 
     draw(ctx) {
         var camera = this.camera;
@@ -80,15 +98,32 @@ class Drawable {
         var tileHeight = camera.pixelScale * camera.linearScale[1];
         var thisTileWidth = rotatedSprite[0].width * tileWidth;
         var thisTileHeight = rotatedSprite[0].height * tileHeight;
-        var xPos = (this.x - camera.x) * tileWidth * Math.cos(realAngle) - (this.y - camera.y) * tileHeight * Math.sin(realAngle) - rotatedSprite[1];
-        var yPos = (this.x - camera.x) * tileWidth * Math.sin(realAngle) - (this.y - camera.y) * tileHeight * Math.cos(realAngle) - rotatedSprite[2];
+        this.xPos = (this.x - camera.x) * tileWidth * Math.cos(realAngle) - (this.y - camera.y) * tileHeight * Math.sin(realAngle) - rotatedSprite[1];
+        this.yPos = (this.x - camera.x) * tileWidth * Math.sin(realAngle) - (this.y - camera.y) * tileHeight * Math.cos(realAngle) - rotatedSprite[2];
         
-        if (xPos < ctx.canvas.width && xPos + thisTileWidth - 1 >= 0 && yPos < ctx.canvas.height && yPos + thisTileHeight - 1 >= 0) {
-            ctx.drawImage(rotatedSprite[0], 0, 0, rotatedSprite[0].width,rotatedSprite[0].height,xPos,yPos,thisTileWidth, thisTileHeight);
+        if (this.xPos < ctx.canvas.width && this.xPos + thisTileWidth - 1 >= 0 && this.yPos < ctx.canvas.height && this.yPos + thisTileHeight - 1 >= 0) {
+            ctx.drawImage(rotatedSprite[0], 0, 0, rotatedSprite[0].width,rotatedSprite[0].height,this.xPos,this.yPos,thisTileWidth, thisTileHeight);
+            if (PARAMS.DEBUG && this.BB != null) 
+            {
+                ctx.strokeStyle = 'Red';
+                ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
+            }
         }
 
     };
-
+    updateBB()
+    {
+        if(this instanceof overWorldCoyote)
+        {
+            this.BB = new BoundingBox(this.xPos, this.yPos + 20, this.BB.width, this.BB.height);
+        }
+        else
+        {
+            this.BB = new BoundingBox(this.xPos, this.yPos, this.BB.width, this.BB.height);
+        }
+    }
+    collision(player)
+    {}
     createRotatedCanvas(angle) {
         var realAngle = angle % (Math.PI * 2);
         var canvas = document.createElement('canvas');

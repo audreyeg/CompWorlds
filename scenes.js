@@ -262,7 +262,7 @@ class TownScene extends Scene {
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);
-        this.entities.push(new EnemySpawner(gameEngine,0,1500,400,350,5,1));
+        //this.entities.push(new EnemySpawner(gameEngine,0,1500,400,350,5,1));
     }
 }
 
@@ -272,7 +272,7 @@ class Desert extends Scene {
 
         // this.camera.pixelScale = 128;
 
-        this.camera.setEntityToFollow(character);
+        //this.camera.setEntityToFollow(character);
         this.entities.push(this.camera);
 
         for (var i = -20; i < 20; i++) {
@@ -318,7 +318,7 @@ class Desert extends Scene {
             var thing = new DesertWell(gameEngine, x * 128, y * 128, this.camera);
             this.entities.push(thing);
 
-            var thing = new EnemySpawner(gameEngine,x * 128,2000,y * 128,2000,5,1);
+            var thing = new EnemySpawner(gameEngine,x * 128,2000,y * 128,2000,5,1,this.camera);
         
             this.entities.push(thing);
             things[JSON.stringify(x) + JSON.stringify(y)] = thing;
@@ -326,9 +326,12 @@ class Desert extends Scene {
 
 
         // Add beep bop boop bep cowboy
-        this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character, this.camera));
-        this.entities.push(new townLZ(gameEngine,350,750,50,25));
+        var cowboys = new OverWorldPlayer(gameEngine,30,375,this.character, this.camera)
+        this.entities.push(cowboys);
+        this.entities.push(new townLZ(gameEngine,0,375,25,50));
         this.entities.push(this.inventory);
+        this.camera.setEntityToFollow(cowboys);
+        
 
     }
 }

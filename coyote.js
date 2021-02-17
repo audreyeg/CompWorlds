@@ -2,7 +2,6 @@ class coyote{
 
     constructor(game, x, y,parent,lvl) {
         Object.assign(this, { game, x, y });
-        this.game.coyote = this;
         // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/coyote.png");
         this.velocity = { x: 0, y: 0 };
@@ -22,8 +21,8 @@ class coyote{
         this.delay = 0;
         this.returnTime = 0;
         this.turn;
-        this.healthMax = (lvl * 1);
-        this.health = (lvl * 10);
+        this.healthMax = (lvl * 10);
+        this.health = this.healthMax;
         this.parent = parent;
         this.baseXP = 25;
         this.lvl = lvl;
@@ -31,7 +30,7 @@ class coyote{
         this.reward = "medpac";
         this.rewardMin = 1;
         this.spread = 1;
-        this.chance = 10;
+        this.chance = 10;// 1 in __ chance
     };
     update()
     {
@@ -183,26 +182,5 @@ class coyote{
       {
         this.health = this.healthMax;
       }
-    }
-}
-class overWorldCoyote
-{
-    constructor(game,x,y,lvl)
-    {
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.lvl = lvl
-        this.BB = new fightLZ(this.game,this.x,this.y + 20,60,30,new coyote(this.game,486,450,this,this.lvl));
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/coyote.png");
-    }
-    update()
-    {
-        this.BB.update();
-    }
-    draw(ctx)
-    {
-            ctx.drawImage(this.spritesheet,0,0,136,120,this.x ,this.y,36.25 * 2,30 * 2);
-            this.BB.draw(ctx);
     }
 }

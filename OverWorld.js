@@ -11,6 +11,24 @@ class Town {
         ctx.drawImage(this.spritesheet,0,0,700,350,0,0,1400,700);
     };
 };
+class overWorldCoyote extends Drawable
+{
+    constructor(game,x,y,lvl, camera)
+    {
+        super(x, y, camera, 0, 0, 136, 120, 60, 50, "./sprites/coyote.png");
+        this.lvl = lvl
+        this.BB = new BoundingBox(x,y + 20,60,30);
+    }
+    collision(player)
+    {
+        gameEngine.camera.enemySpawner.currentEnemies--;
+        gameEngine.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450,this,this.lvl),this.x,this.y);
+        document.getElementById("townAudio").pause();
+        document.getElementById("fightAudio").play();
+        this.removeFromWorld = true;
+    }
+
+}
 class DesertGround extends Drawable
 {
     constructor(game,x,y, camera)
@@ -30,6 +48,11 @@ class DesertPlant extends Drawable
     constructor(game,x,y, camera)
     {
         super(x, y, camera, 320, 160, 32, 32, 64, 64, "./sprites/DesertTileSet.png");
+        this.BB = new BoundingBox(x,y,64,64);
+    }
+    collision(player)
+    {
+        player.stats.health--;
     }
 }
 class DesertWell extends Drawable
@@ -37,6 +60,11 @@ class DesertWell extends Drawable
     constructor(game,x,y, camera)
     {
         super(x, y, camera, 448, 64, 64, 64, 256, 256, "./sprites/DesertTileSet.png");
+        this.BB = new BoundingBox(x,y,256,256);
+    }
+    collision(player)
+    {
+        //player.push();
     }
 }
 
