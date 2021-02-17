@@ -41,11 +41,13 @@ class SceneManager {
             this.currentEnemy = null;
         }
         this.missions.missions["KillCoyote"].update();
+        this.missions.missions["Bank"].update();
         this.cowboy.update();
     }
     draw(ctx) 
     { 
        this.missions.missions["KillCoyote"].draw(ctx);
+        this.missions.missions["Bank"].draw(ctx);
        this.cowboy.draw(ctx);
     }
 
