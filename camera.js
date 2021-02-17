@@ -6,6 +6,7 @@ class Camera {
         this.angle = angle;
         this.pixelScale = pixelScale;
         this.linearScale = linearScale;
+        this.followEntity = null;
 
         this.animationQueue = [];
     }
@@ -15,6 +16,17 @@ class Camera {
 
         // }
 
+    }
+
+    update() {
+        if (this.followEntity != null) {
+            this.x = this.followEntity.x;
+            this.y = -this.followEntity.y;
+        }
+    }
+
+    setEntityToFollow(entity) {
+        this.followEntity = entity;
     }
 
     clearAnimations() {
@@ -41,15 +53,20 @@ class Camera {
 }
 
 class Drawable {
-    constructor(game, x, y, dx, dy, tileSprite ) {
-        Object.assign(this, { game, x, y, dx, dy, tileSprite });
+    constructor( x, y, camera, sx, sy, sdx, sdy, dx, dy, tileSprite ) {
+        Object.assign(this, { x, y, camera, sx, sy, sdx, sdy, dx, dy, tileSprite });
         this.spritesheet = ASSET_MANAGER.getAsset(tileSprite);
         
         this.rotations = [];
+
     }
 
-    draw(ctx, camera) {
-        
+    update()
+    {}
+
+    draw(ctx) {
+        var camera = this.camera;
+
         var realAngle = camera.angle % (Math.PI * 2);
         var digitsToRound = 2;
         realAngle = Math.round(realAngle * (10 ** digitsToRound)) / (10 ** digitsToRound);
@@ -66,7 +83,10 @@ class Drawable {
         var xPos = (this.x - camera.x) * tileWidth * Math.cos(realAngle) - (this.y - camera.y) * tileHeight * Math.sin(realAngle) - rotatedSprite[1];
         var yPos = (this.x - camera.x) * tileWidth * Math.sin(realAngle) - (this.y - camera.y) * tileHeight * Math.cos(realAngle) - rotatedSprite[2];
         
-        ctx.drawImage(rotatedSprite[0], 0, 0, rotatedSprite[0].width,rotatedSprite[0].height,xPos,yPos,thisTileWidth,thisTileHeight);
+        if (xPos < ctx.canvas.width && xPos + thisTileWidth - 1 >= 0 && yPos < ctx.canvas.height && yPos + thisTileHeight - 1 >= 0) {
+            ctx.drawImage(rotatedSprite[0], 0, 0, rotatedSprite[0].width,rotatedSprite[0].height,xPos,yPos,thisTileWidth, thisTileHeight);
+        }
+
     };
 
     createRotatedCanvas(angle) {
@@ -93,7 +113,7 @@ class Drawable {
         offscreenCtx.save();
         offscreenCtx.translate(translationX, translationY);
         offscreenCtx.rotate(realAngle);
-        offscreenCtx.drawImage(this.spritesheet, 0, 0, this.dx, this.dy, 0, 0, this.dx, this.dy);
+        offscreenCtx.drawImage(this.spritesheet, this.sx, this.sy, this.sdx, this.sdy, 0, 0, this.dx, this.dy);
         offscreenCtx.restore();
 
         return [canvas, translationX, translationY];

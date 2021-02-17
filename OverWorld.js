@@ -11,25 +11,35 @@ class Town {
         ctx.drawImage(this.spritesheet,0,0,700,350,0,0,1400,700);
     };
 };
-class DesertGround
+class DesertGround extends Drawable
 {
-    constructor(game,x,y)
+    constructor(game,x,y, camera)
     {
-        Object.assign(this, { game, x, y});
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png");
-        this.x = x;
-        this.y = y;
+        super(x, y, camera, 384, 384, 128, 128, 256, 256, "./sprites/DesertTileSet.png");
     }
-    update()
-    {
-
-    }
-    draw(ctx)
-    {
-        ctx.drawImage(this.spritesheet,384,384,512,512,this.x,this.y,128 * 8,128 * 8);
-    }
-
 }
+class DesertSkull extends Drawable
+{
+    constructor(game,x,y, camera)
+    {
+        super(x, y, camera, 224, 192, 64, 32, 128, 64, "./sprites/DesertTileSet.png");
+    }
+}
+class DesertPlant extends Drawable
+{
+    constructor(game,x,y, camera)
+    {
+        super(x, y, camera, 320, 160, 32, 32, 64, 64, "./sprites/DesertTileSet.png");
+    }
+}
+class DesertWell extends Drawable
+{
+    constructor(game,x,y, camera)
+    {
+        super(x, y, camera, 448, 64, 64, 64, 256, 256, "./sprites/DesertTileSet.png");
+    }
+}
+
 class Road
 {
     constructor(game,x,y)
