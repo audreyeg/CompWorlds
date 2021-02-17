@@ -130,12 +130,12 @@ class Fight {
             }
             else if(!this.dialoug && this.enemy.dead)
             {
-                var drop = Math.floor(Math.random() * this.enemy.chance);
+                var drop = Math.floor(Math.random() * this.enemy.chance) ;
                this.dialoug = true;
                document.getElementById("chat").innerHTML = "Killing the coyote granted " + this.enemy.baseXP * this.enemy.lvl + " EXP! " ;
-               if(drop == 1)
+               if(drop == 0)
                {
-                   var amount = this.enemy.rewardMin + Math.floor((Math.random() * this.enemy.spread));
+                   var amount = this.enemy.rewardMin + Math.floor((Math.random() * this.enemy.spread + 1));
                    playerInventory.addItem(this.enemy.reward,amount);
                    document.getElementById("chat").innerHTML += "<br>You looted " + amount + " " + this.enemy.reward + "s";
                }

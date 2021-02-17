@@ -646,7 +646,7 @@ class Character {
     this.maxHealth = 100;
     this.x = 0;
     this.y = 0;
-    this.speed = 3 * 3;
+    this.speed = 3 * 5;
     this.facing;
     this.drunk = 0;
     this.lvl = 0;
@@ -799,7 +799,6 @@ Item.List = {};
 Item("medpac", "MedPac", function () {
   if (playerInventory.hasItem("medpac", 0)) {
     gameEngine.camera.cowboy.health += 10;
-    console.log(this.health);
     playerInventory.removeItem("medpac", 1);
   }
 });
