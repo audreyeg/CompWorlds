@@ -45,8 +45,8 @@ class SceneInventory
     {
         return this.items[this.items.indexOf(item) + 1];
     }
-    update(ctx)
+    update()
     {}
-    draw()
+    draw(ctx)
     {}
 }

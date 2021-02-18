@@ -13,7 +13,6 @@ class FightScene extends Scene {
     constructor(game, character, enemy) {
         super(game, character);
         this.enemy = enemy;
-
         // Sets up scene
         this.fightChar = new CowBoy(gameEngine,160,400,this.character);
         //this.enemy = new coyote(gameEngine,486,450);
@@ -55,7 +54,10 @@ class BankScene extends Scene {
 
         // Sets up scene
         var TILE_WIDTH = 128;
-    
+        this.xMin = 0;
+        this.xMax = 700;
+        this.yMin = 0;
+        this.yMax = 700;
         // Make and left sides of screen
         for (var i = 0; i < 6; i++) {
             this.entities.push(new CenterHouseFadeLeft(gameEngine, 0 * TILE_WIDTH, i * TILE_WIDTH, false));
@@ -106,7 +108,10 @@ class BankScene extends Scene {
 class SheriffScene extends Scene {
     constructor(game, character) {
         super(game, character)
-        
+        this.xMin = 0;
+        this.xMax = 700;
+        this.yMin = 0;
+        this.yMax = 700;
         // Sets up scene
         var TILE_WIDTH = 128;
     
@@ -157,7 +162,10 @@ class SheriffScene extends Scene {
 class SaloonScene extends Scene {
     constructor(game, character) {
         super(game, character)
-
+        this.xMin = 0;
+        this.xMax = 700;
+        this.yMin = 0;
+        this.yMax = 700;
         // Sets up scene
         var TILE_WIDTH = 128;
 
@@ -218,6 +226,10 @@ class SaloonScene extends Scene {
 class TownScene extends Scene {
     constructor(game, character) {
         super(game, character)
+        this.xMin = 0;
+        this.xMax = 1350;
+        this.yMin = 0;
+        this.yMax = 750;
         // Sets up scene
         this.entities.push(new Town(gameEngine,0,0));
         for(var i = 0; i < 3; i++)
@@ -277,7 +289,10 @@ class TownScene extends Scene {
 class Desert extends Scene {
     constructor(game, character) {
         super(game, character);
-
+        this.xMin = -2560/2;
+        this.xMax = 2560/2;
+        this.yMin = -2560/2;
+        this.yMax = 2560/2;
         // this.camera.pixelScale = 128;
 
         //this.camera.setEntityToFollow(character);

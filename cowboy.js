@@ -554,6 +554,22 @@ class OverWorldPlayer {
     }
     this.x += this.velocity.x;
     this.y += this.velocity.y;
+    if(this.x > this.game.camera.scenes[this.game.camera.currentScene].xMax)
+    {
+      this.x = this.game.camera.scenes[this.game.camera.currentScene].xMax;
+    }
+    if(this.x < this.game.camera.scenes[this.game.camera.currentScene].xMin)
+    {
+      this.x = this.game.camera.scenes[this.game.camera.currentScene].xMin;
+    }
+    if(this.y > this.game.camera.scenes[this.game.camera.currentScene].yMax)
+    {
+      this.y = this.game.camera.scenes[this.game.camera.currentScene].yMax;
+    }
+    if(this.y < this.game.camera.scenes[this.game.camera.currentScene].yMin)
+    {
+      this.y = this.game.camera.scenes[this.game.camera.currentScene].yMin;
+    }
     if (this.velocity.x > 0) {
       this.facingState = 0;
     }
@@ -601,6 +617,7 @@ class OverWorldPlayer {
       this.horizontalWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
     else if (this.facingState == 1) {
+      ctx.save();
       ctx.scale(-1, 1);
       this.horizontalWalking.drawFrame(this.game.clockTick, ctx, -this.x - (20 * this.SCALE), this.y, this.SCALE);
       ctx.restore();
