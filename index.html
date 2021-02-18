@@ -2,6 +2,21 @@
 
 
 
+  <!-- 
+  		CHAT SYSTEM
+
+	1) index.html 
+			-place outside of Canvas where npc dialogue lives
+			-buttons filled with user responses are
+			-based on which button user clicks, response is saved and is used to determine next dialogue
+	2) animated/playable sprite (in collisions)
+			-use switch statement to determine npc dialogue and user response options
+				-switch statement is based on 2 factors (which button user pushed) and how many buttons user has pushed
+				since conversation started
+
+
+  -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,34 +82,39 @@
     <!-- Where npc says their lines -->
      <div id="chat" style = "color: black; font-family: Papyrus">
     </div>
-    <!-- Where player response options are  -->
+    <!-- Where player response options are. On click, sends to below function-->
     <button id = "response1" onclick = "change(this, 1)" style = "color: red; font-family: Papyrus"></button>
     <button id = "response2" onclick = "change(this, 2)" style = "color: red; font-family: Papyrus"></button>
 
     <script>
-    	var userresponded = false;
+    	//CHAT variables
+    	//variable to determine whether user responded with first or second option (button)
     	var response = 0;
+    	//variable to determine how deep into conversation user is (based on how many buttons user has pushed)
         var userCount = 0;
+        //dialogue flat to determine npc chat options
         var flag = false;
+        //CHAT variables end
+
         var coyotesKilled = 0;
         var killCoyoteMissionActive = false;
         playerInventory = new Inventory();
 
-        //checks to see when the user responds (button is pushed)
+        //checks to see when the user has responded (button is pushed)
         function change(btn, option) {
-        	this.userresponded = true;
-            console.log(this.userresponded);
-            console.log(userresponded);
+        	//sets to true when user has selected a response option
       	  	var clicked = true;
             //sets response to either 1 or 2 depending if user selected 1st or 2nd button
       	  	this.response = option;
-            console.log(this.response);
        	 	responded(clicked);
+       	 	//increment usercount to determine how deep into conversation user is now
             this.userCount++;
          }
             //clears the chat/buttons 
      	function responded(clicked) 
           	{
+          		//empties contents of buttons and div element where npc has lines if user has responded
+          		//otherwise the contents of buttons and chat element will not be cleared for more dialogue
             	if (clicked) {
             	document.getElementById("response1").innerHTML = "";
             	document.getElementById("response2").innerHTML = "";
