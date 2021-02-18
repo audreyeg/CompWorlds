@@ -5,7 +5,6 @@ class Scene {
         this.character = character;
         this.entities = [];
         this.inventory = new SceneInventory(this.game,this);
-
         this.camera = new Camera();  // Used in desert scene, TODO: use in more scenes
     };
 }
@@ -45,6 +44,7 @@ class FightScene extends Scene {
         this.fightScene = new Fight(gameEngine,this.fightChar,this.enemy);
         this.entities.push(this.fightScene);
         this.entities.push(this.inventory);
+         this.entities.push(new bgImageForChat(gameEngine,-40,650));
     }
 
 }
@@ -98,6 +98,8 @@ class BankScene extends Scene {
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
         this.entities.push(new npc(gameEngine, 384, 300, "banker"));
+        this.entities.push(new bgImageForChat(gameEngine,-40,650));
+        this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
 
@@ -147,6 +149,8 @@ class SheriffScene extends Scene {
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
         this.entities.push(new npc(gameEngine, 384, 300, "cop"));
+        this.entities.push(new bgImageForChat(gameEngine,-40,650));
+        this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
 
@@ -205,6 +209,8 @@ class SaloonScene extends Scene {
         this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
+        this.entities.push(new bgImageForChat(gameEngine,-40,650));
+        this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
 
@@ -262,6 +268,8 @@ class TownScene extends Scene {
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);
+        this.entities.push(new bgImageForChat(gameEngine,-40,650));
+         this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
         //this.entities.push(new EnemySpawner(gameEngine,0,1500,400,350,5,1));
     }
 }
@@ -331,6 +339,8 @@ class Desert extends Scene {
         this.entities.push(new townLZ(gameEngine,0,375,25,50));
         this.entities.push(this.inventory);
         this.camera.setEntityToFollow(cowboys);
+        this.entities.push(new bgImageForChat(gameEngine,-40,650));
+        this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
         
 
     }

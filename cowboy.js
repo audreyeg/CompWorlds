@@ -203,8 +203,6 @@ class OverWorldPlayer {
     this.stun = 0;
     this.cooldown = 0;
     this.talking = false;
-    //this.user = 0;
-    //this.playerInventory = Inventory();
 
   }
   update() {
@@ -263,8 +261,8 @@ class OverWorldPlayer {
       this.stun--;
     }
 
-    //collision
-    // this.userCount = 0;
+    //COLLISIONS 
+    //variable that determines when user is talking to npcs or not 
     this.talking = false;
     var that = this;
     this.game.entities.forEach(function (entity) {
@@ -277,72 +275,77 @@ class OverWorldPlayer {
           playerInventory.addItem("coin", 1);
           entity.removeFromWorld = true;
         }
+
         //saloon NPC
         if (entity instanceof npc && entity.saloon) {
+          //user is now in conversation
           that.talking = true;
+          //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
-          var str = "";
-          str += "Howdy Partner!";
           //npc line
-          document.getElementById("chat").innerHTML = str;
+          document.getElementById("chat").innerHTML = "Howdy Partner!";
+          //user response options
           var response1 = "Q) What is this place?";
           var response2 = "E) Have you seen my hat?";
           //the 2 button responses user can have 
           document.getElementById("response1").innerHTML = response1;
           document.getElementById("response2").innerHTML = response2;
 
-          if (userresponded) {
+          //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
+            //set the state to determine dialogue options
+            //LEVEL 1 of conversation
             if (user == 1 && userCount == 1) {
               stateResponse = 1;
-              //console.log(user);
-              //console.log(userCount);
-              //console.log("Sr" + stateResponse);
             }
             else if (user == 2 && userCount == 1) {
               stateResponse = 2;
-              //console.log(user);
-              //console.log(userCount);
-              //console.log("Sr" + stateResponse);
             }
+            //LEVEL 2 of conversation
             else if (user == 1 && userCount == 2) {
               stateResponse = 3;
-              //console.log(user);
-              //console.log(userCount);
-              //console.log("Sr" + stateResponse);
             }
             else if (user == 2 && userCount == 2) {
               stateResponse = 4;
-              //console.log(user);
-              //console.log(userCount);
-              //console.log("Sr" + stateResponse);
             }
-          }
           switch (stateResponse) {
+            //LEVEL 1 of conversation
             //if user selected option 1 ("what is this place?")
             case 1:
               document.getElementById("chat").innerHTML = "The saloon!";
               //additional responses from user
               var response1 = "Q) Can I buy a drink?";
-              document.getElementById("response1").innerHTML = response1;
               var response2 = "E) Big nice";
+              document.getElementById("response1").innerHTML = response1;
               document.getElementById("response2").innerHTML = response2;
               break;
+              //if user selected option 2 ("Have you seen my hat?")
             case 2:
+               //npc response
               document.getElementById("chat").innerHTML = "Nope";
+              //no additional responses from user are given for this conversation line
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
               break;
+              //LEVEL 2 of conversation
+                //if user selected option 1 ("Can I buy a drink?")
             case 3:
+            //npc response
               document.getElementById("chat").innerHTML = "You have to go to the bartender for that";
+                 //no additional responses from user are given for this conversation line
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
+              //mission started (IGNORE FOR CHAT)
               if (that.game.camera.missions.missions["Bank"].state == 0) {
                 that.game.camera.missions.missions["Bank"].state = 1;
               }
               break;
+              //if user selected option 2 ("Big nice.")
             case 4:
+               //npc response
               document.getElementById("chat").innerHTML = "Okay bye!";
+              document.getElementById("chat").innerHTML = "Nope";
+              //no additional responses from user are given for this conversation line
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
               break;
@@ -351,52 +354,43 @@ class OverWorldPlayer {
 
         //saloon bartender 
         if (entity instanceof npc && entity.bartender) {
+          //user is now in conversation
           that.talking = true;
+          //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
-          var str = "";
-          str += "Buy a drink for 2 coins?";
           //npc line
-          document.getElementById("chat").innerHTML = str;
+          document.getElementById("chat").innerHTML = "Buy a drink for 2 coins?";
+          //user response options
           var response1 = "Q) Yes";
           var response2 = "E) No";
           //the 2 button respnses user can have 
           document.getElementById("response1").innerHTML = response1;
           document.getElementById("response2").innerHTML = response2;
 
-
-
-          if (userresponded) {
+            //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
-            //var convo = 1;
+            //set the state to determine dialogue options
+            //LEVEL 1 of conversation
+            //additional check to make sure user can afford beer
             if (user == 1 && userCount == 1 && (playerInventory.check("coin", 2))) {
+              //meaning user has purchased a beer 
               flag = true;
-              console.log(flag);
               stateResponse = 1;
-              console.log(user);
-              console.log(userCount);
-              console.log("Sr" + stateResponse);
             }
+            //if user tries to buy beer but doesn't have enough money
             else if (user == 1 && userCount == 1 && !(playerInventory.check("coin", 2)) && !(flag)) {
               stateResponse = 2;
-              console.log(user);
-              console.log(userCount);
-              console.log("Sr" + stateResponse);
             }
             else if (user == 2 && userCount == 1) {
               stateResponse = 3;
-              console.log(user);
-              console.log(userCount);
-              console.log("Sr" + stateResponse);
             }
-          }
           switch (stateResponse) {
-            //user selected first button which is ("yes")
+            //LEVEL 1 of conversation
+            //if user selected option 1 ("Yes") and can afford beer 
             case 1:
               document.getElementById("chat").innerHTML = "Drink up! No refunds";
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
-              // playerInventory.addItem("beer", 1);
-              // playerInventory.removeItem("coin", 2);
               break;
             case 2:
               //if user does not have 2 coins have this response instead
@@ -404,7 +398,7 @@ class OverWorldPlayer {
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
               break;
-            //user selected first button which is ("no")
+            //user selected second button which is ("no")
             case 3:
               document.getElementById("chat").innerHTML = "Then stop loitering";
               document.getElementById("response1").innerHTML = "";
@@ -412,18 +406,20 @@ class OverWorldPlayer {
               break;
           }
         }
-        //sherrif 
+        //sherrif npc
         if (entity instanceof npc && entity.cop) {
+          //user is now in conversation
           that.talking = true;
+            //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
-          var str = "";
-          str += "Need something?";
           //npc line
-          document.getElementById("chat").innerHTML = str;
+          document.getElementById("chat").innerHTML = "Need something?";
+          //checks to see state of mission (2 means it has been completed)
           if (that.game.camera.missions.missions["KillCoyote"].state == 2) {
             var response1 = "Q) I killed that coyote for you";
             var response2 = "";
           }
+          //if user hasn't completed mission yet (state 0 or 1)
           else {
             var response1 = "Q) Yes";
             var response2 = "E) No";
@@ -432,59 +428,64 @@ class OverWorldPlayer {
           document.getElementById("response1").innerHTML = response1;
           document.getElementById("response2").innerHTML = response2;
 
-
-
-          if (userresponded) {
+           //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
-            //var convo = 1;
+            //set the state to determine dialogue options
+            //LEVEL 1 of conversation
+            //additional check to see check on state of mission that sheriff npc gives
+            //state 1 means the mission is currently active
             if (user == 1 && userCount == 1 && that.game.camera.missions.missions["KillCoyote"].state == 1) {
               stateResponse = 5;
             }
+            //state 2 means the mission has been completed
             else if (user == 1 && userCount == 1 && that.game.camera.missions.missions["KillCoyote"].state == 2) {
               stateResponse = 4;
             }
             else if (user == 1 && userCount == 1) {
               stateResponse = 1;
             }
+              //LEVEL 2 of conversation
             else if (user == 1 && userCount == 2) {
               stateResponse = 2;
             }
             else if ((user == 2 && userCount == 1) || (user == 2 && userCount == 2)) {
               stateResponse = 3;
             }
-
-          }
           switch (stateResponse) {
-            //user selected first button which is ("yes")
+            //user selected first button which is ("Yes")
             case 1:
               document.getElementById("chat").innerHTML = "Well... If you'd like a mission I have one for you.";
               var response1 = "Q) Yes, that's why I'm here.";
-              document.getElementById("response1").innerHTML = response1;
               var response2 = "E) No, I don't feel like it";
+              document.getElementById("response1").innerHTML = response1;
               document.getElementById("response2").innerHTML = response2;
               break;
+             //user selected first buttion which is ("Yes, that's why I'm here.")
             case 2:
-              //yes to mission
               document.getElementById("chat").innerHTML = "Go kill one of those coyotes for me then come back here when you've done it.";
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
+              //user has been given mission so it goes from state 0 (pre-mission) to state 1 (mission active)
 
               if (that.game.camera.missions.missions["KillCoyote"].state == 0) {
                 that.game.camera.missions.missions["KillCoyote"].state = 1;
               }
 
               break;
+              //user selected second option which is ("No") in level 1 or ("No, I don't feel like it.") in level 2
             case 3:
               document.getElementById("chat").innerHTML = "I ought you lock you up.";
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
               break;
+              //user has completed the mission (state 2)
             case 4:
               document.getElementById("chat").innerHTML = "Thanks, now I get the day off.";
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
               that.game.camera.missions.missions["KillCoyote"].state == 3;
               break;
+              //user is in state 1 (mission has been given but has not been completed)
             case 5:
               document.getElementById("chat").innerHTML = "Arent you supposed to be killing a coyote for me.";
               document.getElementById("response1").innerHTML = "";
@@ -492,52 +493,46 @@ class OverWorldPlayer {
               break;
           }
         }
-        //banker
+        //banker npc
         if (entity instanceof npc && entity.banker) {
+          //user is now in conversation
           that.talking = true;
+             //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
-          var str = "";
-          str += "1..2...3... AH! When did you get here?";
           //npc line
-          document.getElementById("chat").innerHTML = str;
+          document.getElementById("chat").innerHTML = "1..2...3... AH! When did you get here?";
+          //user response options
           var response1 = "Q) Literally just now. ";
           var response2 = "E) What are you doing?";
           //the 2 button respnses user can have 
           document.getElementById("response1").innerHTML = response1;
           document.getElementById("response2").innerHTML = response2;
-
-
-
-          if (userresponded) {
+           //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
-            //var convo = 1;
+            //set the state to determine dialogue options
+            //LEVEL 1 of conversation
             if (user == 1 && userCount == 1) {
               stateResponse = 1;
-              console.log(user);
-              console.log(userCount);
-              console.log("Sr" + stateResponse);
             }
             else if (user == 2 && userCount == 1) {
               stateResponse = 2;
-              console.log(user);
-              console.log(userCount);
-              console.log("Sr" + stateResponse);
             }
             else if (userCount >= 2) {
               document.getElementById("chat").innerHTML = "";
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
             }
-
-          }
           switch (stateResponse) {
+        //LEVEL 1 of conversation
+            //if user selected option 1 ("Literally just now.")
             case 1:
               document.getElementById("chat").innerHTML = "You should really announce yourself, instead of sneaking up.";
               var response1 = "Q) Sorry";
-              document.getElementById("response1").innerHTML = response1;
               var response2 = "E) ...";
+              document.getElementById("response1").innerHTML = response1;
               document.getElementById("response2").innerHTML = response2;
               break;
+            //if user selected option 1 ("What are you doing?")
             case 2:
               document.getElementById("chat").innerHTML = "Counting my coins of course.";
               document.getElementById("response1").innerHTML = "";
@@ -576,13 +571,17 @@ class OverWorldPlayer {
     this.stats.setY(this.y);
     this.stats.setFacing(this.facingState);
 
-    //to clear buttons/npc chat
+    //to clear buttons/npc chat once user has moved away from npc 
     if (!this.talking) {
+      //reset response to 0
       response = 0;
+      //empty dialogue/responses 
       document.getElementById("chat").innerHTML = "";
       document.getElementById("response1").innerHTML = "";
       document.getElementById("response2").innerHTML = "";
+      //reset user count to 0 (to start conversations over)
       userCount = 0;
+      //flag is currently only being used for beer purchase
       if (flag) {
         playerInventory.addItem("beer", 1);
         playerInventory.removeItem("coin", 2);
@@ -697,8 +696,8 @@ class Character {
     }
   }
   draw(ctx) {
-    ctx.font = "15px Papyrus";
     ctx.fillStyle = "Red";
+    ctx.font = "15px Papyrus";
     ctx.fillText("Level: " + this.lvl, 5, 725);
     ctx.fillText("Exp to next lvl: " + (this.nextLvl - this.exp), 5, 740);
     ctx.fillText("Health: " + this.health, 5, 755);

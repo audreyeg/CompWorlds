@@ -154,6 +154,18 @@ class Crate extends InteriorTile {
     };
 }; 
 
+class bgImageForChat extends InteriorTile { 
+    constructor(game, x, y, rotate180) {
+        super(game, x, y, rotate180, "./sprites/plainbackground.png", 170);
+    };
+};
+
+class bgImageForObjective extends InteriorTile { 
+    constructor(game, x, y, rotate180) {
+        super(game, x, y, rotate180, "./sprites/plainbackground.png", 230);
+    };
+};
+
 class Barrel extends InteriorTile { 
     constructor(game, x, y, rotate180) {
         super(game, x, y, rotate180, "./sprites/png/Separate/128/Static Objects/Other/Barrel.png", 64);

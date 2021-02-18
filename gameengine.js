@@ -68,6 +68,9 @@ class GameEngine {
                 case "Digit2":
                     that.Two = true;
                     break;
+                case "Digit3":
+                    that.Three = true;
+                    break;
                 case "KeyQ":
                     that.response1 = true;
                     break;
@@ -112,6 +115,9 @@ class GameEngine {
                     break;
                 case "Digit2":
                     that.Two = false;
+                    break;
+                case "Digit3":
+                    that.Three = false;
                     break;
                 case "KeyQ":
                     that.response1 = false;
