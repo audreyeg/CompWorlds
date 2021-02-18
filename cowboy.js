@@ -601,6 +601,7 @@ class OverWorldPlayer {
       this.horizontalWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
     else if (this.facingState == 1) {
+      ctx.save();
       ctx.scale(-1, 1);
       this.horizontalWalking.drawFrame(this.game.clockTick, ctx, -this.x - (20 * this.SCALE), this.y, this.SCALE);
       ctx.restore();
