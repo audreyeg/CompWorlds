@@ -146,8 +146,8 @@ class Fight {
                 if(this.game.interact)
                 {
                     this.game.camera.cowboy.giveXP(this.enemy.baseXP * this.enemy.lvl);
-                     this.game.camera.fightEnd = true;
-                     coyotesKilled ++;
+                    this.game.camera.fightEnd = true;
+                    coyotesKilled ++;
                 }
             }
         }

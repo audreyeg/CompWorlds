@@ -20,9 +20,7 @@ class SceneManager {
 
         this.missions = new MissionManager(this.game);
         this.currentScene = null;
-        // this.sceneStack = [];
         this.inventory = null;
-        this.enemySpawner = null;
         this.currentEnemy = null;
 
         this.loadScene("town");
@@ -58,15 +56,10 @@ class SceneManager {
         var temp = this.game.entities.length
         for (var i = 0; i < temp; i++) 
         {
-          //console.log(this.game.entities[i]);
           var temp2 = this.game.entities[i];
           if(temp2 instanceof SceneInventory) 
           {
               this.inventory = temp2;
-          }
-          if(temp2 instanceof EnemySpawner)
-          {
-            this.enemySpawner = temp2;
           }
       }
     }

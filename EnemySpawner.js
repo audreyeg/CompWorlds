@@ -7,7 +7,7 @@ class EnemySpawner
         this.xWidth = xWidth;
         this.yMin = yMin;
         this.yWidth = yWidth;
-        this.maxEnemies = 1000;//maxE;
+        this.maxEnemies = maxE;
         this.currentEnemies = 0;
         this.spawnTime = 0 //300 + Math.floor(Math.random() * 300);
         this.enemy = enemy;
@@ -30,14 +30,14 @@ class EnemySpawner
                 this.lvl = this.minLvl + Math.floor(Math.random() * 2)
                 if(this.enemy == 1)
                 {
-                    this.game.entities.push(new overWorldCoyote(this.game,this.x,this.y,this.lvl,this.camera));
+                    this.game.entities.push(new overWorldCoyote(this.game,this.x,this.y,this.lvl,this.camera,this));
                 }
                 if(this.enmemy == 2)
                 {
                     
                 }
             }
-            this.spawnTime = 60;//300 + Math.floor(Math.random() * 300);
+            this.spawnTime = 300 + Math.floor(Math.random() * 300);
         }
         this.spawnTime--;
     }

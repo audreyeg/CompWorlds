@@ -13,18 +13,19 @@ class Town {
 };
 class overWorldCoyote extends Drawable
 {
-    constructor(game,x,y,lvl, camera)
+    constructor(game,x,y,lvl, camera,spawner)
     {
         super(x, y, camera, 0, 0, 136, 120, 60, 50, "./sprites/coyote.png");
         this.lvl = lvl
         this.BB = new BoundingBox(x,y + 20,60,30);
+        this.spawner = spawner;
     }
     collision(player)
     {
-        gameEngine.camera.enemySpawner.currentEnemies--;
         gameEngine.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450,this,this.lvl),this.x,this.y);
         document.getElementById("townAudio").pause();
         document.getElementById("fightAudio").play();
+        this.spawner.currentEnemies--;
         this.removeFromWorld = true;
     }
 
@@ -49,14 +50,24 @@ class DesertPlant extends Drawable
     {
         super(x, y, camera, 320, 160, 32, 32, 64, 64, "./sprites/DesertTileSet.png");
         this.BB = new BoundingBox(x,y,64,64);
+        this.delay = 0;
     }
     collision(player)
     {
-        player.stats.health--;
+        if(this.delay == 0)
+        {
+            player.stats.health--;
+            this.delay = 10;
+        }
+        else if(this.delay > 0)
+        {
+            this.delay--;
+        }
+        player.push(2);
         if(player.stats.health == 0)
         {
             player.removeFromWorld = true;
-            document.getElementById("chat").innerHTML = "Dont bring a gun to a cactus fight!";
+            document.getElementById("chat").innerHTML = "What exactly were you trying to do to that cactus?";
         }
     }
 }
@@ -69,7 +80,7 @@ class DesertWell extends Drawable
     }
     collision(player)
     {
-        //player.push();
+        player.push(2);
     }
 }
 
@@ -127,7 +138,7 @@ class Saloon {
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    entity.push();
+                    entity.push(1);
                 }
             }
         });
@@ -161,7 +172,7 @@ class Sheriff {
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    entity.push();
+                    entity.push(1);
                 }
             }
         });
@@ -195,7 +206,7 @@ class Bank {
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    entity.push();
+                    entity.push(1);
                 }
             }
         });

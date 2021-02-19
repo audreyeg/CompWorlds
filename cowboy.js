@@ -639,16 +639,9 @@ class OverWorldPlayer {
     this.BB = new BoundingBox(this.x + 5, this.y + 20, 30, 35);
 
   }
-  push() {
-    if (this.stun == 0) {
-      //this.y = this.lastY;
-      //this.x = this.lastX;
-      //console.log(this.velocity.y);
-      this.velocity.x = -(this.velocity.x);
-      this.velocity.y = -(this.velocity.y);
-      //console.log(this.velocity.y);
-      this.stun = 1;
-    }
+  push(amt) {
+      this.x -= (this.velocity.x * amt);
+      this.y -= (this.velocity.y * amt);
   }
 }
 class Character {
@@ -668,8 +661,7 @@ class Character {
     this.lvl = 0;
     this.exp = 0;
     this.nextLvl = 50;
-    console.log(this.health);
-    playerInventory.addItem("coin", 0);
+       playerInventory.addItem("coin", 0);
     playerInventory.addItem("medpac", 0);
     this.setDamage(this.baseDamage);
   }
