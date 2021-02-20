@@ -30,6 +30,7 @@ class SceneManager {
     update() {
         if (playGame) {
              this.loadScene("town");
+            playGame = false;
         }
         PARAMS.DEBUG = document.getElementById("debug").checked;
         if(this.fight && this.fightEnd)
