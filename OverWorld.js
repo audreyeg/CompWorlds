@@ -15,7 +15,7 @@ class overWorldCoyote extends Drawable
 {
     constructor(game,x,y,lvl, camera,spawner)
     {
-        super(x, y, camera, 0, 0, 136, 120, 60, 50, "./sprites/coyote.png");
+        super(x, y, camera, 0, 0, 136, 120, 60, 50, ASSET_MANAGER.getAsset("./sprites/coyote.png"));
         this.lvl = lvl
         this.BB = new BoundingBox(x,y + 20,60,30);
         this.spawner = spawner;
@@ -34,21 +34,21 @@ class DesertGround extends Drawable
 {
     constructor(game,x,y, camera)
     {
-        super(x, y, camera, 384, 384, 128, 128, 256, 256, "./sprites/DesertTileSet.png");
+        super(x, y, camera, 384, 384, 128, 128, 256, 256, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
     }
 }
 class DesertSkull extends Drawable
 {
     constructor(game,x,y, camera)
     {
-        super(x, y, camera, 224, 192, 64, 32, 128, 64, "./sprites/DesertTileSet.png");
+        super(x, y, camera, 224, 192, 64, 32, 128, 64, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
     }
 }
 class DesertPlant extends Drawable
 {
     constructor(game,x,y, camera)
     {
-        super(x, y, camera, 320, 160, 32, 32, 64, 64, "./sprites/DesertTileSet.png");
+        super(x, y, camera, 320, 160, 32, 32, 64, 64, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
         this.BB = new BoundingBox(x,y,64,64);
         this.delay = 0;
     }
@@ -75,7 +75,7 @@ class DesertWell extends Drawable
 {
     constructor(game,x,y, camera)
     {
-        super(x, y, camera, 448, 64, 64, 64, 256, 256, "./sprites/DesertTileSet.png");
+        super(x, y, camera, 448, 64, 64, 64, 256, 256, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
         this.BB = new BoundingBox(x,y,256,256);
     }
     collision(player)

@@ -191,9 +191,10 @@ class OverWorldPlayer {
     this.y = y;
     this.game = game;
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
-    this.horizontalWalking = new Animator(this.spritesheet, 2, 88, 20, 31, 3, .33, 1, false, true);
-    this.upWalking = new Animator(this.spritesheet, 5, 59, 18, 27, 3, .33, 4, false, true);
-    this.downWalking = new Animator(this.spritesheet, 6, 3, 18, 27, 3, .33, 1, false, true);
+    this.horizontalWalking = new Animator(this.spritesheet, 2, 88, 20, 31, 3, .33, 1, false, true, camera);
+    this.horizontalWalkingLeft = new Animator(this.spritesheet, 2, 88, 20, 31, 3, .33, 1, false, true, camera);
+    this.upWalking = new Animator(this.spritesheet, 5, 59, 18, 27, 3, .33, 4, false, true, camera);
+    this.downWalking = new Animator(this.spritesheet, 6, 3, 18, 27, 3, .33, 1, false, true, camera);
     this.updateBB();
     this.facingState = 0; //0 = right, 1 = left 2 = up 3 = down
     this.velocity = { x: 0, y: 0 };
@@ -611,16 +612,23 @@ class OverWorldPlayer {
 
   draw(ctx) {
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
-      ctx.drawImage(this.spritesheet, 2, 88, 20, 31, this.x, this.y, 20 * this.SCALE, 31 * this.SCALE);
+      // ctx.drawImage(this.spritesheet, 2, 88, 20, 31, this.x, this.y, 20 * this.SCALE, 31 * this.SCALE);
+      this.horizontalWalking.drawFrame(0, ctx, this.x, this.y, this.SCALE);
     }
     else if (this.facingState == 0) {
       this.horizontalWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
     else if (this.facingState == 1) {
-      ctx.save();
-      ctx.scale(-1, 1);
-      this.horizontalWalking.drawFrame(this.game.clockTick, ctx, -this.x - (20 * this.SCALE), this.y, this.SCALE);
-      ctx.restore();
+      if (this.camera == null) {
+        ctx.save();
+        ctx.scale(-1, 1);
+        this.horizontalWalking.drawFrame(this.game.clockTick, ctx, -this.x - (20 * this.SCALE), this.y, this.SCALE);
+        ctx.restore();
+      } else {
+        // Cry
+        this.horizontalWalkingLeft.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
+      }
+
     }
     else if (this.facingState == 2) {
       this.upWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
@@ -635,8 +643,16 @@ class OverWorldPlayer {
     }
   }
   updateBB() {
-    this.lastBB = this.BB;
-    this.BB = new BoundingBox(this.x + 5, this.y + 20, 30, 35);
+    if (this.camera == null) {
+      this.lastBB = this.BB;
+      this.BB = new BoundingBox(this.x + 5, this.y + 20, 30, 35);
+    } else {
+      var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+      var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+      var xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+      var yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
+      this.BB = new BoundingBox(xPos + 5, yPos + 20, 30, 35);
+    }
 
   }
   push(amt) {
