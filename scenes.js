@@ -234,12 +234,12 @@ class TownScene extends Scene {
         this.entities.push(new Town(gameEngine,0,0));
         for(var i = 0; i < 3; i++)
         {
-            this.entities.push(new DesertGround(gameEngine,256 * 0,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 1,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 2,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 3,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 4,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 5,256 * -i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 0,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 1,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 2,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 3,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 4,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 5,256 * i, this.camera));
         }
         for(var i = 0; i < 44; i++ )
         {
