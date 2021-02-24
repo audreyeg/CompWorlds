@@ -32,9 +32,9 @@ class EnemySpawner
                 {
                     this.game.entities.push(new overWorldCoyote(this.game,this.x,this.y,this.lvl,this.camera,this));
                 }
-                if(this.enmemy == 2)
+                else if(this.enemy == 2)
                 {
-                    
+                    this.game.entities.push(new overWorldBandit(this.game,this.x,this.y,this.lvl,this.camera,this));
                 }
             }
             this.spawnTime = 300 + Math.floor(Math.random() * 300);

@@ -33,6 +33,28 @@ class overWorldCoyote extends Drawable
         
     }
 
+}class overWorldBandit extends Drawable
+{
+    constructor(game,x,y,lvl, camera,spawner)
+    {
+        super(x, y, camera, 9, 9, 62, 90, 44, 60, ASSET_MANAGER.getAsset("./sprites/bandit.png"));
+        this.lvl = lvl
+        this.BB = new BoundingBox(x,y,44,60);
+        this.spawner = spawner;
+    }
+    collision(entity)
+    {
+        if(entity instanceof OverWorldPlayer)
+        {
+            gameEngine.camera.createFightSceneWithEnemy(new Bandit(gameEngine,600,450,this,this.lvl),this.x,this.y);
+            document.getElementById("townAudio").pause();
+            document.getElementById("fightAudio").play();
+            this.spawner.currentEnemies--;
+            this.removeFromWorld = true;
+        }
+        
+    }
+
 }
 class TopGate extends Drawable
 {
