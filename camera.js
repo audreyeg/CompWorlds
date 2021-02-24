@@ -77,10 +77,7 @@ class DynamicDrawable {
             {
                 if (entity.BB && that.BB.collide(entity.BB)) 
                 {
-                    if (entity instanceof OverWorldPlayer) 
-                    {
                         that.collision(entity);
-                    }
                 }
             });
         }

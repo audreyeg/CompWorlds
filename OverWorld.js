@@ -20,15 +20,63 @@ class overWorldCoyote extends Drawable
         this.BB = new BoundingBox(x,y + 20,60,30);
         this.spawner = spawner;
     }
-    collision(player)
+    collision(entity)
     {
-        gameEngine.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450,this,this.lvl),this.x,this.y);
-        document.getElementById("townAudio").pause();
-        document.getElementById("fightAudio").play();
-        this.spawner.currentEnemies--;
-        this.removeFromWorld = true;
+        if(entity instanceof OverWorldPlayer)
+        {
+            gameEngine.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450,this,this.lvl),this.x,this.y);
+            document.getElementById("townAudio").pause();
+            document.getElementById("fightAudio").play();
+            this.spawner.currentEnemies--;
+            this.removeFromWorld = true;
+        }
+        
     }
 
+}
+class TopGate extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 99, 271, 97, 33, 97 * 2, 33 * 2, ASSET_MANAGER.getAsset("./sprites/gates.png"));
+        this.BB = new BoundingBox(x,y,97 * 2, 33 * 2);
+    }
+    collision(entity)
+    {
+        if(entity instanceof overWorldCoyote)
+        {
+            entity.spawner.currentEnemies--;
+            entity.removeFromWorld = true;
+        }
+        else if(!(entity instanceof TopGate) && !(entity instanceof SideGate))
+        {
+            entity.removeFromWorld = true;
+        }
+    }
+}
+class SideGate extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 99, 308, 9, 97, 9*2, 97*2, ASSET_MANAGER.getAsset("./sprites/gates.png"));
+        this.BB = new BoundingBox(x,y,9*2, 97 * 2);
+    }
+    collision(entity)
+    {
+        if(entity instanceof OverWorldPlayer)
+        {
+            entity.push(2);
+        }
+        else if(entity instanceof overWorldCoyote)
+        {
+            entity.spawner.currentEnemies--;
+            entity.removeFromWorld = true;
+        }
+        else if(!(entity instanceof TopGate) && !(entity instanceof SideGate))
+        {
+            entity.removeFromWorld = true;
+        }
+    }
 }
 class DesertGround extends Drawable
 {
@@ -44,6 +92,64 @@ class DesertSkull extends Drawable
         super(x, y, camera, 224, 192, 64, 32, 128, 64, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
     }
 }
+class WalkWay extends Drawable
+{
+    constructor(gmae,x,y,camera)
+    {
+        super(x,y,camera,32, 239, 32, 64, 32 * 2, 64 * 2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+    }    
+}
+class TownSign extends Drawable
+{
+    constructor(gmae,x,y,camera)
+    {
+        super(x,y,camera,0, 0, 84, 86, 84, 86, ASSET_MANAGER.getAsset("./sprites/TownSign.png"));
+        this.BB = new BoundingBox(x,y,84, 86);
+    }   
+    collision(entity)
+    {
+        if(entity instanceof OverWorldPlayer)
+        {
+            entity.push(2);
+        }
+        else if(entity instanceof overWorldCoyote)
+        {
+            entity.spawner.currentEnemies--;
+            entity.removeFromWorld = true;
+        }
+    }
+}
+class TownZone extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x,y,camera,48, 239, 32, 64, 32 * 2, 64 * 2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"))
+        this.BB = new BoundingBox(x,y,32 * 2,64 * 2);
+    }
+    collision(entity)
+    {
+        if(entity instanceof OverWorldPlayer)
+        {
+            entity.x += 10;
+            gameEngine.camera.loadScene("town");
+            document.getElementById("saloonAudio").pause();
+            document.getElementById("townAudio").play();
+        }
+        else if(entity instanceof overWorldCoyote)
+        {
+            entity.spawner.currentEnemies--;
+            entity.removeFromWorld = true;
+        }
+        else if(entity instanceof DesertPlant)
+        {
+            entity.removeFromWorld = true;
+        }
+        else if(entity instanceof DesertWell)
+        {
+            entity.removeFromWorld = true;
+        }
+    }
+}
 class DesertPlant extends Drawable
 {
     constructor(game,x,y, camera)
@@ -52,22 +158,30 @@ class DesertPlant extends Drawable
         this.BB = new BoundingBox(x,y,64,64);
         this.delay = 0;
     }
-    collision(player)
+    collision(entity)
     {
-        if(this.delay == 0)
+        if(entity instanceof OverWorldPlayer)
         {
-            player.stats.health--;
-            this.delay = 10;
+            if(this.delay == 0)
+            {
+                entity.stats.health--;
+                this.delay = 10;
+            }
+            else if(this.delay > 0)
+            {
+                this.delay--;
+            }
+            entity.push(2);
+            if(entity.stats.health == 0)
+            {
+                entity.removeFromWorld = true;
+                document.getElementById("chat").innerHTML = "What exactly were you trying to do to that cactus?";
+            }
         }
-        else if(this.delay > 0)
+        else if(entity instanceof overWorldCoyote)
         {
-            this.delay--;
-        }
-        player.push(2);
-        if(player.stats.health == 0)
-        {
-            player.removeFromWorld = true;
-            document.getElementById("chat").innerHTML = "What exactly were you trying to do to that cactus?";
+            entity.spawner.currentEnemies--;
+            entity.removeFromWorld = true;
         }
     }
 }
@@ -78,9 +192,17 @@ class DesertWell extends Drawable
         super(x, y, camera, 448, 64, 64, 64, 256, 256, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
         this.BB = new BoundingBox(x,y,256,256);
     }
-    collision(player)
+    collision(entity)
     {
-        player.push(2);
+        if(entity instanceof OverWorldPlayer)
+        {
+            entity.push(2);
+        }
+        else if(entity instanceof overWorldCoyote)
+        {
+            entity.spawner.currentEnemies--;
+            entity.removeFromWorld = true;
+        }
     }
 }
 

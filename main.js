@@ -9,6 +9,8 @@ ASSET_MANAGER.queueDownload("./sprites/dialoug.png");
 ASSET_MANAGER.queueDownload("./sprites/health.png");
 ASSET_MANAGER.queueDownload("./sprites/cowboy.png");
 ASSET_MANAGER.queueDownload("./sprites/crit.png");
+ASSET_MANAGER.queueDownload("./sprites/gates.png");
+ASSET_MANAGER.queueDownload("./sprites/TownSign.png");
 ASSET_MANAGER.queueDownload("./sprites/HealthPickup.png");
 ASSET_MANAGER.queueDownload("./sprites/TownConceptV3.png");
 ASSET_MANAGER.queueDownload("./sprites/DesertTileSet.png");
