@@ -149,7 +149,7 @@ class townLZ
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    //entity.y -= 10;
+                    entity.y -= 10;
                     that.game.camera.loadScene("town");
                     document.getElementById("saloonAudio").pause();
                     document.getElementById("townAudio").play();

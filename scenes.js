@@ -289,17 +289,17 @@ class TownScene extends Scene {
 class Desert extends Scene {
     constructor(game, character) {
         super(game, character);
-        this.xMin = -2560/2;
-        this.xMax = 2560/2;
-        this.yMin = -2560/2;
-        this.yMax = 2560/2;
+        this.xMin = -2560;
+        this.xMax = 2620;
+        this.yMin = -2500;
+        this.yMax = 2600;
         // this.camera.pixelScale = 128;
 
         //this.camera.setEntityToFollow(character);
         this.entities.push(this.camera);
 
-        for (var i = -20; i < 20; i++) {
-            for (var j = -20; j < 20; j++) {
+        for (var i = -26; i < 25; i++) {
+            for (var j = -26; j < 25; j++) {
                 this.entities.push(new DesertGround(gameEngine, i * 128, j * 128, this.camera));
 
             }
@@ -346,12 +346,26 @@ class Desert extends Scene {
             this.entities.push(thing);
             things[JSON.stringify(x) + JSON.stringify(y)] = thing;
         }
-
-
+        for(var i = 0; i < 27; i++)
+        {
+            this.entities.push(new TopGate(gameEngine, -2560 + (i * 194),-2560, this.camera));
+            this.entities.push(new TopGate(gameEngine, -2560 + (i * 194), 2660, this.camera))
+            this.entities.push(new SideGate(gameEngine, 2660 ,-2560 + (i * 194), this.camera));
+        }
+        for(var i = 0; i < 13; i++)
+        {
+            this.entities.push(new SideGate(gameEngine, -2560 ,-2560 + (i * 194), this.camera));
+            this.entities.push(new SideGate(gameEngine, -2560 ,2500 - (i * 194), this.camera));
+        }
         // Add beep bop boop bep cowboy
-        var cowboys = new OverWorldPlayer(gameEngine,30,375,this.character, this.camera)
+        var cowboys = new OverWorldPlayer(gameEngine,-2550,0,this.character, this.camera)
         this.entities.push(cowboys);
-        this.entities.push(new townLZ(gameEngine,0,375,25,50));
+        this.entities.push(new TownZone(gameEngine,-2610,0,this.camera));
+        for(var i = 0; i < 20; i++)
+        {
+            this.entities.push(new WalkWay(gameEngine,-2642 - (i * 32),0,this.camera));
+        }
+        this.entities.push(new TownSign(gameEngine,-2500,-120,this.camera));
         this.entities.push(this.inventory);
         this.camera.setEntityToFollow(cowboys, 700, 384);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
