@@ -367,6 +367,7 @@ class Desert extends Scene {
         }
         this.entities.push(new TownSign(gameEngine,-2500,-120,this.camera));
         this.entities.push(this.inventory);
+        this.entities.push(new EnemySpawner(gameEngine,-2600,2000,0,2000,5,2,this.camera))
         this.camera.setEntityToFollow(cowboys, 700, 384);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
