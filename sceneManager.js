@@ -23,10 +23,15 @@ class SceneManager {
         this.inventory = null;
         this.currentEnemy = null;
 
-        this.loadScene("town");
+        //this.loadScene("town");
+
     };
 
     update() {
+        if (playGame) {
+             this.loadScene("town");
+            playGame = false;
+        }
         PARAMS.DEBUG = document.getElementById("debug").checked;
         if(this.fight && this.fightEnd)
         {

@@ -1,9 +1,11 @@
 class Animator {
-    constructor(spritesheet, xStart, yStart, width, height, frameCount, frameDuration, framePadding, reverse, loop, camera=null) {
-        Object.assign(this, { spritesheet, xStart, yStart, height, width, frameCount, frameDuration, framePadding, reverse, loop, camera });
+    constructor(spritesheet, xStart, yStart, width, height, frameCount, frameDuration, framePadding, reverse, loop, camera=null, flipHorizontally = false) {
+        Object.assign(this, { spritesheet, xStart, yStart, height, width, frameCount, frameDuration, framePadding, reverse, loop, camera, flipHorizontally  });
 
         this.elapsedTime = 0;
         this.totalTime = this.frameCount * this.frameDuration;
+
+        this.drawables = [];  // Holds a drawable for each frame of the animation, accessible by index
     };
 
     drawFrame(tick, ctx, x, y, scale) {
@@ -19,6 +21,11 @@ class Animator {
 
         let frame = this.currentFrame();
         if (this.reverse) frame = this.frameCount - frame - 1;
+
+        if (this.drawables[frame] == undefined) {
+            this.drawables[frame] = new DynamicDrawable(this.camera, this.xStart + frame * (this.width + this.framePadding), this.yStart,
+            this.width, this.height, this.width * scale, this.height * scale, this.spritesheet);
+        }
       
         
         // Don't ask me, ask Sam
@@ -30,9 +37,7 @@ class Animator {
                 this.width * scale,
                 this.height * scale);
         } else {
-            this.drawable.x = x;
-            this.drawable.y = y;
-            this.drawable.draw(ctx);
+            this.drawables[frame].draw(ctx, x, y);
         }
     };
 

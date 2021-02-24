@@ -7,6 +7,8 @@ class Camera {
         this.pixelScale = pixelScale;
         this.linearScale = linearScale;
         this.followEntity = null;
+        this.xOffset = 0;
+        this.yOffset = 0;
 
         this.animationQueue = [];
     }
@@ -20,13 +22,15 @@ class Camera {
 
     update() {
         if (this.followEntity != null) {
-            this.x = this.followEntity.x;
-            this.y = -this.followEntity.y;
+            this.x = this.followEntity.x - this.xOffset;
+            this.y = this.followEntity.y - this.yOffset;
         }
     }
 
-    setEntityToFollow(entity) {
+    setEntityToFollow(entity, xOffset = 0, yOffset = 0) {
         this.followEntity = entity;
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
     }
 
     clearAnimations() {
@@ -52,15 +56,15 @@ class Camera {
 
 }
 
-class Drawable {
-    constructor( x, y, camera, sx, sy, sdx, sdy, dx, dy, tileSprite ) {
-        Object.assign(this, { x, y, camera, sx, sy, sdx, sdy, dx, dy, tileSprite });
-        this.spritesheet = ASSET_MANAGER.getAsset(tileSprite);
+// DyanmicDrawable is given its x, y coordinates in its draw method
+class DynamicDrawable {
+    constructor( camera, sx, sy, sdx, sdy, dx, dy, tileSprite ) {
+        Object.assign(this, { camera, sx, sy, sdx, sdy, dx, dy, tileSprite });
+        // this.spritesheet = ASSET_MANAGER.getAsset(tileSprite);
         this.BB = null;
         this.rotations = [];
         this.xPos;
         this.yPos
-
     }
 
     update()
@@ -82,7 +86,7 @@ class Drawable {
         }
     }
 
-    draw(ctx) {
+    draw(ctx, x, y) {
         var camera = this.camera;
 
         var realAngle = camera.angle % (Math.PI * 2);
@@ -98,8 +102,8 @@ class Drawable {
         var tileHeight = camera.pixelScale * camera.linearScale[1];
         var thisTileWidth = rotatedSprite[0].width * tileWidth;
         var thisTileHeight = rotatedSprite[0].height * tileHeight;
-        this.xPos = (this.x - camera.x) * tileWidth * Math.cos(realAngle) - (this.y - camera.y) * tileHeight * Math.sin(realAngle) - rotatedSprite[1];
-        this.yPos = (this.x - camera.x) * tileWidth * Math.sin(realAngle) - (this.y - camera.y) * tileHeight * Math.cos(realAngle) - rotatedSprite[2];
+        this.xPos = (x - camera.x) * tileWidth * Math.cos(realAngle) - (camera.y - y) * tileHeight * Math.sin(realAngle) - rotatedSprite[1];
+        this.yPos = (x - camera.x) * tileWidth * Math.sin(realAngle) - (camera.y - y) * tileHeight * Math.cos(realAngle) - rotatedSprite[2];
         
         if (this.xPos < ctx.canvas.width && this.xPos + thisTileWidth - 1 >= 0 && this.yPos < ctx.canvas.height && this.yPos + thisTileHeight - 1 >= 0) {
             ctx.drawImage(rotatedSprite[0], 0, 0, rotatedSprite[0].width,rotatedSprite[0].height,this.xPos,this.yPos,thisTileWidth, thisTileHeight);
@@ -148,9 +152,20 @@ class Drawable {
         offscreenCtx.save();
         offscreenCtx.translate(translationX, translationY);
         offscreenCtx.rotate(realAngle);
-        offscreenCtx.drawImage(this.spritesheet, this.sx, this.sy, this.sdx, this.sdy, 0, 0, this.dx, this.dy);
+        offscreenCtx.drawImage(this.tileSprite, this.sx, this.sy, this.sdx, this.sdy, 0, 0, this.dx, this.dy);
         offscreenCtx.restore();
 
         return [canvas, translationX, translationY];
+    }
+}
+
+class Drawable extends DynamicDrawable {
+    constructor( x, y, camera, sx, sy, sdx, sdy, dx, dy, tileSprite ) {
+        super(camera, sx, sy, sdx, sdy, dx, dy, tileSprite);
+        Object.assign(this, { x, y });
+    }
+
+    draw(ctx) {
+        super.draw(ctx, this.x, this.y);
     }
 }

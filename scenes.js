@@ -234,12 +234,12 @@ class TownScene extends Scene {
         this.entities.push(new Town(gameEngine,0,0));
         for(var i = 0; i < 3; i++)
         {
-            this.entities.push(new DesertGround(gameEngine,256 * 0,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 1,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 2,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 3,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 4,256 * -i, this.camera));
-            this.entities.push(new DesertGround(gameEngine,256 * 5,256 * -i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 0,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 1,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 2,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 3,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 4,256 * i, this.camera));
+            this.entities.push(new DesertGround(gameEngine,256 * 5,256 * i, this.camera));
         }
         for(var i = 0; i < 44; i++ )
         {
@@ -353,7 +353,7 @@ class Desert extends Scene {
         this.entities.push(cowboys);
         this.entities.push(new townLZ(gameEngine,0,375,25,50));
         this.entities.push(this.inventory);
-        this.camera.setEntityToFollow(cowboys);
+        this.camera.setEntityToFollow(cowboys, 700, 384);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
         
