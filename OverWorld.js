@@ -424,3 +424,20 @@ class Floor {
 
     }
 }
+
+class Ring {
+        constructor(game, x, y, w, h) {
+       Object.assign(this, {game, x, y, w, h});
+        this.game.Floor = this;
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/ring.png");
+        this.BB = new BoundingBox(x,y,w,h);
+    }
+    update() {
+    }
+    draw(ctx) {
+            //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
+            ctx.drawImage(this.spritesheet, 120, 40, 952, 1200, this.x, this.y, this.w, this.h);
+
+    }
+
+}
