@@ -671,7 +671,7 @@ class Character {
     this.maxHealth = 100;
     this.x = 0;
     this.y = 0;
-    this.speed = 3 * 5;
+    this.speed = 3;// * 5;
     this.facing;
     this.drunk = 0;
     this.lvl = 0;

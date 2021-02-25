@@ -11,6 +11,48 @@ class Town {
         ctx.drawImage(this.spritesheet,0,0,700,350,0,0,1400,700);
     };
 };
+class Cave extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 383, 0, 64, 96, 64 * 3.5, 96 * 2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+    }
+}
+class CaveSideLeft extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 0, 128, 64, 64, 64*1.5,64*1.5, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+    }
+}
+class CaveSideRightMid extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 128, 96, 64, 64, 64*1.5,64*1.5, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+    }
+}
+class CaveSideRight extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 128, 128, 64, 64, 64*1.5,64*1.5, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+    }
+}
+class CaveSideLeftMid extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 0, 96, 64, 64, 64*1.5,64*1.5, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+    }
+}
+class CaveTop extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 64, 97, 64, 64, 64*2,64*2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+    }
+}
 class overWorldCoyote extends Drawable
 {
     constructor(game,x,y,lvl, camera,spawner)
@@ -211,8 +253,8 @@ class DesertWell extends Drawable
 {
     constructor(game,x,y, camera)
     {
-        super(x, y, camera, 448, 64, 64, 64, 256, 256, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
-        this.BB = new BoundingBox(x,y,256,256);
+        super(x, y, camera, 448, 64, 64, 64, 256/2, 256/2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+        this.BB = new BoundingBox(x,y,256/2,256/2);
     }
     collision(entity)
     {
@@ -220,7 +262,7 @@ class DesertWell extends Drawable
         {
             entity.push(2);
         }
-        else if(entity instanceof overWorldCoyote)
+        else if(entity instanceof overWorldCoyote || entity instanceof overWorldBandit)
         {
             entity.spawner.currentEnemies--;
             entity.removeFromWorld = true;
