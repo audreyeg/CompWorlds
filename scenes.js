@@ -359,18 +359,27 @@ class Desert extends Scene {
         }
         // Add beep bop boop bep cowboy
         var cowboys = new OverWorldPlayer(gameEngine,-2550,0,this.character, this.camera)
-        this.entities.push(cowboys);
         this.entities.push(new TownZone(gameEngine,-2610,0,this.camera));
         for(var i = 0; i < 20; i++)
         {
             this.entities.push(new WalkWay(gameEngine,-2642 - (i * 32),0,this.camera));
         }
+        this.entities.push(new CaveSideLeft(gameEngine,2358,-2590,this.camera));
+        this.entities.push(new CaveSideLeftMid(gameEngine,2365,-2686,this.camera));
+        this.entities.push(new CaveSideRight(gameEngine,2678,-2590,this.camera));
+        this.entities.push(new CaveSideRightMid(gameEngine,2678,-2686,this.camera));
+        this.entities.push(new Cave(gameEngine,2454,-2686,this.camera));
+        this.entities.push(new CaveTop(gameEngine,2550,-2782,this.camera));
+        this.entities.push(new CaveTop(gameEngine,2390,-2782,this.camera));
+        this.entities.push(new CaveTop(gameEngine,2454,-2782,this.camera));
+        this.entities.push(new CaveTop(gameEngine,2614,-2782,this.camera));
         this.entities.push(new TownSign(gameEngine,-2500,-120,this.camera));
         this.entities.push(this.inventory);
         this.entities.push(new EnemySpawner(gameEngine,-2600,2000,0,2000,5,2,this.camera))
         this.camera.setEntityToFollow(cowboys, 700, 384);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+        this.entities.push(cowboys);
         
 
     }
