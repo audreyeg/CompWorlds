@@ -18,6 +18,7 @@ class npc{
         this.bartender = false;
         this.cop = false;
         this.banker = false;
+        this.guide = false;
 
         if (this.location == "saloon"){
                 this.saloon = true;
@@ -46,6 +47,14 @@ class npc{
         }
          else if (this.location == "banker"){
             this.banker = true;
+            this.startPoint = 30;
+            this.EndPoint = 89;
+            this.wide = 13;
+            this.tall = 25;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+        }
+        else if (this.location == "guide"){
+            this.guide = true;
             this.startPoint = 30;
             this.EndPoint = 89;
             this.wide = 13;
