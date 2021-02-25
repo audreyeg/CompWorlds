@@ -276,6 +276,13 @@ class OverWorldPlayer {
           playerInventory.addItem("coin", 1);
           entity.removeFromWorld = true;
         }
+         if (entity instanceof Ring) {
+          if (that.game.camera.missions.missions["FindRing"].state == 1) {
+          		playerInventory.addItem("ring", 1);
+          		     entity.removeFromWorld = true;
+          		         ringFound = true;
+          }
+        }
 
         //saloon NPC
         if (entity instanceof npc && entity.saloon) {
@@ -284,71 +291,90 @@ class OverWorldPlayer {
           //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-          document.getElementById("chat").innerHTML = "Howdy Partner!";
+         document.getElementById("chat").innerHTML = "Howdy Partner!";
+
+             if (that.game.camera.missions.missions["FindRing"].state == 2) {
+            var response1 = "Q) I found your ring!";
+            var response2 = "";
+              document.getElementById("response1").innerHTML = response1;
+	          document.getElementById("response2").innerHTML = response2;
+          }
+          else {
           //user response options
-          var response1 = "Q) What is this place?";
-          var response2 = "E) Have you seen my hat?";
-          //the 2 button responses user can have 
-          document.getElementById("response1").innerHTML = response1;
-          document.getElementById("response2").innerHTML = response2;
+	          var response1 = "Q) I heard bandits were terrozing the town.";
+	          var response2 = "";
+	          //the 2 button responses user can have 
+	          document.getElementById("response1").innerHTML = response1;
+	          document.getElementById("response2").innerHTML = response2;
+	      }
 
           //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
             //set the state to determine dialogue options
             //LEVEL 1 of conversation
-            if (user == 1 && userCount == 1) {
+             if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 2)) {
+              stateResponse = 5;
+            }
+            else if (user == 1 && userCount == 1) {
               stateResponse = 1;
             }
-            else if (user == 2 && userCount == 1) {
-              stateResponse = 2;
-            }
-            //LEVEL 2 of conversation
             else if (user == 1 && userCount == 2) {
               stateResponse = 3;
             }
             else if (user == 2 && userCount == 2) {
-              stateResponse = 4;
+              stateResponse = 2;
+            }
+            else if (user == 2 && userCount == 1) {
+            	stateResponse = 4;
             }
           switch (stateResponse) {
             //LEVEL 1 of conversation
             //if user selected option 1 ("what is this place?")
             case 1:
-              document.getElementById("chat").innerHTML = "The saloon!";
-              //additional responses from user
-              var response1 = "Q) Can I buy a drink?";
-              var response2 = "E) Big nice";
-              document.getElementById("response1").innerHTML = response1;
-              document.getElementById("response2").innerHTML = response2;
+             document.getElementById("chat").innerHTML = "Yes! In fact, they stole my very precious ring! Are you interested in getting it back for me?";
+              document.getElementById("response1").innerHTML = "Q) No.";
+              document.getElementById("response2").innerHTML = "E) How can I help?";
               break;
               //if user selected option 2 ("Have you seen my hat?")
             case 2:
                //npc response
-              document.getElementById("chat").innerHTML = "Nope";
-              //no additional responses from user are given for this conversation line
+              document.getElementById("chat").innerHTML = "My ring is somewhere in town. The sherrif chased them off and they dropped it nearby. I just can't seem to find it. If you see it, bring it to me.";
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
+
+                  if (that.game.camera.missions.missions["FindRing"].state == 0) {
+                that.game.camera.missions.missions["FindRing"].state = 1;
+              }
               break;
               //LEVEL 2 of conversation
                 //if user selected option 1 ("Can I buy a drink?")
             case 3:
             //npc response
-              document.getElementById("chat").innerHTML = "You have to go to the bartender for that";
+              document.getElementById("chat").innerHTML = "*sobbing*";
                  //no additional responses from user are given for this conversation line
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
               //mission started (IGNORE FOR CHAT)
-              if (that.game.camera.missions.missions["Bank"].state == 0) {
-                that.game.camera.missions.missions["Bank"].state = 1;
-              }
+              // if (that.game.camera.missions.missions["Bank"].state == 0) {
+              //   that.game.camera.missions.missions["Bank"].state = 1;
+              // }
               break;
               //if user selected option 2 ("Big nice.")
             case 4:
                //npc response
               document.getElementById("chat").innerHTML = "Okay bye!";
-              document.getElementById("chat").innerHTML = "Nope";
               //no additional responses from user are given for this conversation line
               document.getElementById("response1").innerHTML = "";
               document.getElementById("response2").innerHTML = "";
+              break;
+              //user has found ring 
+            case 5:
+               //npc response
+              document.getElementById("chat").innerHTML = "Thank you for finding my ring!";
+              //no additional responses from user are given for this conversation line
+              document.getElementById("response1").innerHTML = "";
+              document.getElementById("response2").innerHTML = "";
+              playerInventory.removeItem("ring", 1);
               break;
           }
         }
@@ -494,7 +520,63 @@ class OverWorldPlayer {
               break;
           }
         }
-        //banker npc
+        //guide npc
+        if (entity instanceof npc && entity.guide) {
+          //user is now in conversation
+          that.talking = true;
+             //this will determine which dialogue options to show in switch statement
+          var stateResponse = 0;
+          //npc line
+          document.getElementById("chat").innerHTML = "Welcome newcomer! The Wild West can be a daunting place, come to me if you need guidance.";
+          //user response options
+          var response1 = "Q) I'm okay for now";
+          var response2 = "E) What should I do?";
+          //the 2 button respnses user can have 
+          document.getElementById("response1").innerHTML = response1;
+          document.getElementById("response2").innerHTML = response2;
+           //gets from index file the response (1 or 2) that user selected based on which button was pushed
+            var user = response;
+            //set the state to determine dialogue options
+            //LEVEL 1 of conversation
+            if (user == 1) {
+              stateResponse = 1;
+            }
+            else if (user == 2 && userCount == 1) {
+              stateResponse = 2;
+            }
+            else if (user == 2 && userCount == 2) {
+            	stateResponse = 3;
+              document.getElementById("chat").innerHTML = "";
+              document.getElementById("response1").innerHTML = "";
+              document.getElementById("response2").innerHTML = "";
+            }
+          switch (stateResponse) {
+        //LEVEL 1 of conversation
+            //if user selected option 1 ("I'm okay for now.")
+            case 1:
+              document.getElementById("chat").innerHTML = "Run along then cowboy!";
+              var response1 = "";
+              var response2 = "";
+              document.getElementById("response1").innerHTML = response1;
+              document.getElementById("response2").innerHTML = response2;
+              break;
+            //if user selected option 1 ("What should I do?")
+            case 2:
+              document.getElementById("chat").innerHTML = "Bandits have been messing with all the town folk. If you ask around, I'm sure they would like your help.";
+              document.getElementById("response1").innerHTML = "Q) Thanks!";
+              document.getElementById("response2").innerHTML = "E) Who should I ask?";
+              break;
+           //LEVEL 2 of conversation
+              //if user selected option 2 ("Who should I ask?")
+             case 3:
+               document.getElementById("chat").innerHTML = "There's the bartender and the girl in the saloon, the sheriff in the jail and the banker in the bank!";
+              document.getElementById("response1").innerHTML = "";
+              document.getElementById("response2").innerHTML = "";
+              break;
+          }
+        }
+
+                //banker npc
         if (entity instanceof npc && entity.banker) {
           //user is now in conversation
           that.talking = true;
@@ -610,6 +692,7 @@ class OverWorldPlayer {
 
   }
 
+
   draw(ctx) {
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
       // ctx.drawImage(this.spritesheet, 2, 88, 20, 31, this.x, this.y, 20 * this.SCALE, 31 * this.SCALE);
@@ -679,6 +762,7 @@ class Character {
     this.nextLvl = 50;
        playerInventory.addItem("coin", 0);
     playerInventory.addItem("medpac", 0);
+    playerInventory.addItem("beer", 0);
     this.setDamage(this.baseDamage);
   }
   takeDamage(amt) {
@@ -824,6 +908,12 @@ Item("medpac", "MedPac", function () {
   if (playerInventory.hasItem("medpac", 0)) {
     gameEngine.camera.cowboy.health += 10;
     playerInventory.removeItem("medpac", 1);
+  }
+});
+
+Item("ring", "Ring", function () {
+  if (playerInventory.hasItem("ring", 0)) {
+    playerInventory.removeItem("ring", 1);
   }
 });
 
