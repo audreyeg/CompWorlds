@@ -22,6 +22,7 @@ ASSET_MANAGER.queueDownload("./sprites/bank.png");
 ASSET_MANAGER.queueDownload("./sprites/floor.png");
 ASSET_MANAGER.queueDownload("./sprites/saloongirl.png");
 ASSET_MANAGER.queueDownload("./sprites/plainbackground.png");
+ASSET_MANAGER.queueDownload("./sprites/ring.png");
 ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (14).png");
 ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (15).png");
 ASSET_MANAGER.queueDownload("./sprites/png/Separate/128/Tiles/House/HouseTile (16).png");
