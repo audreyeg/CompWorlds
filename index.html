@@ -166,6 +166,46 @@
         var killCoyoteMissionActive = false;
         playerInventory = new Inventory();
 
+        //chat variables 
+        var npcLine = "";
+        var userLine1 = "";
+        var userLine2 = "";
+
+
+        //function to change what npc says 
+        function changeChat(chat) {
+            npcLine = chat;
+            document.getElementById("chat").innerHTML = npcLine;
+        } 
+
+        //function to change user response option 1
+        function changeChat1(userChat1) {
+            //if sent empty string then buttons should not display anything
+            if (userChat1.length === 0) {
+                userLine1 = userChat1;
+                document.getElementById("response1").innerHTML = userLine1;
+            }
+           //if string has contents then display contents along with hot key 
+            else {
+                userLine1 = "Q)" + userChat1;
+                document.getElementById("response1").innerHTML = userLine1;
+            }
+        }
+
+        //function to change user response option 2
+        function changeChat2(userChat2) {
+            //if sent empty string then buttons should not display anything
+           if (userChat2.length === 0){
+                userLine2 = userChat2;
+                document.getElementById("response2").innerHTML = userLine2;
+           }
+           //if string has contents then display contents along with hot key 
+            else {
+                userLine2 = "E)" + userChat2;
+                document.getElementById("response2").innerHTML = userLine2;
+            }
+        }
+
         //checks to see when the user has responded (button is pushed)
         function change(btn, option) {
         	//sets to true when user has selected a response option
