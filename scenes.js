@@ -281,7 +281,10 @@ class TownScene extends Scene {
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
+        this.entities.push(new npc(gameEngine, 120, 430, "guide"));
+        this.entities.push(new Ring(gameEngine, 120, 600, 20, 10));
          this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+
         //this.entities.push(new EnemySpawner(gameEngine,0,1500,400,350,5,1));
     }
 }
