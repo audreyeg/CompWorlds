@@ -291,21 +291,15 @@ class OverWorldPlayer {
           //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-         document.getElementById("chat").innerHTML = "Howdy Partner!";
-
+          changeChat("Howdy Partner!");
              if (that.game.camera.missions.missions["FindRing"].state == 2) {
-            var response1 = "Q) I found your ring!";
-            var response2 = "";
-              document.getElementById("response1").innerHTML = response1;
-	          document.getElementById("response2").innerHTML = response2;
+                  changeChat1("I found your ring!");
+                  changeChat2("");
+  
           }
           else {
-          //user response options
-	          var response1 = "Q) I heard bandits were terrozing the town.";
-	          var response2 = "";
-	          //the 2 button responses user can have 
-	          document.getElementById("response1").innerHTML = response1;
-	          document.getElementById("response2").innerHTML = response2;
+              changeChat1("I heard bandits were terrozing the town.");
+              changeChat2("");
 	      }
 
           //gets from index file the response (1 or 2) that user selected based on which button was pushed
@@ -328,52 +322,35 @@ class OverWorldPlayer {
             	stateResponse = 4;
             }
           switch (stateResponse) {
-            //LEVEL 1 of conversation
-            //if user selected option 1 ("what is this place?")
             case 1:
-             document.getElementById("chat").innerHTML = "Yes! In fact, they stole my very precious ring! Are you interested in getting it back for me?";
-              document.getElementById("response1").innerHTML = "Q) No.";
-              document.getElementById("response2").innerHTML = "E) How can I help?";
+              changeChat("Yes! In fact, they stole my very precious ring! Are you interested in getting it back for me?");
+              changeChat1("No");
+              changeChat2("How can I help?");
               break;
               //if user selected option 2 ("Have you seen my hat?")
             case 2:
-               //npc response
-              document.getElementById("chat").innerHTML = "My ring is somewhere in town. The sherrif chased them off and they dropped it nearby. I just can't seem to find it. If you see it, bring it to me.";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
-
+              changeChat("My ring is somewhere in town. The sherrif chased them of and they dropped it nearby. I just can't seem to find it. If you see it, bring it to me.");
+              changeChat1("");
+              changeChat2("");
                   if (that.game.camera.missions.missions["FindRing"].state == 0) {
                 that.game.camera.missions.missions["FindRing"].state = 1;
               }
               break;
-              //LEVEL 2 of conversation
-                //if user selected option 1 ("Can I buy a drink?")
             case 3:
-            //npc response
-              document.getElementById("chat").innerHTML = "*sobbing*";
-                 //no additional responses from user are given for this conversation line
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
-              //mission started (IGNORE FOR CHAT)
-              // if (that.game.camera.missions.missions["Bank"].state == 0) {
-              //   that.game.camera.missions.missions["Bank"].state = 1;
-              // }
+              changeChat("*sobbing*");
+              changeChat1("");
+              changeChat2("");
               break;
-              //if user selected option 2 ("Big nice.")
             case 4:
-               //npc response
-              document.getElementById("chat").innerHTML = "Okay bye!";
-              //no additional responses from user are given for this conversation line
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Okay bye!");
+              changeChat1("");
+              changeChat2("");
               break;
               //user has found ring 
             case 5:
-               //npc response
-              document.getElementById("chat").innerHTML = "Thank you for finding my ring!";
-              //no additional responses from user are given for this conversation line
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Thank you for finding my ring!");
+              changeChat1("");
+              changeChat2("");
               playerInventory.removeItem("ring", 1);
               break;
           }
@@ -386,14 +363,9 @@ class OverWorldPlayer {
           //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-          document.getElementById("chat").innerHTML = "Buy a drink for 2 coins?";
-          //user response options
-          var response1 = "Q) Yes";
-          var response2 = "E) No";
-          //the 2 button respnses user can have 
-          document.getElementById("response1").innerHTML = response1;
-          document.getElementById("response2").innerHTML = response2;
-
+          changeChat("Buy a drink for 2 coins?");
+          changeChat1("Yes");
+          changeChat2("No");
             //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
             //set the state to determine dialogue options
@@ -415,21 +387,21 @@ class OverWorldPlayer {
             //LEVEL 1 of conversation
             //if user selected option 1 ("Yes") and can afford beer 
             case 1:
-              document.getElementById("chat").innerHTML = "Drink up! No refunds";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Drink up! No refunds.");
+              changeChat1("");
+              changeChat2("");
               break;
             case 2:
               //if user does not have 2 coins have this response instead
-              document.getElementById("chat").innerHTML = "Nice try, come back when you have some coin";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Nice try, come back when you have some coin");
+              changeChat1("");
+              changeChat2("");
               break;
             //user selected second button which is ("no")
             case 3:
-              document.getElementById("chat").innerHTML = "Then stop loitering";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Then stop loitering");
+              changeChat1("");
+              changeChat2("");
               break;
           }
         }
@@ -440,21 +412,17 @@ class OverWorldPlayer {
             //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-          document.getElementById("chat").innerHTML = "Need something?";
+            changeChat("Need something?");
           //checks to see state of mission (2 means it has been completed)
           if (that.game.camera.missions.missions["KillCoyote"].state == 2) {
-            var response1 = "Q) I killed that coyote for you";
-            var response2 = "";
+              changeChat1("I killed that coyote for you");
+              changeChat2("");
           }
           //if user hasn't completed mission yet (state 0 or 1)
           else {
-            var response1 = "Q) Yes";
-            var response2 = "E) No";
+              changeChat1("Yes");
+              changeChat2("No");
           }
-          //the 2 button respnses user can have 
-          document.getElementById("response1").innerHTML = response1;
-          document.getElementById("response2").innerHTML = response2;
-
            //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
             //set the state to determine dialogue options
@@ -481,17 +449,15 @@ class OverWorldPlayer {
           switch (stateResponse) {
             //user selected first button which is ("Yes")
             case 1:
-              document.getElementById("chat").innerHTML = "Well... If you'd like a mission I have one for you.";
-              var response1 = "Q) Yes, that's why I'm here.";
-              var response2 = "E) No, I don't feel like it";
-              document.getElementById("response1").innerHTML = response1;
-              document.getElementById("response2").innerHTML = response2;
+              changeChat("Well... If you'd like a mission I have one for you.");
+              changeChat1("Yes, that's why I'm here.");
+              changeChat2("No, I don't feel like it.");
               break;
              //user selected first buttion which is ("Yes, that's why I'm here.")
             case 2:
-              document.getElementById("chat").innerHTML = "Go kill one of those coyotes for me then come back here when you've done it.";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Go kill one of those coyotes for me then come back here when you've done it.");
+              changeChat1("");
+              changeChat2("");
               //user has been given mission so it goes from state 0 (pre-mission) to state 1 (mission active)
 
               if (that.game.camera.missions.missions["KillCoyote"].state == 0) {
@@ -501,22 +467,22 @@ class OverWorldPlayer {
               break;
               //user selected second option which is ("No") in level 1 or ("No, I don't feel like it.") in level 2
             case 3:
-              document.getElementById("chat").innerHTML = "I ought you lock you up.";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("I ought to lock you up.");
+              changeChat1("");
+              changeChat2("");
               break;
               //user has completed the mission (state 2)
             case 4:
-              document.getElementById("chat").innerHTML = "Thanks, now I get the day off.";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Thanks, now I get the day off.");
+              changeChat1("");
+              changeChat2("");
               that.game.camera.missions.missions["KillCoyote"].state == 3;
               break;
               //user is in state 1 (mission has been given but has not been completed)
             case 5:
-              document.getElementById("chat").innerHTML = "Arent you supposed to be killing a coyote for me.";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Aren't you supposed to be killing a coyote for me.");
+              changeChat1("");
+              changeChat2("");
               break;
           }
         }
@@ -527,13 +493,10 @@ class OverWorldPlayer {
              //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-          document.getElementById("chat").innerHTML = "Welcome newcomer! The Wild West can be a daunting place, come to me if you need guidance.";
+          changeChat("Welcome newcomer! The Wild West can be a daunting place, come to me if you need guidance.");
           //user response options
-          var response1 = "Q) I'm okay for now";
-          var response2 = "E) What should I do?";
-          //the 2 button respnses user can have 
-          document.getElementById("response1").innerHTML = response1;
-          document.getElementById("response2").innerHTML = response2;
+          changeChat1("I'm okay for now");
+          changeChat2("What should I do?");
            //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
             //set the state to determine dialogue options
@@ -546,32 +509,28 @@ class OverWorldPlayer {
             }
             else if (user == 2 && userCount == 2) {
             	stateResponse = 3;
-              document.getElementById("chat").innerHTML = "";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
             }
           switch (stateResponse) {
         //LEVEL 1 of conversation
             //if user selected option 1 ("I'm okay for now.")
             case 1:
-              document.getElementById("chat").innerHTML = "Run along then cowboy!";
-              var response1 = "";
-              var response2 = "";
-              document.getElementById("response1").innerHTML = response1;
-              document.getElementById("response2").innerHTML = response2;
+              changeChat("Run along then cowboy!");
+              changeChat1("");
+              changeChat2("");
               break;
             //if user selected option 1 ("What should I do?")
             case 2:
-              document.getElementById("chat").innerHTML = "Bandits have been messing with all the town folk. If you ask around, I'm sure they would like your help.";
-              document.getElementById("response1").innerHTML = "Q) Thanks!";
-              document.getElementById("response2").innerHTML = "E) Who should I ask?";
+              changeChat("Bandits have been messing with all the town folk. If you ask around, I'm sure they would like your help.");
+              changeChat1("Thanks!");
+              changeChat2("Who should I ask?");
+
               break;
            //LEVEL 2 of conversation
               //if user selected option 2 ("Who should I ask?")
              case 3:
-               document.getElementById("chat").innerHTML = "There's the bartender and the girl in the saloon, the sheriff in the jail and the banker in the bank!";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+                changeChat("There's the bartender and the girl in the saloon, the sheriff in the jail and the banker in the bank!");
+                changeChat1("");
+                changeChat2("");
               break;
           }
         }
@@ -583,13 +542,9 @@ class OverWorldPlayer {
              //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-          document.getElementById("chat").innerHTML = "1..2...3... AH! When did you get here?";
-          //user response options
-          var response1 = "Q) Literally just now. ";
-          var response2 = "E) What are you doing?";
-          //the 2 button respnses user can have 
-          document.getElementById("response1").innerHTML = response1;
-          document.getElementById("response2").innerHTML = response2;
+              changeChat("1..2...3... AH! When did you get here?");
+              changeChat1("Literally just now. ");
+              changeChat2(" What are you doing?");
            //gets from index file the response (1 or 2) that user selected based on which button was pushed
             var user = response;
             //set the state to determine dialogue options
@@ -601,25 +556,23 @@ class OverWorldPlayer {
               stateResponse = 2;
             }
             else if (userCount >= 2) {
-              document.getElementById("chat").innerHTML = "";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("");
+              changeChat1("");
+              changeChat2("");
             }
           switch (stateResponse) {
         //LEVEL 1 of conversation
             //if user selected option 1 ("Literally just now.")
             case 1:
-              document.getElementById("chat").innerHTML = "You should really announce yourself, instead of sneaking up.";
-              var response1 = "Q) Sorry";
-              var response2 = "E) ...";
-              document.getElementById("response1").innerHTML = response1;
-              document.getElementById("response2").innerHTML = response2;
+              changeChat("You should really announce yourself, instead of speaking up.");
+              changeChat1("Sorry");
+              changeChat2("...");
               break;
             //if user selected option 1 ("What are you doing?")
             case 2:
-              document.getElementById("chat").innerHTML = "Counting my coins of course.";
-              document.getElementById("response1").innerHTML = "";
-              document.getElementById("response2").innerHTML = "";
+              changeChat("Counting my coins of course.");
+              changeChat1("");
+              changeChat2("");
               break;
           }
         }
@@ -675,9 +628,9 @@ class OverWorldPlayer {
       //reset response to 0
       response = 0;
       //empty dialogue/responses 
-      document.getElementById("chat").innerHTML = "";
-      document.getElementById("response1").innerHTML = "";
-      document.getElementById("response2").innerHTML = "";
+        changeChat("");
+        changeChat1("");
+        changeChat2("");
       //reset user count to 0 (to start conversations over)
       userCount = 0;
       //flag is currently only being used for beer purchase
