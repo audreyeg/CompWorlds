@@ -631,7 +631,7 @@ class Character {
     this.baseDamage = 5;
     this.damage;
     this.armor = 5;
-    this.maxHealth = 1;
+    this.maxHealth = 100;
     this.health = this.maxHealth;
     this.x = 0;
     this.y = 0;
