@@ -61,6 +61,9 @@ class GameEngine {
                 case "KeyC":
                     that.three = true;
                     break;
+                case "KeyV":
+                    that.four = true;
+                    break;
                     case "ArrowLeft":
                 case "Digit1":
                     that.One = true;
@@ -109,6 +112,9 @@ class GameEngine {
                     break;
                 case "KeyC":
                     that.three = false;
+                    break;
+                case "KeyV":
+                    that.four = false;
                     break;
                 case "Digit1":
                     that.One = false;

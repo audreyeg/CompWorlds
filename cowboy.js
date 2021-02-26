@@ -13,13 +13,13 @@ class CowBoy {
     this.facing = 0; //0 = right, 1 = left
     this.state = 0; //0 = idle, 1 = running
     this.fire = 0; //0 = not shooting, 1 = shooting, 2 = dead
-    this.health = 50;
     this.dead = false;
     this.gravity = 9.8 / 60;
     this.velocity = { x: 0, y: 0 };
     this.onGround = false;
     this.attacking = false;
     this.turn;
+    this.defending = false;
 
     this.updateBB();
 
@@ -32,21 +32,6 @@ class CowBoy {
     this.animations.push(new Animator(this.spritesheet, 9, 9, 62, 90, 2, .5, 2, false, true));
     //move right + facing right
     this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true));
-
-    //idle + facing left 
-    this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
-    //moving left and facing left
-    this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true));
-
-    //idle + facing up
-    this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
-    //moving up and facing up 
-    this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 15, 0.1, 2.5, false, true));
-
-    //idle + facing down 
-    this.animations.push(new Animator(this.spritesheet, 6, 6, 44, 69, 1, 0.1, 2, false, true));
-    //moving down and facing down
-    this.animations.push(new Animator(this.spritesheet, 94, 2, 44, 66, 15, 0.1, 2.5, false, true));
     //shooting
     this.animations.push(new Animator(this.spritesheet, 478, 213, 113, 90, 4, 1 / 4, 0, false, true));
 
@@ -61,65 +46,11 @@ class CowBoy {
     }
     //idle, face right, shooting
     else if (this.state == 0 && this.facing == 0 && this.fire == 1) {
-      this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
-    }
-    //move right, face right, not shooting
-    else if (this.state == 1 && this.facing == 0 && this.fire == 0) {
-      this.animations[1].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-    }
-    //move right, face right, shooting
-    else if (this.state == 1 && this.facing == 0 && this.fire == 1) {
-      this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 3);
-    }
-    //idle, face left, not shooting
-    else if (this.state == 0 && this.facing == 1 && this.fire == 0) {
-      ctx.scale(-1, 1);
-      this.animations[2].drawFrame(this.game.clockTick, ctx, -this.x - 44, this.y, 1);
-      ctx.restore();
-    }
-    //idle, face left, shooting 
-    else if (this.state == 0 && this.facing == 1 && this.fire == 1) {
-      ctx.scale(-1, 1);
-      this.animations[8].drawFrame(this.game.clockTick, ctx, -this.x - 60, this.y, 1);
-      ctx.restore();
-    }
-    //move left, face left, not shooting
-    else if (this.state == 1 && this.facing == 1 && this.fire == 0) {
-      ctx.scale(-1, 1);
-      this.animations[3].drawFrame(this.game.clockTick, ctx, -this.x - 44, this.y, 1);
-      ctx.restore();
-    }
-    //move left, face left, shooting 
-    else if (this.state == 1 && this.facing == 1 && this.fire == 1) {
-      ctx.scale(-1, 1);
-      this.animations[8].drawFrame(this.game.clockTick, ctx, -this.x - 60, this.y, 1);
-      ctx.restore();
-    }
-    else if (this.state == 0 && this.facing == 3) {
-      this.animations[4].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-    }
-    //moving up, not shooting
-    else if (this.state == 1 && this.facing == 3 && this.fire == 0) {
-      this.animations[5].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-    }
-    //moving up, shooting
-    else if (this.state == 1 && this.facing == 3 && this.fire == 1) {
-      this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-    }
-    else if (this.state == 0 && this.facing == 4) {
-      this.animations[6].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-    }
-    //moving down, not shooting
-    else if (this.state == 1 && this.facing == 4 && this.fire == 0) {
-      this.animations[7].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
-    }
-    //moving down, shooting
-    else if (this.state == 1 && this.facing == 4 && this.fire == 1) {
-      this.animations[8].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+      this.animations[2].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
     }
     //dead 
     else if (this.state == 2) {
-      this.animations[9].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
+      this.animations[3].drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
     }
   }
 
@@ -140,9 +71,6 @@ class CowBoy {
       }
       if (!this.onGround) {
         this.velocity.y += this.gravity;
-      }
-      if (this.game.interact) {
-        //this.attack();
       }
       //collision
       var that = this;
@@ -169,10 +97,12 @@ class CowBoy {
     this.timer = 52;
     this.attacking = true;
   }
-  heal(amount) {
-    this.health += amount;
-    if (this.health > 50) {
-      this.health = 50;
+  heal() {
+    if (playerInventory.hasItem("medpac", 0)) {
+      playerInventory.use("medpac");
+      if (this.health > 50) {
+        this.health = 50;
+      }
     }
   }
   killed() {
@@ -184,7 +114,7 @@ class CowBoy {
 
 
 class OverWorldPlayer {
-  constructor(game, x, y, stats, camera=null) {
+  constructor(game, x, y, stats, camera = null) {
     Object.assign(this, { game, x, y, stats, camera });
     this.stats = stats;
     this.x = x;
@@ -210,12 +140,10 @@ class OverWorldPlayer {
     if (this.stun == 0) {
       if (this.talking && this.cooldown <= 0) {
         if (this.game.response1) {
-          console.log("hi1");
           var btn = document.getElementById("response1").click();
           this.cooldown = 60;
         }
         else if (this.game.response2) {
-          console.log("hi1");
           var btn = document.getElementById("response2").click();
           this.cooldown = 60;
         }
@@ -276,11 +204,11 @@ class OverWorldPlayer {
           playerInventory.addItem("coin", 1);
           entity.removeFromWorld = true;
         }
-         if (entity instanceof Ring) {
+        if (entity instanceof Ring) {
           if (that.game.camera.missions.missions["FindRing"].state == 1) {
-          		playerInventory.addItem("ring", 1);
-          		     entity.removeFromWorld = true;
-          		         ringFound = true;
+            playerInventory.addItem("ring", 1);
+            entity.removeFromWorld = true;
+            ringFound = true;
           }
         }
 
@@ -292,47 +220,47 @@ class OverWorldPlayer {
           var stateResponse = 0;
           //npc line
           changeChat("Howdy Partner!");
-             if (that.game.camera.missions.missions["FindRing"].state == 2) {
-                  changeChat1("I found your ring!");
-                  changeChat2("");
-  
+          if (that.game.camera.missions.missions["FindRing"].state == 2) {
+            changeChat1("I found your ring!");
+            changeChat2("");
+
           }
           else {
-              changeChat1("I heard bandits were terrozing the town.");
-              changeChat2("");
-	      }
+            changeChat1("I heard bandits were terrozing the town.");
+            changeChat2("");
+          }
 
           //gets from index file the response (1 or 2) that user selected based on which button was pushed
-            var user = response;
-            //set the state to determine dialogue options
-            //LEVEL 1 of conversation
-             if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 2)) {
-              stateResponse = 5;
-            }
-            else if (user == 1 && userCount == 1) {
-              stateResponse = 1;
-            }
-            else if (user == 1 && userCount == 2) {
-              stateResponse = 3;
-            }
-            else if (user == 2 && userCount == 2) {
-              stateResponse = 2;
-            }
-            else if (user == 2 && userCount == 1) {
-            	stateResponse = 4;
-            }
+          var user = response;
+          //set the state to determine dialogue options
+          //LEVEL 1 of conversation
+          if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 2)) {
+            stateResponse = 5;
+          }
+          else if (user == 1 && userCount == 1) {
+            stateResponse = 1;
+          }
+          else if (user == 1 && userCount == 2) {
+            stateResponse = 3;
+          }
+          else if (user == 2 && userCount == 2) {
+            stateResponse = 2;
+          }
+          else if (user == 2 && userCount == 1) {
+            stateResponse = 4;
+          }
           switch (stateResponse) {
             case 1:
               changeChat("Yes! In fact, they stole my very precious ring! Are you interested in getting it back for me?");
               changeChat1("No");
               changeChat2("How can I help?");
               break;
-              //if user selected option 2 ("Have you seen my hat?")
+            //if user selected option 2 ("Have you seen my hat?")
             case 2:
               changeChat("My ring is somewhere in town. The sherrif chased them of and they dropped it nearby. I just can't seem to find it. If you see it, bring it to me.");
               changeChat1("");
               changeChat2("");
-                  if (that.game.camera.missions.missions["FindRing"].state == 0) {
+              if (that.game.camera.missions.missions["FindRing"].state == 0) {
                 that.game.camera.missions.missions["FindRing"].state = 1;
               }
               break;
@@ -346,7 +274,7 @@ class OverWorldPlayer {
               changeChat1("");
               changeChat2("");
               break;
-              //user has found ring 
+            //user has found ring 
             case 5:
               changeChat("Thank you for finding my ring!");
               changeChat1("");
@@ -366,23 +294,23 @@ class OverWorldPlayer {
           changeChat("Buy a drink for 2 coins?");
           changeChat1("Yes");
           changeChat2("No");
-            //gets from index file the response (1 or 2) that user selected based on which button was pushed
-            var user = response;
-            //set the state to determine dialogue options
-            //LEVEL 1 of conversation
-            //additional check to make sure user can afford beer
-            if (user == 1 && userCount == 1 && (playerInventory.check("coin", 2))) {
-              //meaning user has purchased a beer 
-              flag = true;
-              stateResponse = 1;
-            }
-            //if user tries to buy beer but doesn't have enough money
-            else if (user == 1 && userCount == 1 && !(playerInventory.check("coin", 2)) && !(flag)) {
-              stateResponse = 2;
-            }
-            else if (user == 2 && userCount == 1) {
-              stateResponse = 3;
-            }
+          //gets from index file the response (1 or 2) that user selected based on which button was pushed
+          var user = response;
+          //set the state to determine dialogue options
+          //LEVEL 1 of conversation
+          //additional check to make sure user can afford beer
+          if (user == 1 && userCount == 1 && (playerInventory.check("coin", 2))) {
+            //meaning user has purchased a beer 
+            flag = true;
+            stateResponse = 1;
+          }
+          //if user tries to buy beer but doesn't have enough money
+          else if (user == 1 && userCount == 1 && !(playerInventory.check("coin", 2)) && !(flag)) {
+            stateResponse = 2;
+          }
+          else if (user == 2 && userCount == 1) {
+            stateResponse = 3;
+          }
           switch (stateResponse) {
             //LEVEL 1 of conversation
             //if user selected option 1 ("Yes") and can afford beer 
@@ -409,43 +337,43 @@ class OverWorldPlayer {
         if (entity instanceof npc && entity.cop) {
           //user is now in conversation
           that.talking = true;
-            //this will determine which dialogue options to show in switch statement
+          //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-            changeChat("Need something?");
+          changeChat("Need something?");
           //checks to see state of mission (2 means it has been completed)
           if (that.game.camera.missions.missions["KillCoyote"].state == 2) {
-              changeChat1("I killed that coyote for you");
-              changeChat2("");
+            changeChat1("I killed that coyote for you");
+            changeChat2("");
           }
           //if user hasn't completed mission yet (state 0 or 1)
           else {
-              changeChat1("Yes");
-              changeChat2("No");
+            changeChat1("Yes");
+            changeChat2("No");
           }
-           //gets from index file the response (1 or 2) that user selected based on which button was pushed
-            var user = response;
-            //set the state to determine dialogue options
-            //LEVEL 1 of conversation
-            //additional check to see check on state of mission that sheriff npc gives
-            //state 1 means the mission is currently active
-            if (user == 1 && userCount == 1 && that.game.camera.missions.missions["KillCoyote"].state == 1) {
-              stateResponse = 5;
-            }
-            //state 2 means the mission has been completed
-            else if (user == 1 && userCount == 1 && that.game.camera.missions.missions["KillCoyote"].state == 2) {
-              stateResponse = 4;
-            }
-            else if (user == 1 && userCount == 1) {
-              stateResponse = 1;
-            }
-              //LEVEL 2 of conversation
-            else if (user == 1 && userCount == 2) {
-              stateResponse = 2;
-            }
-            else if ((user == 2 && userCount == 1) || (user == 2 && userCount == 2)) {
-              stateResponse = 3;
-            }
+          //gets from index file the response (1 or 2) that user selected based on which button was pushed
+          var user = response;
+          //set the state to determine dialogue options
+          //LEVEL 1 of conversation
+          //additional check to see check on state of mission that sheriff npc gives
+          //state 1 means the mission is currently active
+          if (user == 1 && userCount == 1 && that.game.camera.missions.missions["KillCoyote"].state == 1) {
+            stateResponse = 5;
+          }
+          //state 2 means the mission has been completed
+          else if (user == 1 && userCount == 1 && that.game.camera.missions.missions["KillCoyote"].state == 2) {
+            stateResponse = 4;
+          }
+          else if (user == 1 && userCount == 1) {
+            stateResponse = 1;
+          }
+          //LEVEL 2 of conversation
+          else if (user == 1 && userCount == 2) {
+            stateResponse = 2;
+          }
+          else if ((user == 2 && userCount == 1) || (user == 2 && userCount == 2)) {
+            stateResponse = 3;
+          }
           switch (stateResponse) {
             //user selected first button which is ("Yes")
             case 1:
@@ -453,7 +381,7 @@ class OverWorldPlayer {
               changeChat1("Yes, that's why I'm here.");
               changeChat2("No, I don't feel like it.");
               break;
-             //user selected first buttion which is ("Yes, that's why I'm here.")
+            //user selected first buttion which is ("Yes, that's why I'm here.")
             case 2:
               changeChat("Go kill one of those coyotes for me then come back here when you've done it.");
               changeChat1("");
@@ -465,20 +393,20 @@ class OverWorldPlayer {
               }
 
               break;
-              //user selected second option which is ("No") in level 1 or ("No, I don't feel like it.") in level 2
+            //user selected second option which is ("No") in level 1 or ("No, I don't feel like it.") in level 2
             case 3:
               changeChat("I ought to lock you up.");
               changeChat1("");
               changeChat2("");
               break;
-              //user has completed the mission (state 2)
+            //user has completed the mission (state 2)
             case 4:
               changeChat("Thanks, now I get the day off.");
               changeChat1("");
               changeChat2("");
               that.game.camera.missions.missions["KillCoyote"].state == 3;
               break;
-              //user is in state 1 (mission has been given but has not been completed)
+            //user is in state 1 (mission has been given but has not been completed)
             case 5:
               changeChat("Aren't you supposed to be killing a coyote for me.");
               changeChat1("");
@@ -490,28 +418,28 @@ class OverWorldPlayer {
         if (entity instanceof npc && entity.guide) {
           //user is now in conversation
           that.talking = true;
-             //this will determine which dialogue options to show in switch statement
+          //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
           changeChat("Welcome newcomer! The Wild West can be a daunting place, come to me if you need guidance.");
           //user response options
           changeChat1("I'm okay for now");
           changeChat2("What should I do?");
-           //gets from index file the response (1 or 2) that user selected based on which button was pushed
-            var user = response;
-            //set the state to determine dialogue options
-            //LEVEL 1 of conversation
-            if (user == 1) {
-              stateResponse = 1;
-            }
-            else if (user == 2 && userCount == 1) {
-              stateResponse = 2;
-            }
-            else if (user == 2 && userCount == 2) {
-            	stateResponse = 3;
-            }
+          //gets from index file the response (1 or 2) that user selected based on which button was pushed
+          var user = response;
+          //set the state to determine dialogue options
+          //LEVEL 1 of conversation
+          if (user == 1) {
+            stateResponse = 1;
+          }
+          else if (user == 2 && userCount == 1) {
+            stateResponse = 2;
+          }
+          else if (user == 2 && userCount == 2) {
+            stateResponse = 3;
+          }
           switch (stateResponse) {
-        //LEVEL 1 of conversation
+            //LEVEL 1 of conversation
             //if user selected option 1 ("I'm okay for now.")
             case 1:
               changeChat("Run along then cowboy!");
@@ -525,43 +453,43 @@ class OverWorldPlayer {
               changeChat2("Who should I ask?");
 
               break;
-           //LEVEL 2 of conversation
-              //if user selected option 2 ("Who should I ask?")
-             case 3:
-                changeChat("There's the bartender and the girl in the saloon, the sheriff in the jail and the banker in the bank!");
-                changeChat1("");
-                changeChat2("");
+            //LEVEL 2 of conversation
+            //if user selected option 2 ("Who should I ask?")
+            case 3:
+              changeChat("There's the bartender and the girl in the saloon, the sheriff in the jail and the banker in the bank!");
+              changeChat1("");
+              changeChat2("");
               break;
           }
         }
 
-                //banker npc
+        //banker npc
         if (entity instanceof npc && entity.banker) {
           //user is now in conversation
           that.talking = true;
-             //this will determine which dialogue options to show in switch statement
+          //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-              changeChat("1..2...3... AH! When did you get here?");
-              changeChat1("Literally just now. ");
-              changeChat2(" What are you doing?");
-           //gets from index file the response (1 or 2) that user selected based on which button was pushed
-            var user = response;
-            //set the state to determine dialogue options
-            //LEVEL 1 of conversation
-            if (user == 1 && userCount == 1) {
-              stateResponse = 1;
-            }
-            else if (user == 2 && userCount == 1) {
-              stateResponse = 2;
-            }
-            else if (userCount >= 2) {
-              changeChat("");
-              changeChat1("");
-              changeChat2("");
-            }
+          changeChat("1..2...3... AH! When did you get here?");
+          changeChat1("Literally just now. ");
+          changeChat2(" What are you doing?");
+          //gets from index file the response (1 or 2) that user selected based on which button was pushed
+          var user = response;
+          //set the state to determine dialogue options
+          //LEVEL 1 of conversation
+          if (user == 1 && userCount == 1) {
+            stateResponse = 1;
+          }
+          else if (user == 2 && userCount == 1) {
+            stateResponse = 2;
+          }
+          else if (userCount >= 2) {
+            changeChat("");
+            changeChat1("");
+            changeChat2("");
+          }
           switch (stateResponse) {
-        //LEVEL 1 of conversation
+            //LEVEL 1 of conversation
             //if user selected option 1 ("Literally just now.")
             case 1:
               changeChat("You should really announce yourself, instead of speaking up.");
@@ -590,20 +518,16 @@ class OverWorldPlayer {
     }
     this.x += this.velocity.x;
     this.y += this.velocity.y;
-    if(this.x > this.game.camera.scenes[this.game.camera.currentScene].xMax)
-    {
+    if (this.x > this.game.camera.scenes[this.game.camera.currentScene].xMax) {
       this.x = this.game.camera.scenes[this.game.camera.currentScene].xMax;
     }
-    if(this.x < this.game.camera.scenes[this.game.camera.currentScene].xMin)
-    {
+    if (this.x < this.game.camera.scenes[this.game.camera.currentScene].xMin) {
       this.x = this.game.camera.scenes[this.game.camera.currentScene].xMin;
     }
-    if(this.y > this.game.camera.scenes[this.game.camera.currentScene].yMax)
-    {
+    if (this.y > this.game.camera.scenes[this.game.camera.currentScene].yMax) {
       this.y = this.game.camera.scenes[this.game.camera.currentScene].yMax;
     }
-    if(this.y < this.game.camera.scenes[this.game.camera.currentScene].yMin)
-    {
+    if (this.y < this.game.camera.scenes[this.game.camera.currentScene].yMin) {
       this.y = this.game.camera.scenes[this.game.camera.currentScene].yMin;
     }
     if (this.velocity.x > 0) {
@@ -628,9 +552,9 @@ class OverWorldPlayer {
       //reset response to 0
       response = 0;
       //empty dialogue/responses 
-        changeChat("");
-        changeChat1("");
-        changeChat2("");
+      changeChat("");
+      changeChat1("");
+      changeChat2("");
       //reset user count to 0 (to start conversations over)
       userCount = 0;
       //flag is currently only being used for beer purchase
@@ -692,30 +616,32 @@ class OverWorldPlayer {
 
   }
   push(amt) {
-      this.x -= (this.velocity.x * amt);
-      this.y -= (this.velocity.y * amt);
+    this.x -= (this.velocity.x * amt);
+    this.y -= (this.velocity.y * amt);
   }
 }
 class Character {
   constructor(game) {
     Object.assign(this, { game });
     this.game = game;
-    this.health = 50;
     this.baseDamage = 5;
     this.damage;
     this.armor = 5;
     this.maxHealth = 100;
+    this.health = this.maxHealth;
     this.x = 0;
     this.y = 0;
-    this.speed = 3;// * 5;
+    this.speed = 3 * 5;
     this.facing;
     this.drunk = 0;
     this.lvl = 0;
     this.exp = 0;
     this.nextLvl = 50;
-       playerInventory.addItem("coin", 0);
+    this.specialMeter = 0;
+    playerInventory.addItem("coin", 0);
     playerInventory.addItem("medpac", 0);
     playerInventory.addItem("beer", 0);
+    playerInventory.addItem("armor", 1);
     this.setDamage(this.baseDamage);
   }
   takeDamage(amt) {
@@ -725,10 +651,12 @@ class Character {
       this.health = 0;
     }
   }
-  heal(amt) {
-    this.health += amt;
-    if (this.health >= this.maxHealth) {
-      this.health = this.maxHealth; ''
+  heal() {
+    if (playerInventory.hasItem("medpac")) {
+      playerInventory.use("medpac");
+      if (this.health >= this.maxHealth) {
+        this.health = this.maxHealth; ''
+      }
     }
   }
   increaseMaxHP(amt) {
@@ -755,6 +683,7 @@ class Character {
       this.exp -= this.nextLvl;
       this.nextLvl = Math.floor(1.25 * this.nextLvl);
       this.setDamage(this.baseDamage * (1 + (this.lvl * .25)));
+      this.health = this.maxHealth;
     }
   }
   draw(ctx) {
@@ -859,7 +788,7 @@ Item.List = {};
 //health pacs will increase health and be removed upon use 
 Item("medpac", "MedPac", function () {
   if (playerInventory.hasItem("medpac", 0)) {
-    gameEngine.camera.cowboy.health += 10;
+    gameEngine.camera.cowboy.health += 25;
     playerInventory.removeItem("medpac", 1);
   }
 });
@@ -874,6 +803,13 @@ Item("ring", "Ring", function () {
 Item("beer", "Beer", function () {
   if (playerInventory.hasItem("beer", 0)) {
     playerInventory.removeItem("beer", 1);
+    gameEngine.camera.cowboy.drunk = 600;
+  }
+});
+
+Item("armor", "Armor Plate", function () {
+  if (playerInventory.hasItem("armor", 0)) {
+    playerInventory.removeItem("armor", 1);
     gameEngine.camera.cowboy.drunk = 600;
   }
 });
