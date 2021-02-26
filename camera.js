@@ -77,7 +77,7 @@ class DynamicDrawable {
             {
                 if (entity.BB && that.BB.collide(entity.BB)) 
                 {
-                        that.collision(entity);
+                    that.collision(entity);
                 }
             });
         }

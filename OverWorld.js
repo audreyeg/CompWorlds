@@ -183,6 +183,31 @@ class TownSign extends Drawable
         }
     }
 }
+class DesertSign 
+{
+    constructor(game,x,y)
+    {
+        this.x = x;
+        this.y = y;
+        this.game = game;
+        this.BB = new BoundingBox(x + 20,y,10, 86);
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/DesertSign.png");
+    }   
+    update()
+    {
+
+    }
+    draw(ctx)
+    {
+        ctx.drawImage(this.spritesheet,0,0,84,86,this.x,this.y,84,86);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+    }
+
+}
 class TownZone extends Drawable
 {
     constructor(game,x,y,camera)

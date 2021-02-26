@@ -263,6 +263,7 @@ class TownScene extends Scene {
         this.entities.push(new House(gameEngine, 405, 545, 200, 150));
         this.entities.push(new House(gameEngine, 650, 545, 250, 150));
         this.entities.push(new House(gameEngine, 1000, 545, 400, 150));
+        this.entities.push(new DesertSign(this.game,1300,300));
         this.entities.push(new OverWorldPlayer(gameEngine,0,450,this.character));
         this.entities.push(new saloonLZ(gameEngine,170,355,55,25));
         this.entities.push(new sheriffLZ(gameEngine,700,255,55,25));
@@ -284,8 +285,6 @@ class TownScene extends Scene {
         this.entities.push(new npc(gameEngine, 120, 430, "guide"));
         this.entities.push(new Ring(gameEngine, 120, 600, 20, 10));
          this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
-
-        //this.entities.push(new EnemySpawner(gameEngine,0,1500,400,350,5,1));
     }
 }
 
@@ -361,8 +360,7 @@ class Desert extends Scene {
             this.entities.push(new SideGate(gameEngine, -2560 ,2500 - (i * 194), this.camera));
         }
         // Add beep bop boop bep cowboy
-        var cowboys = new OverWorldPlayer(gameEngine,-2550,0,this.character, this.camera)
-        this.entities.push(new TownZone(gameEngine,-2610,0,this.camera));
+        var cowboys = new OverWorldPlayer(gameEngine,-2540,0,this.character, this.camera)
         for(var i = 0; i < 20; i++)
         {
             this.entities.push(new WalkWay(gameEngine,-2642 - (i * 32),0,this.camera));
@@ -383,7 +381,6 @@ class Desert extends Scene {
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
         this.entities.push(cowboys);
-        
-
+        this.entities.push(new TownZone(gameEngine,-2610,0,this.camera));
     }
 }

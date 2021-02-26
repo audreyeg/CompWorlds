@@ -116,7 +116,7 @@ class desertLZ
             {
                 if (entity instanceof OverWorldPlayer) 
                 {
-                    entity.y += 10;
+                    entity.x -= 20;
                     that.game.camera.loadScene("desert");
                 }
             }

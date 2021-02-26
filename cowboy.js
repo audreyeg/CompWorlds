@@ -196,6 +196,10 @@ class OverWorldPlayer {
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
+        if(entity instanceof DesertSign)
+        {
+          that.push(2);
+        }
         if (entity instanceof Heal) {
           playerInventory.addItem("medpac", 1);
           entity.removeFromWorld = true;
