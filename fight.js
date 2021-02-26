@@ -192,6 +192,7 @@ class Fight {
             else if(this.player.dead)
             {
                 changeChat("You Have Died"); 
+                this.player.killed();
             }
 
 
