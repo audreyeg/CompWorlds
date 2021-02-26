@@ -159,7 +159,7 @@ class Fight {
                     this.attacking = false;
                 }
             }
-            if(this.player.health == 0)
+            if(this.player.stats.health == 0)
             {
                 this.end = true;
                 this.player.dead = true;
@@ -192,6 +192,7 @@ class Fight {
             else if(this.player.dead)
             {
                 changeChat("You Have Died"); 
+                this.player.killed();
             }
 
 

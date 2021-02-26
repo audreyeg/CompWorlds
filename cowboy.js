@@ -196,6 +196,10 @@ class OverWorldPlayer {
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
+        if(entity instanceof DesertSign)
+        {
+          that.push(2);
+        }
         if (entity instanceof Heal) {
           playerInventory.addItem("medpac", 1);
           entity.removeFromWorld = true;
@@ -627,7 +631,7 @@ class Character {
     this.baseDamage = 5;
     this.damage;
     this.armor = 5;
-    this.maxHealth = 100;
+    this.maxHealth = 1;
     this.health = this.maxHealth;
     this.x = 0;
     this.y = 0;
