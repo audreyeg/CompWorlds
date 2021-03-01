@@ -254,6 +254,9 @@ class OverWorldPlayer {
           	buyMedpac = true;
           	stateResponse = 6;
           }
+	  else if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 3) && !(playerInventory.check("coin", 10))) {
+            stateResponse = 7;
+          }
           else if (user == 2 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 3)) {
           	stateResponse = 4;
           }
@@ -308,6 +311,12 @@ class OverWorldPlayer {
              	changeChat1("");
              	changeChat2("");
              break;
+	     case 7:
+              changeChat("What part of 10 coins do you not understand?");
+              changeChat1("");
+              changeChat2("");
+	      break;
+          }
           }
         }
 
