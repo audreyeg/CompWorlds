@@ -4,6 +4,7 @@
 
 
 
+
   <!-- 
   		CHAT SYSTEM
 
@@ -127,6 +128,12 @@
         font-size: 15px;
         overflow:hidden;
     }
+        #quests 
+    {
+        position:absolute;
+        left: 85%;
+        top: 130%;
+    }
 
 
 </style>
@@ -143,9 +150,16 @@
 
     <div id="inventory">
     </div>
+
     <!-- Where npc says their lines -->
      <div id="chat" style = "color: black; font-family: Papyrus">
     </div>
+
+    <div id="quests" style = "color: black; font-family: Papyrus">
+        <p id = "ringQuest"></p>
+        <p id = "sheriffQuest"></p>
+    </div>
+
     <!-- Where player response options are. On click, sends to below function-->
     <button id = "response1" onclick = "change(this, 1)" style = "color: red; font-family: Papyrus"></button>
     <button id = "response2" onclick = "change(this, 2)" style = "color: red; font-family: Papyrus"></button>
@@ -156,8 +170,12 @@
     	var response = 0;
     	//variable to determine how deep into conversation user is (based on how many buttons user has pushed)
         var userCount = 0;
-        //dialogue flat to determine npc chat options
+        //dialogue flag to determine npc chat options
         var flag = false;
+        //dialoge flat for purchasing medpacs
+        var buyMedpac = false;
+        var giveCoin = false;
+        var endMission = false;
         //CHAT variables end
 
         var coyotesKilled = 0;
@@ -171,7 +189,29 @@
         var userLine1 = "";
         var userLine2 = "";
 
+        function addQuests(quest) {  
+            if (quest == "find ring") {
+                document.getElementById("ringQuest").innerHTML = "Find the stolen ring";
+            }
+            if (quest == "return ring") {
+                 document.getElementById("ringQuest").innerHTML = "Return the stolen ring";
+            }
+           if (quest == "coyote") {
+                document.getElementById("sheriffQuest").innerHTML = "Kill one coyote";
+            }
+            if (quest == "coyote killed") {
+                document.getElementById("sheriffQuest").innerHTML = "Return to sheriff";
+            }
 
+        }
+        function clearQuests(quest) {
+            if (quest == "ring") {
+                  document.getElementById("ringQuest").innerHTML = "";
+            }
+            if (quest == "coyote") {
+                  document.getElementById("sheriffQuest").innerHTML = "";
+            }
+        }
         //function to change what npc says 
         function changeChat(chat) {
             npcLine = chat;
