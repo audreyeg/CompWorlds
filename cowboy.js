@@ -317,7 +317,6 @@ class OverWorldPlayer {
               changeChat2("");
 	      break;
           }
-          }
         }
 
         //saloon bartender 
