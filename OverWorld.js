@@ -461,7 +461,7 @@ class Ring {
     }
     draw(ctx) {
             //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
-            ctx.drawImage(this.spritesheet, 120, 40, 952, 1200, this.x, this.y, this.w, this.h);
+            ctx.drawImage(this.spritesheet, 60, 40, 952, 1200, this.x, this.y, this.w, this.h);
 
     }
 
