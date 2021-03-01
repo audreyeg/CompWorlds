@@ -224,10 +224,19 @@ class OverWorldPlayer {
           var stateResponse = 0;
           //npc line
           changeChat("Howdy Partner!");
-          if (that.game.camera.missions.missions["FindRing"].state == 2) {
+          if (that.game.camera.missions.missions["FindRing"].state == 1) {
+          	changeChat("Look around town for my ring!")
+          	changeChat1("");
+          	changeChat2("");
+          }
+          else if (that.game.camera.missions.missions["FindRing"].state == 2) {
             changeChat1("I found your ring!");
             changeChat2("");
 
+          }
+          else if (that.game.camera.missions.missions["FindRing"].state == 3) {
+          	changeChat1("Can I buy a medpac?");
+          	changeChat2("Just stopping by");
           }
           else {
             changeChat1("I heard bandits were terrozing the town.");
@@ -240,6 +249,13 @@ class OverWorldPlayer {
           //LEVEL 1 of conversation
           if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 2)) {
             stateResponse = 5;
+          }
+          else if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 3) && (playerInventory.check("coin", 10))) {
+          	buyMedpac = true;
+          	stateResponse = 6;
+          }
+          else if (user == 2 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 3)) {
+          	stateResponse = 4;
           }
           else if (user == 1 && userCount == 1) {
             stateResponse = 1;
@@ -280,11 +296,18 @@ class OverWorldPlayer {
               break;
             //user has found ring 
             case 5:
-              changeChat("Thank you for finding my ring!");
+              changeChat("Thank you for finding my ring! Here's 50 coins as a reward. Come back anytime if you want to buy medpacs, 1 for 10 coins.");
               changeChat1("");
               changeChat2("");
               playerInventory.removeItem("ring", 1);
+              giveCoin = true;
+              endMission = true;
               break;
+             case 6:
+             	changeChat("1 medpac for 10 coins coming up!");
+             	changeChat1("");
+             	changeChat2("");
+             break;
           }
         }
 
@@ -344,6 +367,12 @@ class OverWorldPlayer {
           //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
+          if (that.game.camera.missions.missions["KillCoyote"].state == 3) {
+          	changeChat("Still so many coyotes out there...");
+          	changeChat1("");
+          	changeChat2("");
+          }
+          else {
           changeChat("Need something?");
           //checks to see state of mission (2 means it has been completed)
           if (that.game.camera.missions.missions["KillCoyote"].state == 2) {
@@ -355,6 +384,7 @@ class OverWorldPlayer {
             changeChat1("Yes");
             changeChat2("No");
           }
+      }
           //gets from index file the response (1 or 2) that user selected based on which button was pushed
           var user = response;
           //set the state to determine dialogue options
@@ -366,6 +396,9 @@ class OverWorldPlayer {
           }
           //state 2 means the mission has been completed
           else if (user == 1 && userCount == 1 && that.game.camera.missions.missions["KillCoyote"].state == 2) {
+            stateResponse = 4;
+          }
+          else if (user == 1 && userCount == 1 && that.game.camera.missions.missions["KillCoyote"].state == 3) {
             stateResponse = 4;
           }
           else if (user == 1 && userCount == 1) {
@@ -408,7 +441,7 @@ class OverWorldPlayer {
               changeChat("Thanks, now I get the day off.");
               changeChat1("");
               changeChat2("");
-              that.game.camera.missions.missions["KillCoyote"].state == 3;
+              that.game.camera.missions.missions["KillCoyote"].state = 3;
               break;
             //user is in state 1 (mission has been given but has not been completed)
             case 5:
@@ -567,7 +600,19 @@ class OverWorldPlayer {
         playerInventory.removeItem("coin", 2);
         flag = false;
       }
-
+     if (buyMedpac) {
+        playerInventory.addItem("medpac", 1);
+        playerInventory.removeItem("coin", 10);
+        buyMedpac = false;
+      }
+	  if (that.game.camera.missions.missions["FindRing"].state == 2 && (endMission)) {
+                that.game.camera.missions.missions["FindRing"].state = 3;
+                endMission = false;
+        }
+      if (that.game.camera.missions.missions["FindRing"].state == 3 && (giveCoin)) {
+      	  	playerInventory.addItem("coin", 50);
+      	  	giveCoin = false;
+      }
     }
 
 
@@ -765,7 +810,7 @@ Inventory = function () {
       let item = Item.List[self.items[i].id];
       let onclick = "Item.List['" + item.id + "'].event()";
       str += "<button onclick=\"" + onclick + "\" >" + but + ") " + item.name + " x" + self.items[i].amount + "</button>";
-    }
+	}
 
     document.getElementById("inventory").innerHTML = str;
   }

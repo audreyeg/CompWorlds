@@ -168,6 +168,10 @@ class Fight {
         else if (this.end) {
             if(this.enemy.dead)
             {
+                if(this.enemy instanceof coyote)
+                {
+                    coyotesKilled++;
+                }
                 if(this.print)
                 {
                     var str = "Killing the " + this.enemy.name + " has granted " + this.enemy.baseXP + " XP!";

@@ -101,7 +101,7 @@ class BankScene extends Scene {
         this.entities.push(this.inventory);
         this.entities.push(new npc(gameEngine, 384, 300, "banker"));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
-        this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+        //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
 
@@ -155,7 +155,7 @@ class SheriffScene extends Scene {
         this.entities.push(this.inventory);
         this.entities.push(new npc(gameEngine, 384, 300, "cop"));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
-        this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+        //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
 
@@ -218,7 +218,7 @@ class SaloonScene extends Scene {
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
-        this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+        //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
 
@@ -283,8 +283,8 @@ class TownScene extends Scene {
         this.entities.push(this.inventory);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new npc(gameEngine, 120, 430, "guide"));
-        this.entities.push(new Ring(gameEngine, 120, 600, 20, 10));
-         this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+        this.entities.push(new Ring(gameEngine, 800, 700, 40, 40));
+         //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
 
@@ -379,7 +379,7 @@ class Desert extends Scene {
         this.entities.push(new EnemySpawner(gameEngine,-2600,2000,0,2000,5,2,this.camera))
         this.camera.setEntityToFollow(cowboys, 700, 384);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
-        this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+        //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
         this.entities.push(cowboys);
         this.entities.push(new TownZone(gameEngine,-2610,0,this.camera));
     }

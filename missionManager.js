@@ -44,9 +44,9 @@ class BankerMission  extends Missions
     {
         if(this.state == 1)
         {
-            ctx.font = "15px Papyrus";
-            ctx.fillStyle = "Red";
-            ctx.fillText("Put Two Coins Into The Chest", 5, 25);
+            // ctx.font = "15px Papyrus";
+            // ctx.fillStyle = "Red";
+            // ctx.fillText("Put Two Coins Into The Chest", 5, 25);
         }
     }
 }
@@ -77,9 +77,16 @@ class KillCoyoteMission  extends Missions
     {
         if(this.state == 1)
         {
-            ctx.font = "15px Papyrus";
-            ctx.fillStyle = "Red";
-            ctx.fillText("Kill One Coyote", 5, 25);
+            // ctx.font = "15px Papyrus";
+            // ctx.fillStyle = "Red";
+            // ctx.fillText("Kill One Coyote", 5, 25);
+           addQuests("coyote");
+        }
+        if (this.state == 2) {
+            addQuests("coyote killed");
+        }
+        if (this.state == 3) {
+            clearQuests("coyote");
         }
     }
 }
@@ -106,9 +113,18 @@ class findStolenRing extends Missions
     {
         if(this.state == 1)
         {
-            ctx.font = "15px Papyrus";
-            ctx.fillStyle = "Red";
-            ctx.fillText("Find the stolen ring", 5, 25);
+            // ctx.font = "15px Papyrus";
+            // ctx.fillStyle = "Red";
+            // ctx.fillText("Find the stolen ring", 5, 25);
+            //document.getElementById("quests").innerHTML = "Find the stolen ring.";
+            addQuests("find ring");
+        }
+        if (this.state == 2)
+        {
+            addQuests("return ring");
+        }
+        if (this.state == 3) {
+            clearQuests("ring");
         }
     }
 }
