@@ -99,12 +99,11 @@ class npc{
         }
         var that = this;
         this.game.entities.forEach(function (entity) {
-            if (entity.BB && that.BB.collide(entity.BB)) 
+            if (entity.BB && that.BB2.collide(entity.BB)) 
             {
-                if(entity instanceof groundCen || entity instanceof groundRig || entity instanceof groundLeft)
+                if(entity instanceof OverWorldPlayer)
                 {
-                    that.velocity.y = 0;
-                    //that.y = entity.y - 118;
+                    entity.push(1);
                 }
             }
         });
@@ -120,10 +119,12 @@ class npc{
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+            ctx.strokeRect(this.BB2.x - this.game.camera.x, this.BB2.y, this.BB2.width, this.BB2.height);
         }
     }
     updateBB()
     {
-            this.BB = new BoundingBox(this.x, this.y ,50,60);
+            this.BB2 = new BoundingBox(this.x, this.y ,50,60);
+            this.BB = new BoundingBox(this.x-15,this.y-15,80,90);
     }
 }
