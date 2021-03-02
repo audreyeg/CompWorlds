@@ -763,6 +763,10 @@ class Character {
       this.setDamage(this.baseDamage * (1 + (this.lvl * .25)));
       this.health = this.maxHealth;
     }
+    if(this.health > this.maxHealth)
+    {
+      this.health = this.maxHealth;
+    }
   }
   draw(ctx) {
     ctx.fillStyle = "Red";
@@ -866,7 +870,7 @@ Item.List = {};
 
 //health pacs will increase health and be removed upon use 
 Item("medpac", "MedPac", function () {
-  if (playerInventory.hasItem("medpac", 0)) {
+  if (playerInventory.hasItem("medpac", 0) && gameEngine.camera.cowboy.health < gameEngine.camera.cowboy.maxHealth) {
     gameEngine.camera.cowboy.health += 25;
     playerInventory.removeItem("medpac", 1);
   }
@@ -887,7 +891,7 @@ Item("beer", "Beer", function () {
 });
 
 Item("armor", "Armor Plate", function () {
-  if (playerInventory.hasItem("armor", 0)) {
+  if (playerInventory.hasItem("armor", 0) && gameEngine.camera.fight) {
     playerInventory.removeItem("armor", 1);
   }
 });
