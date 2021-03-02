@@ -284,6 +284,9 @@ class TownScene extends Scene {
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new npc(gameEngine, 120, 430, "guide"));
         this.entities.push(new Ring(gameEngine, 800, 700, 40, 40));
+        this.entities.push(new npc(gameEngine, 350, 700, "rake"));
+        this.entities.push(new npc(gameEngine, 950, 100, "shovel"));
+        this.entities.push(new npc(gameEngine, 950, 550, "girl"));
          //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }

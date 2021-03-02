@@ -181,6 +181,10 @@ class OverWorldPlayer {
           playerInventory.use("beer");
           this.cooldown = 60;
         }
+         if (this.game.Four) {
+          playerInventory.use("armor");
+          this.cooldown = 60;
+        }
       }
       else {
         this.cooldown--;
@@ -214,6 +218,18 @@ class OverWorldPlayer {
             entity.removeFromWorld = true;
             ringFound = true;
           }
+        }
+        if (entity instanceof npc && entity.rake) {
+          that.talking = true;
+          changeChat("Bandits everywhere... Coyotes everywhere... Yet happiness nowhere to be found.")
+        }
+         if (entity instanceof npc && entity.shovel) {
+          that.talking = true;
+          changeChat("What the hell are you looking at?")
+        }
+         if (entity instanceof npc && entity.girl) {
+          that.talking = true;
+          changeChat("It's a big world out there. I've only ever seen a small part of it.")
         }
 
         //saloon NPC
@@ -446,9 +462,10 @@ class OverWorldPlayer {
               break;
             //user has completed the mission (state 2)
             case 4:
-              changeChat("Thanks, now I get the day off.");
+              changeChat("Thanks, now I get the day off... By the way, I found these armor plates, you can have them.");
               changeChat1("");
               changeChat2("");
+              giveArmor = true;
               that.game.camera.missions.missions["KillCoyote"].state = 3;
               break;
             //user is in state 1 (mission has been given but has not been completed)
@@ -621,6 +638,10 @@ class OverWorldPlayer {
       	  	playerInventory.addItem("coin", 50);
       	  	giveCoin = false;
       }
+      if (that.game.camera.missions.missions["KillCoyote"].state == 3 && (giveArmor)) {
+            playerInventory.addItem("armor", 2);
+            giveArmor = false;
+      }
     }
 
 
@@ -750,7 +771,7 @@ class Character {
     ctx.fillText("Exp to next lvl: " + (this.nextLvl - this.exp), 5, 740);
     ctx.fillText("Health: " + this.health, 5, 755);
     if (this.drunk != 0) {
-      document.getElementById("chat").innerHTML = "<br>Effects of beer will wear off in " + this.drunk;
+      document.getElementById("chat").innerHTML = "Effects of beer will wear off in " + this.drunk;
     }
   }
   giveXP(exp) {
@@ -818,6 +839,7 @@ Inventory = function () {
       let item = Item.List[self.items[i].id];
       let onclick = "Item.List['" + item.id + "'].event()";
       str += "<button onclick=\"" + onclick + "\" >" + but + ") " + item.name + " x" + self.items[i].amount + "</button>";
+
 	}
 
     document.getElementById("inventory").innerHTML = str;
@@ -867,7 +889,6 @@ Item("beer", "Beer", function () {
 Item("armor", "Armor Plate", function () {
   if (playerInventory.hasItem("armor", 0)) {
     playerInventory.removeItem("armor", 1);
-    gameEngine.camera.cowboy.drunk = 600;
   }
 });
 
