@@ -84,7 +84,6 @@ class BankScene extends Scene {
     
         this.entities.push(new HouseLeftWall(gameEngine, 3 * TILE_WIDTH, 0 * TILE_WIDTH, false));
         // TODO: Put door here!
-        // gameEngine.addEntity(new HouseLeftWall(gameEngine, 3 * TILE_WIDTH, 1 * TILE_WIDTH, false));
         this.entities.push(new HouseBottomLeftCornerBeam(gameEngine, 3 * TILE_WIDTH, 2 * TILE_WIDTH, false));
         this.entities.push(new HouseBottomWall(gameEngine, 4 * TILE_WIDTH, 2 * TILE_WIDTH, false));
         this.entities.push(new HouseBottomWall(gameEngine, 5 * TILE_WIDTH, 2 * TILE_WIDTH, false));
@@ -96,12 +95,11 @@ class BankScene extends Scene {
         this.entities.push(new Chest(gameEngine, 2.5 * TILE_WIDTH, .5 * TILE_WIDTH, false));
     
         // Add beep bop boop bep cowboy
-        this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
-        this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
         this.entities.push(new npc(gameEngine, 384, 300, "banker"));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
-        //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+        this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
+        this.entities.push(new townLZ(gameEngine,350,750,50,25));
     }
 }
 
@@ -150,11 +148,11 @@ class SheriffScene extends Scene {
         
     
         // Add beep bop boop bep cowboy
-        this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
-        this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
         this.entities.push(new npc(gameEngine, 384, 300, "cop"));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
+        this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
+        this.entities.push(new townLZ(gameEngine,350,750,50,25));
         //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
@@ -214,10 +212,10 @@ class SaloonScene extends Scene {
         this.entities.push(new npc(gameEngine, 500, 400, "saloon"));
         this.entities.push(new npc(gameEngine, 100, 400, "bartender"));
         // Add beep bop boop bep cowboy
-        this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character));
-        this.entities.push(new townLZ(gameEngine,350,750,50,25));
         this.entities.push(this.inventory);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
+        this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character));
+        this.entities.push(new townLZ(gameEngine,350,750,50,25));
         //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
@@ -264,11 +262,6 @@ class TownScene extends Scene {
         this.entities.push(new House(gameEngine, 650, 545, 250, 150));
         this.entities.push(new House(gameEngine, 1000, 545, 400, 150));
         this.entities.push(new DesertSign(this.game,1300,300));
-        this.entities.push(new OverWorldPlayer(gameEngine,0,450,this.character));
-        this.entities.push(new saloonLZ(gameEngine,170,355,55,25));
-        this.entities.push(new sheriffLZ(gameEngine,700,255,55,25));
-        this.entities.push(new bankLZ(gameEngine,1165,300,23,25));
-        this.entities.push(new desertLZ(gameEngine,1370,415,23,100));
 
         this.entities.push(new Heal(gameEngine, 200, 400));
         this.entities.push(new Heal(gameEngine, 800, 400));
@@ -287,6 +280,11 @@ class TownScene extends Scene {
         this.entities.push(new npc(gameEngine, 350, 700, "rake"));
         this.entities.push(new npc(gameEngine, 950, 100, "shovel"));
         this.entities.push(new npc(gameEngine, 950, 550, "girl"));
+        this.entities.push(new OverWorldPlayer(gameEngine,0,450,this.character));
+        this.entities.push(new saloonLZ(gameEngine,170,355,55,25));
+        this.entities.push(new sheriffLZ(gameEngine,700,255,55,25));
+        this.entities.push(new bankLZ(gameEngine,1165,300,23,25));
+        this.entities.push(new desertLZ(gameEngine,1370,415,23,100));
          //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
