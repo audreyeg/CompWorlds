@@ -74,6 +74,9 @@ class GameEngine {
                 case "Digit3":
                     that.Three = true;
                     break;
+                 case "Digit4":
+                    that.Four = true;
+                    break;
                 case "KeyQ":
                     that.response1 = true;
                     break;
@@ -124,6 +127,9 @@ class GameEngine {
                     break;
                 case "Digit3":
                     that.Three = false;
+                    break;
+                 case "Digit4":
+                    that.Four = false;
                     break;
                 case "KeyQ":
                     that.response1 = false;
