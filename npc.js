@@ -19,6 +19,9 @@ class npc{
         this.cop = false;
         this.banker = false;
         this.guide = false;
+        this.rake = false;
+        this.shovel = false;
+        this.girl = false;
 
         if (this.location == "saloon"){
                 this.saloon = true;
@@ -31,35 +34,59 @@ class npc{
         }
         else if (this.location == "bartender"){
             this.bartender = true;
-            this.startPoint = 30;
-            this.EndPoint = 89;
-            this.wide = 13;
-            this.tall = 25;
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+            this.startPoint = 45;
+            this.EndPoint = 229;
+            this.wide = 135;
+            this.tall = 256;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/bartender.png");
         }
         else if (this.location == "cop"){
             this.cop = true;
-            this.startPoint = 30;
-            this.EndPoint = 89;
-            this.wide = 13;
-            this.tall = 25;
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+            this.startPoint = 85;
+            this.EndPoint = 20;
+            this.wide = 305;
+            this.tall = 440;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/sheriffnpc.png");
         }
          else if (this.location == "banker"){
             this.banker = true;
-            this.startPoint = 30;
-            this.EndPoint = 89;
-            this.wide = 13;
-            this.tall = 25;
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+            this.startPoint = 358;
+            this.EndPoint = 2;
+            this.wide = 77;
+            this.tall = 159;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/banker.png");
         }
         else if (this.location == "guide"){
             this.guide = true;
-            this.startPoint = 30;
-            this.EndPoint = 89;
-            this.wide = 13;
-            this.tall = 25;
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+            this.startPoint = 175;
+            this.EndPoint = 18;
+            this.wide = 270;
+            this.tall = 420;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/guide.png");
+        }
+        else if (this.location == "rake"){
+            this.rake = true;
+            this.startPoint = 171;
+            this.EndPoint = 22;
+            this.wide = 133;
+            this.tall = 137;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/banker.png");
+        }
+        else if (this.location == "shovel"){
+            this.shovel = true;
+            this.startPoint = 33;
+            this.EndPoint = 0;
+            this.wide = 111;
+            this.tall = 160;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/banker.png");
+        }
+         else if (this.location == "girl"){
+            this.girl = true;
+            this.startPoint = 4;
+            this.EndPoint = 0;
+            this.wide = 46;
+            this.tall = 93;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/random.png");
         }
     };
 
