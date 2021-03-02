@@ -62,6 +62,20 @@ class Coin{
     };
     update()
     {
+        var that = this;
+        this.game.entities.forEach(function (entity) {
+        if (entity.BB && that.BB.collide(entity.BB)) {
+          if (!(entity instanceof OverWorldPlayer || entity instanceof Chest || entity instanceof Coin)) {
+            playerInventory.addItem("coin", 1);
+            that.removeFromWorld = true;
+          }
+        }
+      });
+      if(this.x > this.game.camera.scenes[this.game.camera.currentScene].xMax || this.x < this.game.camera.scenes[this.game.camera.currentScene].xMin || this.y > this.game.camera.scenes[this.game.camera.currentScene].yMax || this.y < this.game.camera.scenes[this.game.camera.currentScene].yMin || this.game.camera.currentScene == "desert")
+      {
+        playerInventory.addItem("coin", 1);
+        that.removeFromWorld = true;
+        }
     }
     draw(ctx)
     {

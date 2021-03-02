@@ -22,7 +22,7 @@ class coyote {
     this.delay = 0;
     this.returnTime = 0;
     this.turn;
-    this.healthMax = (lvl * 9);
+    this.healthMax = (lvl * 7);
     this.health = this.healthMax;
     this.parent = parent;
     this.baseXP = 25;
@@ -229,8 +229,8 @@ class Bandit {
     this.parent = parent;
     this.baseXP = 30;
     this.lvl = lvl;
-    this.damage = 3 * (1 + (this.lvl * .25));
-    this.specialDamage = 35 * (1 + (this.lvl * .25));
+    this.damage = 2 * (1 + (this.lvl * .25));
+    this.specialDamage = 25 * (1 + (this.lvl * .25));
     this.reward = "coin";
     this.rewardMin = 2;
     this.spread = 5;

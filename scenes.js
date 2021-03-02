@@ -96,7 +96,7 @@ class BankScene extends Scene {
     
         // Add beep bop boop bep cowboy
         this.entities.push(this.inventory);
-        this.entities.push(new npc(gameEngine, 384, 300, "banker"));
+        this.entities.push(new npc(gameEngine, 410, 290, "banker"));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));

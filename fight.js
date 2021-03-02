@@ -150,8 +150,10 @@ class Fight {
                         this.player.defending = false;
                         this.defending = false;
                     }
-                    changeChat("You were hit for " + Math.floor(this.damage) + " damage");
-                    this.player.stats.takeDamage(Math.floor(this.damage));
+                    var dam = Math.floor(this.damage * ((10 - (this.player.stats.lvl - this.enemy.lvl))/10))
+                    changeChat("You were hit for " + dam + " damage");
+                    console.log(dam);
+                    this.player.stats.takeDamage(dam);
                     this.delay = 120;
                     this.enemy.turn = false;
                     this.player.turn = true;
@@ -174,8 +176,20 @@ class Fight {
                 }
                 if(this.print)
                 {
-                    var str = "Killing the " + this.enemy.name + " has granted " + this.enemy.baseXP + " XP!";
-                    this.game.camera.cowboy.giveXP(this.enemy.baseXP);
+                    var dif = 1;
+                    if(this.enemy.lvl > this.player.stats.lvl)
+                    {
+                        var temp = (this.enemy.lvl - this.player.stats.lvl) / 10;
+                        dif += temp; 
+                    }
+                    else if(this.enemy.lvl < this.player.lvl)
+                    {
+                        var temp = (this.player.stats.lvl - this.enemy.lvl)/10;
+                        dif -= temp; 
+                    }
+                    var xp = Math.ceil(((this.enemy.baseXP * this.enemy.lvl) * dif));
+                    var str = "Killing the " + this.enemy.name + " has granted " + xp + " XP!";
+                    this.game.camera.cowboy.giveXP(xp);
                     var num =  Math.floor(Math.random() * this.enemy.chance);
                     if(num == 1)
                     {
