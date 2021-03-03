@@ -122,7 +122,7 @@ class OverWorldPlayer {
     this.game = game;
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/Player.png");
     this.horizontalWalking = new Animator(this.spritesheet, 5, 88, 18, 25, 3, .33, 3, false, true, camera);
-    this.horizontalWalkingLeft = new Animator(this.spritesheet, 5, 31, 18, 25, 3, .33, 3, false, true, camera);
+    this.horizontalWalkingLeft = new Animator(this.spritesheet, 5, 31, 18, 25, 3, .33, 3, true, true, camera);
     this.upWalking = new Animator(this.spritesheet, 5, 59, 18, 27, 3, .33, 4, false, true, camera);
     this.downWalking = new Animator(this.spritesheet, 6, 3, 18, 27, 3, .33, 1, false, true, camera);
     this.updateBB();
