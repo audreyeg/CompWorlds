@@ -649,17 +649,26 @@ class OverWorldPlayer {
 
 
   draw(ctx) {
+    var xPos = this.x;
+    var yPos = this.y;
+    if(this.camera != null)
+    {      
+      var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+      var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+      xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+      yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
+    }
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
-      ctx.drawImage(this.spritesheet, 26, 88, 20, 28, this.x, this.y, 20 * this.SCALE, 28 * this.SCALE);
+      ctx.drawImage(this.spritesheet, 26, 88, 20, 28, xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
     }
     else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 1) {
-      ctx.drawImage(this.spritesheet, 26, 31, 20, 28, this.x, this.y, 20 * this.SCALE, 28 * this.SCALE);
+      ctx.drawImage(this.spritesheet, 26, 31, 20, 28, xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
     }
     else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 2) {
-      ctx.drawImage(this.spritesheet, 25, 60, 20, 28, this.x, this.y, 20 * this.SCALE, 28 * this.SCALE);
+      ctx.drawImage(this.spritesheet, 25, 60, 20, 28,  xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
     }
     else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 3) {
-      ctx.drawImage(this.spritesheet, 24, 5, 20, 26, this.x, this.y, 20 * this.SCALE, 26 * this.SCALE);
+      ctx.drawImage(this.spritesheet, 24, 5, 20, 26,  xPos, yPos, 20 * this.SCALE, 26 * this.SCALE);
     }
 
     else if (this.facingState == 0) {
