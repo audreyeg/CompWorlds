@@ -120,7 +120,7 @@ class OverWorldPlayer {
     this.x = x;
     this.y = y;
     this.game = game;
-    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/Player.png");
     this.horizontalWalking = new Animator(this.spritesheet, 2, 88, 20, 31, 3, .33, 1, false, true, camera);
     this.horizontalWalkingLeft = new Animator(this.spritesheet, 2, 88, 20, 31, 3, .33, 1, false, true, camera);
     this.upWalking = new Animator(this.spritesheet, 5, 59, 18, 27, 3, .33, 4, false, true, camera);
@@ -650,9 +650,18 @@ class OverWorldPlayer {
 
   draw(ctx) {
     if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
-      // ctx.drawImage(this.spritesheet, 2, 88, 20, 31, this.x, this.y, 20 * this.SCALE, 31 * this.SCALE);
-      this.horizontalWalking.drawFrame(0, ctx, this.x, this.y, this.SCALE);
+      ctx.drawImage(this.spritesheet, 26, 88, 20, 28, this.x, this.y, 20 * this.SCALE, 28 * this.SCALE);
     }
+    else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 1) {
+      ctx.drawImage(this.spritesheet, 26, 31, 20, 28, this.x, this.y, 20 * this.SCALE, 28 * this.SCALE);
+    }
+    else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 2) {
+      ctx.drawImage(this.spritesheet, 25, 60, 20, 28, this.x, this.y, 20 * this.SCALE, 28 * this.SCALE);
+    }
+    else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 3) {
+      ctx.drawImage(this.spritesheet, 24, 5, 20, 26, this.x, this.y, 20 * this.SCALE, 26 * this.SCALE);
+    }
+
     else if (this.facingState == 0) {
       this.horizontalWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
     }
@@ -709,7 +718,7 @@ class Character {
     this.health = this.maxHealth;
     this.x = 0;
     this.y = 0;
-    this.speed = 3 * 5;
+    this.speed = 3;// * 5;
     this.facing;
     this.drunk = 0;
     this.lvl = 0;
