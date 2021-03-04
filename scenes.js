@@ -210,7 +210,7 @@ class SaloonScene extends Scene {
         }
 
         this.entities.push(new npc(gameEngine, 500, 400, "saloon"));
-        this.entities.push(new npc(gameEngine, 100, 400, "bartender"));
+        this.entities.push(new npc(gameEngine, 80, 400, "bartender"));
         // Add beep bop boop bep cowboy
         this.entities.push(this.inventory);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
