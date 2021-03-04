@@ -189,6 +189,18 @@ class OverWorldPlayer {
       else {
         this.cooldown--;
       }
+      if (this.velocity.x > 0) {
+        this.facingState = 0;
+      }
+      if (this.velocity.x < 0) {
+        this.facingState = 1;
+      }
+      if (this.velocity.y < 0) {
+        this.facingState = 2;
+      }
+      if (this.velocity.y > 0) {
+        this.facingState = 3;
+      }
     }
     else {
       this.stun--;
@@ -200,7 +212,7 @@ class OverWorldPlayer {
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
-        if(entity instanceof DesertSign)
+        if(entity instanceof DesertSign || entity instanceof Crate )
         {
           that.push(2);
         }
@@ -592,18 +604,6 @@ class OverWorldPlayer {
     if (this.y < this.game.camera.scenes[this.game.camera.currentScene].yMin) {
       this.y = this.game.camera.scenes[this.game.camera.currentScene].yMin;
     }
-    if (this.velocity.x > 0) {
-      this.facingState = 0;
-    }
-    if (this.velocity.x < 0) {
-      this.facingState = 1;
-    }
-    if (this.velocity.y < 0) {
-      this.facingState = 2;
-    }
-    if (this.velocity.y > 0) {
-      this.facingState = 3;
-    }
     that.updateBB();
     this.stats.setX(this.x);
     this.stats.setY(this.y);
@@ -847,11 +847,17 @@ Inventory = function () {
   //make buttons for items
   self.refreshRender = function () {
     var str = "";
+    var count = 1;
     for (var i = 0; i < self.items.length; i++) {
-      var but = i + 1;
       let item = Item.List[self.items[i].id];
-      let onclick = "Item.List['" + item.id + "'].event()";
-      str += "<button onclick=\"" + onclick + "\" >" + but + ") " + item.name + " x" + self.items[i].amount + "</button>";
+      if(!item.key)
+      {
+        var but = count;
+        count++
+        let item = Item.List[self.items[i].id];
+        let onclick = "Item.List['" + item.id + "'].event()";
+        str += "<button onclick=\"" + onclick + "\" >" + but + ") " + item.name + " x" + self.items[i].amount + "</button>";
+      }
 
 	}
 
@@ -866,11 +872,12 @@ Inventory = function () {
 }
 
 //define inventory items and how they're used
-Item = function (id, name, event) {
+Item = function (id, name, event,key = false) {
   var self = {
     id: id,
     name: name,
     event: event,
+    key: key,
   }
   Item.List[self.id] = self;
   return self;
@@ -889,7 +896,7 @@ Item("ring", "Ring", function () {
   if (playerInventory.hasItem("ring", 0)) {
     playerInventory.removeItem("ring", 1);
   }
-});
+}, true);
 
 //beer
 Item("beer", "Beer", function () {

@@ -124,7 +124,11 @@ class npc{
     }
     updateBB()
     {
-            this.BB2 = new BoundingBox(this.x, this.y ,50,60);
-            this.BB = new BoundingBox(this.x-15,this.y-15,80,90);
+        this.BB2 = new BoundingBox(this.x, this.y ,50,60);
+        this.BB = new BoundingBox(this.x-15,this.y-15,80,90);
+        if(this.location == "bartender")
+        {
+            this.BB = new BoundingBox(this.x,this.y,150,60);
+        }
     }
 }

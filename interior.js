@@ -148,9 +148,15 @@ class LeftWallWoodThing extends InteriorTile {
 class Crate extends InteriorTile { 
     constructor(game, x, y, rotate180) {
         super(game, x, y, rotate180, "./sprites/png/Separate/128/Static Objects/Other/Crate.png", 128);
+        this.BB = new BoundingBox(this.x,this.y, 128 * 3 / 5, 128);
     };
     draw(ctx) {
         ctx.drawImage((this.rotate180) ? this.offscreenCanvas : this.spritesheet,0,0,106,106,this.x,this.y,this.spriteWidth * 3 / 5,this.spriteWidth);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
     };
 }; 
 
