@@ -3,10 +3,10 @@ class Horse {
         Object.assign(this, { game, x, y,camera,player })
         this.camera = camera;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/horse-brown.png");
-        this.horizontalWalking = new Animator(this.spritesheet, 0, 108, 64, 61, 3, .2, 0, false, true, camera);
-        this.horizontalWalkingLeft = new Animator(this.spritesheet, 0, 278, 64, 61, 3, .2, 0, true, true, camera);
-        this.upWalking = new Animator(this.spritesheet, 19, 20, 24, 65, 3, .2, 41, false, true, camera);
-        this.downWalking = new Animator(this.spritesheet, 20, 202, 23, 53, 3, .2, 41, false, true, camera);
+        this.horizontalWalking = new Animator(this.spritesheet, 2, 107, 64, 62, 4, .2, .5, false, true, camera);
+        this.horizontalWalkingLeft = new Animator(this.spritesheet, 2, 277, 64, 62, 4, .2, .5, true, true, camera);
+        this.upWalking = new Animator(this.spritesheet, 22, 19, 24, 65, 4, .2, 41, false, true, camera);
+        this.downWalking = new Animator(this.spritesheet, 23, 201, 23, 53, 4, .2, 41, false, true, camera);
         this.updateBB();
         this.mounting = 0;
         this.facingState = 0; //0 = right, 1 = left 2 = up 3 = down
@@ -108,16 +108,16 @@ class Horse {
           yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
         }
         if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
-          ctx.drawImage(this.spritesheet, 63, 108, 64, 61, xPos, yPos, 64 * 1.5, 61 * 1.5);
+          ctx.drawImage(this.spritesheet, 66, 108, 64, 61, xPos, yPos, 64 * 1.5, 61 * 1.5);
         }
         else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 1) {
-          ctx.drawImage(this.spritesheet, 64, 278, 64, 61, xPos, yPos, 64 * 1.5, 61 * 1.5);
+          ctx.drawImage(this.spritesheet, 67, 278, 64, 61, xPos, yPos, 64 * 1.5, 61 * 1.5);
         }
         else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 2) {
-          ctx.drawImage(this.spritesheet, 83, 20, 25, 65,  xPos, yPos, 25 * 1.5, 65 * 1.5);
+          ctx.drawImage(this.spritesheet, 86, 20, 25, 65,  xPos, yPos, 25 * 1.5, 65 * 1.5);
         }
         else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 3) {
-          ctx.drawImage(this.spritesheet, 84, 202, 23, 53,  xPos, yPos, 23 * 1.5, 53 * 1.5);
+          ctx.drawImage(this.spritesheet, 87, 202, 23, 53,  xPos, yPos, 23 * 1.5, 53 * 1.5);
         }
         else if (this.facingState == 0) 
         {
