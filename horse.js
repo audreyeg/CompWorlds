@@ -121,7 +121,6 @@ class Horse {
         }
         else if (this.facingState == 0) 
         {
-            //ctx.drawImage(this.spritesheet, 0, 108, 63, 61, this.x, this.y, 63, 61);
             this.horizontalWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y,1.5);
         }
         else if (this.facingState == 1) 

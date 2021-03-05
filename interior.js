@@ -150,6 +150,20 @@ class Crate extends InteriorTile {
         super(game, x, y, rotate180, "./sprites/png/Separate/128/Static Objects/Other/Crate.png", 128);
         this.BB = new BoundingBox(this.x,this.y, 128 * 3 / 5, 128);
     };
+    update()
+    {
+        var that = this;
+        this.game.entities.forEach(function (entity) 
+        {
+            if (entity.BB && that.BB.collide(entity.BB)) 
+            {
+                if (entity instanceof OverWorldPlayer) 
+                {
+                    entity.push(1);
+                }
+            }
+        });
+    }
     draw(ctx) {
         ctx.drawImage((this.rotate180) ? this.offscreenCanvas : this.spritesheet,0,0,106,106,this.x,this.y,this.spriteWidth * 3 / 5,this.spriteWidth);
         if (PARAMS.DEBUG) 

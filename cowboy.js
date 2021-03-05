@@ -229,10 +229,6 @@ class OverWorldPlayer {
             that.active = false;
           }
         }
-        if(entity instanceof DesertSign || entity instanceof Crate )
-        {
-          that.push(2);
-        }
         if (entity instanceof Heal) {
           playerInventory.addItem("medpac", 1);
           entity.removeFromWorld = true;
