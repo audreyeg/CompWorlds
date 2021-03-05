@@ -352,6 +352,19 @@ class Desert extends Scene {
             this.entities.push(thing);
             things[JSON.stringify(x) + JSON.stringify(y)] = thing;
         }
+        for (var i = 0; i < 3; i++) {
+            // Add Well
+            var x = Math.random() * 40 - 20;
+            var y = Math.random() * 40 - 20;
+            while (things[JSON.stringify(x) + JSON.stringify(y)] != undefined) {
+                x = Math.random() * 39 - 20;
+                y = Math.random() * 39 - 20;
+            }
+            // Add enemy spawner
+            var thing = new Camp(gameEngine, x * 128, y * 128, this.camera);
+            this.entities.push(thing);
+            this.entities.push(new EnemySpawner(gameEngine,x * 128,2000,y * 128,2000,5,2,this.camera))
+        }
         for(var i = 0; i < 27; i++)
         {
             this.entities.push(new TopGate(gameEngine, -2560 + (i * 194),-2560, this.camera));
@@ -370,6 +383,7 @@ class Desert extends Scene {
         {
             this.entities.push(new WalkWay(gameEngine,-2642 - (i * 32),0,this.camera));
         }
+       //this.entities.push(new Camp(gameEngine,-2500,0,20,20,this.camera));
         this.entities.push(new CaveSideLeft(gameEngine,2358,-2590,this.camera));
         this.entities.push(new CaveSideLeftMid(gameEngine,2365,-2686,this.camera));
         this.entities.push(new CaveSideRight(gameEngine,2678,-2590,this.camera));
@@ -381,7 +395,6 @@ class Desert extends Scene {
         this.entities.push(new CaveTop(gameEngine,2614,-2782,this.camera));
         this.entities.push(new TownSign(gameEngine,-2500,-120,this.camera));
         this.entities.push(this.inventory);
-        this.entities.push(new EnemySpawner(gameEngine,-2600,2000,0,2000,5,2,this.camera))
         this.camera.setEntityToFollow(cowboys, 700, 384);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
