@@ -5,7 +5,7 @@ var ASSET_MANAGER = new AssetManager();
 ASSET_MANAGER.queueDownload("./sprites/coyote.png");
 ASSET_MANAGER.queueDownload("./sprites/Player.png");
 ASSET_MANAGER.queueDownload("./sprites/horse-brown.png");
-ASSET_MANAGER.queueDownload("./sprites/buildings.png");
+ASSET_MANAGER.queueDownload("./sprites/Buildings.png");
 ASSET_MANAGER.queueDownload("./sprites/campsite.png");
 ASSET_MANAGER.queueDownload("./sprites/DesertGround.png");
 ASSET_MANAGER.queueDownload("./sprites/dialoug.png");
