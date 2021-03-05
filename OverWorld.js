@@ -585,5 +585,32 @@ draw(ctx) {
         }
 
 }
+}
+class Camp {
+    constructor(game, x, y,camera) {
+    Object.assign(this, {game, x, y,camera});
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/campsite.png");
+    this.animate = new Animator(this.spritesheet, 5, 3, 22, 29, 3, .33, 14, false, true,this.camera);
+    this.BB = new BoundingBox(x,y,20,20);
+}
+update() {
+}
+draw(ctx) {
+    var xPos = this.x;
+    var yPos = this.y;
+    if(this.camera != null)
+    {      
+      var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+      var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+      xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+      yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
+    }
+    this.animate.drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
+    if (PARAMS.DEBUG) 
+    {
+        ctx.strokeStyle = 'Red';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+    }
 
+}
 }
