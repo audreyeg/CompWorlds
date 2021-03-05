@@ -133,7 +133,9 @@ class OverWorldPlayer {
     this.lastY;
     this.stun = 0;
     this.cooldown = 0;
+    this.dismount = 0;
     this.talking = false;
+    this.active = true;
 
   }
   update() {
@@ -212,6 +214,21 @@ class OverWorldPlayer {
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
+        if(entity instanceof Horse)
+        {
+          that.talking = true;
+          if(that.active)
+          {
+            changeChat("Press Space To Mount Horse!");
+          }
+          if(that.game.interact && that.dismount == 0)
+          {
+            that.camera.setEntityToFollow(entity, 700, 384);
+            entity.active = true;
+            entity.mounting = 20;
+            that.active = false;
+          }
+        }
         if(entity instanceof DesertSign || entity instanceof Crate )
         {
           that.push(2);
@@ -643,50 +660,56 @@ class OverWorldPlayer {
             giveArmor = false;
       }
     }
-
+    if(this.dismount > 0)
+    {
+      this.dismount--;
+    }
 
   }
 
 
   draw(ctx) {
-    var xPos = this.x;
-    var yPos = this.y;
-    if(this.camera != null)
-    {      
-      var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
-      var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
-      xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
-      yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
-    }
-    if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
-      ctx.drawImage(this.spritesheet, 26, 88, 20, 28, xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
-    }
-    else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 1) {
-      ctx.drawImage(this.spritesheet, 26, 31, 20, 28, xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
-    }
-    else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 2) {
-      ctx.drawImage(this.spritesheet, 25, 60, 20, 28,  xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
-    }
-    else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 3) {
-      ctx.drawImage(this.spritesheet, 24, 5, 20, 26,  xPos, yPos, 20 * this.SCALE, 26 * this.SCALE);
-    }
-
-    else if (this.facingState == 0) {
-      this.horizontalWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
-    }
-    else if (this.facingState == 1) {
-        this.horizontalWalkingLeft.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
+    if(this.active)
+    {
+      var xPos = this.x;
+      var yPos = this.y;
+      if(this.camera != null)
+      {      
+        var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+        var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+        xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+        yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
       }
-    else if (this.facingState == 2) {
-      this.upWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
-    }
-    else if (this.facingState == 3) {
-      this.downWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
-    }
-    // console.log(PARAMS.DEBUG)
-    if (PARAMS.DEBUG) {
-      ctx.strokeStyle = 'Red';
-      ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+      if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 0) {
+        ctx.drawImage(this.spritesheet, 26, 88, 20, 28, xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
+      }
+      else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 1) {
+        ctx.drawImage(this.spritesheet, 26, 31, 20, 28, xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
+      }
+      else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 2) {
+        ctx.drawImage(this.spritesheet, 25, 60, 20, 28,  xPos, yPos, 20 * this.SCALE, 28 * this.SCALE);
+      }
+      else if (this.velocity.x == 0 && this.velocity.y == 0 && this.facingState == 3) {
+        ctx.drawImage(this.spritesheet, 24, 5, 20, 26,  xPos, yPos, 20 * this.SCALE, 26 * this.SCALE);
+      }
+
+      else if (this.facingState == 0) {
+        this.horizontalWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
+      }
+      else if (this.facingState == 1) {
+          this.horizontalWalkingLeft.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
+        }
+      else if (this.facingState == 2) {
+        this.upWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
+      }
+      else if (this.facingState == 3) {
+        this.downWalking.drawFrame(this.game.clockTick, ctx, this.x, this.y, this.SCALE);
+      }
+      // console.log(PARAMS.DEBUG)
+      if (PARAMS.DEBUG) {
+        ctx.strokeStyle = 'Red';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+      }
     }
   }
   updateBB() {
