@@ -362,7 +362,7 @@ class Desert extends Scene {
         }
         // Add beep bop boop bep cowboy
         var cowboys = new OverWorldPlayer(gameEngine,-2540,0,this.character, this.camera);
-        this.entities.push(new Horse(gameEngine,-2540,0,this.camera,cowboys));
+        this.entities.push(new Horse(gameEngine,-2400,250,this.camera,cowboys));
         for(var i = 0; i < 20; i++)
         {
             this.entities.push(new WalkWay(gameEngine,-2642 - (i * 32),0,this.camera));
