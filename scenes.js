@@ -257,10 +257,7 @@ class TownScene extends Scene {
         //gameEngine.addEntity(new Floor(gameEngine, 1100, 50, 470, 600));
         this.entities.push(new Bank(gameEngine, 1075, 20, true));
 
-        this.entities.push(new House(gameEngine, 5, 545, 350, 150));
-        this.entities.push(new House(gameEngine, 405, 545, 200, 150));
-        this.entities.push(new House(gameEngine, 650, 545, 250, 150));
-        this.entities.push(new House(gameEngine, 1000, 545, 400, 150));
+
         this.entities.push(new DesertSign(this.game,1300,300));
 
         this.entities.push(new Heal(gameEngine, 200, 400));
@@ -276,11 +273,17 @@ class TownScene extends Scene {
         this.entities.push(this.inventory);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new npc(gameEngine, 120, 430, "guide"));
-        this.entities.push(new Ring(gameEngine, 800, 700, 40, 40));
+        this.entities.push(new Ring(gameEngine, 900, 700, 40, 40));
         this.entities.push(new npc(gameEngine, 350, 700, "rake"));
         this.entities.push(new npc(gameEngine, 950, 100, "shovel"));
         this.entities.push(new npc(gameEngine, 950, 550, "girl"));
         this.entities.push(new OverWorldPlayer(gameEngine,0,450,this.character));
+        this.entities.push(new Building1(gameEngine, 50, 545, 63 * 3 , 64 * 3));
+        this.entities.push(new Building2(gameEngine, 450, 530, 81 * 2, 110 * 2));
+        this.entities.push(new Door(gameEngine, 514, 706, 17 * 2, 23 * 2));
+        this.entities.push(new Building1(gameEngine, 650, 545, 63*3.5, 64*3));
+        this.entities.push(new Building3(gameEngine, 1100, 545, 63 * 3, 64 * 3));
+        this.entities.push(new Door(gameEngine, 1145, 668, 17 * 3, 23 * 3));
         this.entities.push(new saloonLZ(gameEngine,170,355,55,25));
         this.entities.push(new sheriffLZ(gameEngine,700,255,55,25));
         this.entities.push(new bankLZ(gameEngine,1165,300,23,25));

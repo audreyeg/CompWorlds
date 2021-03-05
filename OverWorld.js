@@ -195,7 +195,17 @@ class DesertSign
     }   
     update()
     {
-
+        var that = this;
+        this.game.entities.forEach(function (entity) 
+        {
+            if (entity.BB && that.BB.collide(entity.BB)) 
+            {
+                if (entity instanceof OverWorldPlayer) 
+                {
+                    entity.push(1);
+                }
+            }
+        });
     }
     draw(ctx)
     {
@@ -464,5 +474,116 @@ class Ring {
             ctx.drawImage(this.spritesheet, 60, 40, 952, 1200, this.x, this.y, this.w, this.h);
 
     }
+
+}
+class Building1 {
+    constructor(game, x, y, w, h) {
+    Object.assign(this, {game, x, y, w, h});
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
+    this.BB = new BoundingBox(x,y + 30,w,h - 30);
+}
+update() {
+    var that = this;
+    this.game.entities.forEach(function (entity) 
+    {
+        if (entity.BB && that.BB.collide(entity.BB)) 
+        {
+            if (entity instanceof OverWorldPlayer) 
+            {
+                entity.push(1);
+            }
+        }
+    });
+}
+draw(ctx) {
+        //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
+        ctx.drawImage(this.spritesheet, 16, 208, 63, 64, this.x, this.y, this.w, this.h);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+
+}
+
+}
+class Building2 {
+    constructor(game, x, y, w, h) {
+    Object.assign(this, {game, x, y, w, h});
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
+    this.BB = new BoundingBox(x ,y + 50,w,h-50);
+}
+update() {
+    var that = this;
+    this.game.entities.forEach(function (entity) 
+    {
+        if (entity.BB && that.BB.collide(entity.BB)) 
+        {
+            if (entity instanceof OverWorldPlayer) 
+            {
+                entity.push(1);
+            }
+        }
+    });
+}
+draw(ctx) {
+        //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
+        ctx.drawImage(this.spritesheet, 111, 191, 81, 110, this.x, this.y, this.w, this.h);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+
+}
+}
+class Building3 {
+    constructor(game, x, y, w, h) {
+    Object.assign(this, {game, x, y, w, h});
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
+    this.BB = new BoundingBox(x,y + 30,w,h - 30);
+}
+update() {
+    var that = this;
+    this.game.entities.forEach(function (entity) 
+    {
+        if (entity.BB && that.BB.collide(entity.BB)) 
+        {
+            if (entity instanceof OverWorldPlayer) 
+            {
+                entity.push(1);
+            }
+        }
+    });
+}
+draw(ctx) {
+        //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
+        ctx.drawImage(this.spritesheet, 112, 320, 63, 64, this.x, this.y, this.w, this.h);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+
+}
+}
+class Door {
+    constructor(game, x, y, w, h) {
+    Object.assign(this, {game, x, y, w, h});
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
+    this.BB = new BoundingBox(x,y,w,h);
+}
+update() {
+}
+draw(ctx) {
+        //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
+        ctx.drawImage(this.spritesheet, 95, 72, 17, 23, this.x, this.y, this.w, this.h);
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+
+}
 
 }
