@@ -287,6 +287,7 @@ class TownScene extends Scene {
         this.entities.push(new Building3(gameEngine, 1100, 545, 63 * 3, 64 * 3));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new Door(gameEngine, 1145, 668, 17 * 3, 23 * 3));
+        this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new saloonLZ(gameEngine,170,355,55,25));
         this.entities.push(new sheriffLZ(gameEngine,700,255,55,25));
         this.entities.push(new bankLZ(gameEngine,1165,300,23,25));
