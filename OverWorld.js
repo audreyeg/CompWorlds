@@ -249,6 +249,38 @@ class TownZone extends Drawable
         }
     }
 }
+class DesertZone extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x,y,camera,48, 239, 32, 64, 32 * 2, 64 * 2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"))
+        this.BB = new BoundingBox(x,y,32 * 2,64 * 2);
+    }
+    collision(entity)
+    {
+        if(entity instanceof OverWorldPlayer)
+        {
+            entity.x += 10;
+            gameEngine.camera.loadScene("desert");
+        }
+    }
+}
+class CaveZone extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x,y,camera,48, 239, 32, 64, 32 * 2, 64 * 2 , ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"))
+        this.BB = new BoundingBox(x,y,32 * 2,64 * 2);
+    }
+    collision(entity)
+    {
+        if(entity instanceof OverWorldPlayer)
+        {
+            entity.y += 10;
+            gameEngine.camera.loadScene("cave");
+        }
+    }
+}
 class DesertPlant extends Drawable
 {
     constructor(game,x,y, camera)
