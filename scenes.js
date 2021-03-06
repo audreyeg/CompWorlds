@@ -395,5 +395,68 @@ class Desert extends Scene {
         //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
         this.entities.push(cowboys);
         this.entities.push(new TownZone(gameEngine,-2610,0,this.camera));
+        this.entities.push(new CaveZone(gameEngine,2450,-2450,this.camera));
+    }
+}
+class CaveScene extends Scene {
+    constructor(game, character) {
+        super(game, character);
+        this.xMin = -1000;
+        this.xMax = 970;
+        this.yMin = -1000;
+        this.yMax = 970;
+        // this.camera.pixelScale = 128;
+
+        //this.camera.setEntityToFollow(character);
+        this.entities.push(this.camera);
+
+        for (var i = -17; i < 16; i++) {
+            for (var j = -16; j < 16; j++) {
+                this.entities.push(new caveFloor(gameEngine, i * 64, j * 64, this.camera));
+
+            }
+        }
+        for(var i = 0; i < 15; i++)
+        {
+            this.entities.push(new tCaveWall(gameEngine,-1040 + (153 * (i - 1)),-1100,this.camera));
+            this.entities.push(new lCaveWall(gameEngine,-1040,50 +(i*64) ,this.camera));
+            this.entities.push(new lCaveWall(gameEngine,-1040,-200 - (i*64) ,this.camera));
+            this.entities.push(new rCaveWall(gameEngine,1000,50 +(i*64) ,this.camera));
+            this.entities.push(new rCaveWall(gameEngine,1000,-200 - (i*64) ,this.camera));
+        }
+        this.entities.push(new rCaveWall(gameEngine,1000,-42 ,this.camera));
+        this.entities.push(new rCaveWall(gameEngine,1000,-110 ,this.camera));
+        for(var i = 0; i < 17; i++)
+        {
+            this.entities.push(new bCaveWall(gameEngine,-993 + (120 * i),1015,this.camera));
+        }
+        for (var i = -27; i < -16; i++) {
+            for (var j = -22; j < 22; j++) {
+                this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
+            }
+        }
+        for (var i = -16; i < 16; i++) {
+            for (var j = -22; j < -17; j++) {
+                this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
+            }
+        }
+        for (var i = 16; i < 27; i++) {
+            for (var j = -22; j < 22; j++) {
+                this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
+            }
+        }
+        for (var i = -16; i < 16; i++) {
+            for (var j = 16; j < 22; j++) {
+                this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
+            }
+        }
+        // Add beep bop boop bep cowboy
+        var cowboys = new OverWorldPlayer(gameEngine,-900,0,this.character, this.camera);
+        this.entities.push(this.inventory);
+        this.camera.setEntityToFollow(cowboys, 700, 384);
+        this.entities.push(new bgImageForChat(gameEngine,-40,650));
+        //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
+        this.entities.push(cowboys);
+        this.entities.push(new DesertZone(gameEngine,-1000,0,this.camera));
     }
 }
