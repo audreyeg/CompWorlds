@@ -237,8 +237,6 @@ class TownScene extends Scene {
         this.xMax = 1350;
         this.yMin = 0;
         this.yMax = 750;
-        // Sets up scene
-        this.entities.push(new Town(gameEngine,0,0));
         for(var i = 0; i < 3; i++)
         {
             this.entities.push(new DesertGround(gameEngine,256 * 0,256 * i, this.camera));

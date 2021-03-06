@@ -1,22 +1,10 @@
-class Town { 
-    constructor(game, x, y) {
-        Object.assign(this, { game, x, y });
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/TownConceptV3.png");
-    };
-
-    update() {
-
-    };
-    draw(ctx) {
-        ctx.drawImage(this.spritesheet,0,0,700,350,0,0,1400,700);
-    };
-};
 class Cave extends Drawable
 {
     constructor(game,x,y,camera)
     {
         super(x, y, camera, 383, 0, 64, 96, 64 * 3.5, 96 * 2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
         this.BB = new BoundingBox(x,y,64 * 3.5, 96 * 2 + 20);
+        this.hasCollision = true;
     }
     collision(entity)
     {
@@ -71,18 +59,6 @@ class overWorldCoyote extends Drawable
         this.BB = new BoundingBox(x,y + 20,60,30);
         this.spawner = spawner;
     }
-    collision(entity)
-    {
-        if(entity instanceof OverWorldPlayer)
-        {
-            gameEngine.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450,this,this.lvl),this.x,this.y);
-            document.getElementById("townAudio").pause();
-            document.getElementById("fightAudio").play();
-            this.spawner.currentEnemies--;
-            this.removeFromWorld = true;
-        }
-        
-    }
 
 }class overWorldBandit extends Drawable
 {
@@ -93,19 +69,6 @@ class overWorldCoyote extends Drawable
         this.BB = new BoundingBox(x,y,44,60);
         this.spawner = spawner;
     }
-    collision(entity)
-    {
-        if(entity instanceof OverWorldPlayer)
-        {
-            gameEngine.camera.createFightSceneWithEnemy(new Bandit(gameEngine,600,450,this,this.lvl),this.x,this.y);
-            document.getElementById("townAudio").pause();
-            document.getElementById("fightAudio").play();
-            this.spawner.currentEnemies--;
-            this.removeFromWorld = true;
-        }
-        
-    }
-
 }
 class TopGate extends Drawable
 {
@@ -113,6 +76,7 @@ class TopGate extends Drawable
     {
         super(x, y, camera, 99, 271, 97, 33, 97 * 2, 33 * 2, ASSET_MANAGER.getAsset("./sprites/gates.png"));
         this.BB = new BoundingBox(x,y,97 * 2, 33 * 2);
+        this.hasCollision = true;
     }
     collision(entity)
     {
@@ -133,6 +97,7 @@ class SideGate extends Drawable
     {
         super(x, y, camera, 99, 308, 9, 97, 9*2, 97*2, ASSET_MANAGER.getAsset("./sprites/gates.png"));
         this.BB = new BoundingBox(x,y,9*2, 97 * 2);
+        this.hasCollision = true;
     }
     collision(entity)
     {
@@ -178,6 +143,7 @@ class TownSign extends Drawable
     {
         super(x,y,camera,0, 0, 84, 86, 84, 86, ASSET_MANAGER.getAsset("./sprites/TownSign.png"));
         this.BB = new BoundingBox(x,y,84, 86);
+        this.hasCollision = true;
     }   
     collision(entity)
     {
@@ -221,6 +187,7 @@ class TownZone extends Drawable
     {
         super(x,y,camera,48, 239, 32, 64, 32 * 2, 64 * 2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"))
         this.BB = new BoundingBox(x,y,32 * 2,64 * 2);
+        this.hasCollision = true;
     }
     collision(entity)
     {
@@ -253,6 +220,7 @@ class DesertPlant extends Drawable
         super(x, y, camera, 320, 160, 32, 32, 64, 64, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
         this.BB = new BoundingBox(x,y,64,64);
         this.delay = 0;
+        this.hasCollision = true;
     }
     collision(entity)
     {
@@ -287,6 +255,7 @@ class DesertWell extends Drawable
     {
         super(x, y, camera, 448, 64, 64, 64, 256/2, 256/2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
         this.BB = new BoundingBox(x,y,256/2,256/2);
+        this.hasCollision = true;
     }
     collision(entity)
     {
@@ -301,7 +270,7 @@ class DesertWell extends Drawable
         }
         else if(entity instanceof Camp)
         {
-            that.removeFromWorld = true;
+            entity.removeFromWorld = true;
         }
     }
 }

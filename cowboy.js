@@ -249,6 +249,24 @@ class OverWorldPlayer {
             that.active = false;
           }
         }
+        if(entity instanceof overWorldCoyote)
+        {
+          that.game.camera.createFightSceneWithEnemy(new coyote(gameEngine,486,450,entity,entity.lvl));
+          document.getElementById("townAudio").pause();
+          document.getElementById("fightAudio").play();
+          entity.spawner.currentEnemies--;
+          entity.removeFromWorld = true;
+          entity.BB = null;
+        }
+        if(entity instanceof overWorldBandit)
+        {
+          gameEngine.camera.createFightSceneWithEnemy(new Bandit(gameEngine,600,450,entity,entity.lvl));
+          document.getElementById("townAudio").pause();
+          document.getElementById("fightAudio").play();
+          this.spawner.currentEnemies--;
+          this.removeFromWorld = true;
+          entity.BB = null;
+        }
         if (entity instanceof Heal) {
           playerInventory.addItem("medpac", 1);
           entity.removeFromWorld = true;
@@ -762,8 +780,6 @@ class OverWorldPlayer {
   push(amt) {
     this.x -= (this.velocity.x * amt);
     this.y -= (this.velocity.y * amt);
-    this.velocity.x = 0;
-    this.velocity.y = 0;
   }
 }
 class Character {
