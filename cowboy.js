@@ -136,6 +136,8 @@ class OverWorldPlayer {
     this.dismount = 0;
     this.talking = false;
     this.active = true;
+    this.curIn;
+    this.lastIn;
 
   }
   update() {
@@ -153,22 +155,27 @@ class OverWorldPlayer {
       if (this.game.right) {
         this.velocity.x = this.stats.speed;
         this.velocity.y = 0;
+        this.curIn = "right";
       }
       else if (this.game.left) {
         this.velocity.x = -this.stats.speed;
         this.velocity.y = 0;
+        this.curIn = "left";
       }
       else if (this.game.up) {
         this.velocity.y = -this.stats.speed;
         this.velocity.x = 0;
+        this.curIn = "up";
       }
       else if (this.game.down) {
         this.velocity.y = this.stats.speed;
         this.velocity.x = 0;
+        this.curIn = "down";
       }
       else {
         this.velocity.x = 0;
         this.velocity.y = 0;
+        this.curIn = "";
       }
       if (this.cooldown <= 0) {
         if (this.game.One) {
@@ -214,6 +221,19 @@ class OverWorldPlayer {
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
+        if(entity instanceof Boundry)
+        {
+          if((gameEngine.left || gameEngine.right || gameEngine.up || gameEngine.down) && that.curIn == that.lastIn)
+          {
+            that.velocity.x = 0;
+            that.velocity.y = 0;
+          }
+          else
+          {
+            that.x = that.lastX;
+            that.y = that.lastY;
+          }
+        }
         if(entity instanceof Horse)
         {
           that.talking = true;
@@ -595,9 +615,27 @@ class OverWorldPlayer {
       }
     });
 
-
-    this.lastX = this.x;
-    this.lastY = this.y;
+    if(this.velocity.x != 0 || this.velocity.y != 0)
+    {
+      this.lastX = this.x;
+      this.lastY = this.y;
+      if(this.game.right)
+      {
+        this.lastIn = "right";
+      }
+      else if(this.game.left)
+      {
+        this.lastIn = "left";
+      }
+      else if(this.game.up)
+      {
+        this.lastIn = "up";
+      }
+      if(this.game.down)
+      {
+        this.lastIn = "down";
+      }
+    }
     if (this.stats.drunk > 0) {
       this.stats.drunk--;
       this.velocity.x = -this.velocity.x;
@@ -724,6 +762,8 @@ class OverWorldPlayer {
   push(amt) {
     this.x -= (this.velocity.x * amt);
     this.y -= (this.velocity.y * amt);
+    this.velocity.x = 0;
+    this.velocity.y = 0;
   }
 }
 class Character {
@@ -737,7 +777,7 @@ class Character {
     this.health = this.maxHealth;
     this.x = 0;
     this.y = 0;
-    this.speed = 3;// * 5;
+    this.speed = 3 * 5;
     this.facing;
     this.drunk = 0;
     this.lvl = 0;

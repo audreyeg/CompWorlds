@@ -133,7 +133,16 @@ class OpenCage extends InteriorTile {
 class WheelTable extends InteriorTile { 
     constructor(game, x, y, rotate180) {
         super(game, x, y, rotate180, "./sprites/png/Separate/128/Static Objects/Other/Wheel 2.png", 128);
+        this.firstLoad = true;
     };
+    update()
+    {
+        if(this.firstLoad)   
+        {
+            this.game.entities.push(new Boundry(gameEngine,this.x,this.y,this.spriteWidth - 10,this.spriteWidth - 10));
+            this.firstLoad = false;
+        }
+    }
     draw(ctx) {
         ctx.drawImage((this.rotate180) ? this.offscreenCanvas : this.spritesheet,0,0,136,136,this.x,this.y,this.spriteWidth,this.spriteWidth);
     };
@@ -148,29 +157,18 @@ class LeftWallWoodThing extends InteriorTile {
 class Crate extends InteriorTile { 
     constructor(game, x, y, rotate180) {
         super(game, x, y, rotate180, "./sprites/png/Separate/128/Static Objects/Other/Crate.png", 128);
-        this.BB = new BoundingBox(this.x,this.y, 128 * 3 / 5, 128);
+        this.firstLoad = true;
     };
     update()
     {
-        var that = this;
-        this.game.entities.forEach(function (entity) 
+        if(this.firstLoad)   
         {
-            if (entity.BB && that.BB.collide(entity.BB)) 
-            {
-                if (entity instanceof OverWorldPlayer) 
-                {
-                    entity.push(1);
-                }
-            }
-        });
+            this.game.entities.push(new Boundry(gameEngine,this.x,this.y,this.spriteWidth * 3 / 5,this.spriteWidth));
+            this.firstLoad = false;
+        }
     }
     draw(ctx) {
         ctx.drawImage((this.rotate180) ? this.offscreenCanvas : this.spritesheet,0,0,106,106,this.x,this.y,this.spriteWidth * 3 / 5,this.spriteWidth);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
     };
 }; 
 
@@ -219,15 +217,12 @@ class Chest extends InteriorTile {
           var temp = that.game.entities.length
           for (var i = 0; i < temp; i++) 
           {
-            console.log(that.game.entities[i]);
             var temp2 = that.game.entities[i];
             if(temp2 instanceof SceneInventory) 
             {
-                console.log(temp2);
                 inventory = temp2;
             }
         }
-          console.log(inventory);
           inventory.addNewItem("coin");
         }
 

@@ -174,7 +174,7 @@ class WalkWay extends Drawable
 }
 class TownSign extends Drawable
 {
-    constructor(gmae,x,y,camera)
+    constructor(game,x,y,camera)
     {
         super(x,y,camera,0, 0, 84, 86, 84, 86, ASSET_MANAGER.getAsset("./sprites/TownSign.png"));
         this.BB = new BoundingBox(x,y,84, 86);
@@ -199,31 +199,19 @@ class DesertSign
         this.x = x;
         this.y = y;
         this.game = game;
-        this.BB = new BoundingBox(x + 20,y,10, 86);
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/DesertSign.png");
-    }   
-    update()
-    {
-        var that = this;
-        this.game.entities.forEach(function (entity) 
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
         {
-            if (entity.BB && that.BB.collide(entity.BB)) 
-            {
-                if (entity instanceof OverWorldPlayer) 
-                {
-                    entity.push(1);
-                }
-            }
-        });
+            this.game.entities.push(new Boundry(gameEngine,this.x + 20,this.y,10,86));
+            this.firstLoad = false;
+        }
     }
     draw(ctx)
     {
         ctx.drawImage(this.spritesheet,0,0,84,86,this.x,this.y,84,86);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
     }
 
 }
@@ -338,22 +326,6 @@ class Road
 
 }
 
-class House {
-     constructor(game, x, y, w, h) {
-        Object.assign(this, { game, x, y, w, h });
-        this.game.house = this;
-        // spritesheet
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/house.png");
-        this.BB = new BoundingBox(this.x,this.y,this.w,this.h);
-    }
-    update()
-    {
-    }
-    draw(ctx)
-    {
-        ctx.drawImage(this.spritesheet,100,18,310,470,this.x,this.y,this.w,this.h);
-    }
-}
 
 class Saloon {
      constructor(game, x, y, visible) {
@@ -361,30 +333,18 @@ class Saloon {
         this.game.Saloon = this;
         // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloon.png");
-        this.BB = new BoundingBox(this.x + 19,this.y,356,350);
+        this.firstLoad = true;
     }
-    update()
-    {
-        var that = this;
-        this.game.entities.forEach(function (entity) 
+    update() {
+        if(this.firstLoad)   
         {
-            if (entity.BB && that.BB.collide(entity.BB)) 
-            {
-                if (entity instanceof OverWorldPlayer) 
-                {
-                    entity.push(1);
-                }
-            }
-        });
+            this.game.entities.push(new Boundry(gameEngine,this.x + 19,this.y  ,356,350));
+            this.firstLoad = false;
+        }
     }
     draw(ctx)
     {
         ctx.drawImage(this.spritesheet,0,0,952,1024,this.x,this.y,400,350);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
     }
 
 }
@@ -395,31 +355,18 @@ class Sheriff {
         this.game.Sheriff = this;
         // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/sheriff.png");
-        this.BB = new BoundingBox(this.x + 20,this.y,380,250);
+        this.firstLoad = true;
     }
-    update()
-    {
-        var that = this;
-        this.game.entities.forEach(function (entity) 
+    update() {
+        if(this.firstLoad)   
         {
-            if (entity.BB && that.BB.collide(entity.BB)) 
-            {
-                if (entity instanceof OverWorldPlayer) 
-                {
-                    entity.push(1);
-                }
-            }
-        });
-        
+            this.game.entities.push(new Boundry(gameEngine,this.x + 20,this.y ,380,250));
+            this.firstLoad = false;
+        }
     }
     draw(ctx)
     {
         ctx.drawImage(this.spritesheet,0,0,894,512,this.x,this.y,400,250);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
     }
 }
 
@@ -429,31 +376,18 @@ class Bank {
         this.game.Bank = this;
         // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/bank.png");
-        this.BB = new BoundingBox(this.x,this.y,200,300);
+        this.firstLoad = true;
     }
-    update()
-    {
-        var that = this;
-        this.game.entities.forEach(function (entity) 
+    update() {
+        if(this.firstLoad)   
         {
-            if (entity.BB && that.BB.collide(entity.BB)) 
-            {
-                if (entity instanceof OverWorldPlayer) 
-                {
-                    entity.push(1);
-                }
-            }
-        });
+            this.game.entities.push(new Boundry(gameEngine,this.x,this.y  ,200,300));
+            this.firstLoad = false;
+        }
     }
     draw(ctx)
     {
         ctx.drawImage(this.spritesheet,0,0,1438,1086,this.x,this.y,200,300);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
-
     }
 }
 
@@ -462,14 +396,12 @@ class Floor {
        Object.assign(this, {game, x, y, w, h});
         this.game.Floor = this;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/floor.png");
-        this.BB = new BoundingBox(x,y,w,h);
     }
     update() {
     }
     draw(ctx) {
-            //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
-            ctx.drawImage(this.spritesheet, 120, 40, 952, 1200, this.x, this.y, this.w, this.h);
-
+        //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
+        ctx.drawImage(this.spritesheet, 120, 40, 952, 1200, this.x, this.y, this.w, this.h);
     }
 }
 
@@ -493,29 +425,18 @@ class Building1 {
     constructor(game, x, y, w, h) {
     Object.assign(this, {game, x, y, w, h});
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
-    this.BB = new BoundingBox(x,y + 30,w,h - 30);
+    this.firstLoad = true;
 }
 update() {
-    var that = this;
-    this.game.entities.forEach(function (entity) 
+    if(this.firstLoad)   
     {
-        if (entity.BB && that.BB.collide(entity.BB)) 
-        {
-            if (entity instanceof OverWorldPlayer) 
-            {
-                entity.push(1);
-            }
-        }
-    });
+        this.game.entities.push(new Boundry(gameEngine,this.x + 5,this.y + 30 ,this.w - 5,this.h - 30));
+        this.firstLoad = false;
+    }
 }
 draw(ctx) {
-        //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
-        ctx.drawImage(this.spritesheet, 16, 208, 63, 64, this.x, this.y, this.w, this.h);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
+    //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
+    ctx.drawImage(this.spritesheet, 16, 208, 63, 64, this.x, this.y, this.w, this.h);
 
 }
 
@@ -524,79 +445,48 @@ class Building2 {
     constructor(game, x, y, w, h) {
     Object.assign(this, {game, x, y, w, h});
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
-    this.BB = new BoundingBox(x ,y + 50,w,h-50);
+    this.firstLoad = true;
 }
 update() {
-    var that = this;
-    this.game.entities.forEach(function (entity) 
+    if(this.firstLoad)   
     {
-        if (entity.BB && that.BB.collide(entity.BB)) 
-        {
-            if (entity instanceof OverWorldPlayer) 
-            {
-                entity.push(1);
-            }
-        }
-    });
+        this.game.entities.push(new Boundry(gameEngine,this.x + 5,this.y + 50 ,this.w - 5,this.h - 50));
+        this.firstLoad = false;
+    }
 }
 draw(ctx) {
-        //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
-        ctx.drawImage(this.spritesheet, 111, 191, 81, 110, this.x, this.y, this.w, this.h);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
-
+    //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
+     ctx.drawImage(this.spritesheet, 111, 191, 81, 110, this.x, this.y, this.w, this.h)
 }
 }
 class Building3 {
     constructor(game, x, y, w, h) {
     Object.assign(this, {game, x, y, w, h});
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
-    this.BB = new BoundingBox(x,y + 30,w,h - 30);
+    this.firstLoad = true;
 }
 update() {
-    var that = this;
-    this.game.entities.forEach(function (entity) 
+    if(this.firstLoad)   
     {
-        if (entity.BB && that.BB.collide(entity.BB)) 
-        {
-            if (entity instanceof OverWorldPlayer) 
-            {
-                entity.push(1);
-            }
-        }
-    });
+        this.game.entities.push(new Boundry(gameEngine,this.x + 5,this.y + 30 ,this.w - 5,this.h - 30));
+        this.firstLoad = false;
+    }
 }
 draw(ctx) {
         //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
         ctx.drawImage(this.spritesheet, 112, 320, 63, 64, this.x, this.y, this.w, this.h);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
-
 }
 }
 class Door {
     constructor(game, x, y, w, h) {
     Object.assign(this, {game, x, y, w, h});
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/buildings.png");
-    this.BB = new BoundingBox(x,y,w,h);
 }
 update() {
 }
 draw(ctx) {
         //spritesheet, xStart, yStart, width, height, x, y, dimensions of box to fill 
         ctx.drawImage(this.spritesheet, 95, 72, 17, 23, this.x, this.y, this.w, this.h);
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
-
 }
 }
 class Camp {
@@ -635,4 +525,24 @@ updateBB()
     var yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
     this.BB = new BoundingBox(xPos, yPos, 40, 80);
 }
+}
+class Boundry
+{
+    constructor(game,x,y,w,h)
+    {
+        this.x = x;
+        this.y = y;
+        this.game = game;
+        this.BB = new BoundingBox(x,y,w,h);
+    }
+    update()
+    {
+    }
+    draw(ctx) {
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+    }
 }

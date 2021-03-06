@@ -93,6 +93,10 @@ class BankScene extends Scene {
         this.entities.push(new Money(gameEngine, 4 * TILE_WIDTH, 1.5 * TILE_WIDTH, false));
         this.entities.push(new Money(gameEngine, 4.5 * TILE_WIDTH, 1.5 * TILE_WIDTH, false));
         this.entities.push(new Chest(gameEngine, 2.5 * TILE_WIDTH, .5 * TILE_WIDTH, false));
+
+        this.entities.push(new Boundry(gameEngine,385,0,15,125))
+        this.entities.push(new Boundry(gameEngine,385,255,15,125))
+        this.entities.push(new Boundry(gameEngine,385,368,400,15))
     
         // Add beep bop boop bep cowboy
         this.entities.push(this.inventory);
@@ -146,6 +150,8 @@ class SheriffScene extends Scene {
         this.entities.push(new HouseBottomLeftCornerBeam(gameEngine, 4 * TILE_WIDTH, 1 * TILE_WIDTH, false));
         this.entities.push(new OpenCage(gameEngine, 4.9 * TILE_WIDTH, 1 * TILE_WIDTH, false));
         this.entities.push(new HouseLeftWall(gameEngine, 4 * TILE_WIDTH, 0 * TILE_WIDTH, false));
+
+        this.entities.push(new Boundry(gameEngine,0,240,760,15))
         
     
         // Add beep bop boop bep cowboy
@@ -208,7 +214,7 @@ class SaloonScene extends Scene {
         this.entities.push(new Crate(gameEngine, 1 * TILE_WIDTH, 4.1 * TILE_WIDTH, false));
         
         for (var i = 0; i < 5; i += 0.5) {
-            this.entities.push(new Barrel(gameEngine, 1.75 * TILE_WIDTH, (i + 0.1) * TILE_WIDTH, false));
+            this.entities.push(new Barrel(gameEngine, 1.75 * TILE_WIDTH - 20, (i + 0.1) * TILE_WIDTH, false));
         }
 
         this.entities.push(new npc(gameEngine, 500, 400, "saloon"));
@@ -292,7 +298,6 @@ class TownScene extends Scene {
         this.entities.push(new sheriffLZ(gameEngine,700,255,55,25));
         this.entities.push(new bankLZ(gameEngine,1165,300,23,25));
         this.entities.push(new desertLZ(gameEngine,1370,415,23,100));
-         //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
 }
 
