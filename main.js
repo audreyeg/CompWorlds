@@ -8,6 +8,7 @@ ASSET_MANAGER.queueDownload("./sprites/horse-brown.png");
 ASSET_MANAGER.queueDownload("./sprites/buildings.png");
 ASSET_MANAGER.queueDownload("./sprites/campsite.png");
 ASSET_MANAGER.queueDownload("./sprites/DesertGround.png");
+ASSET_MANAGER.queueDownload("./sprites/exits.png");
 ASSET_MANAGER.queueDownload("./sprites/dialoug.png");
 ASSET_MANAGER.queueDownload("./sprites/health.png");
 ASSET_MANAGER.queueDownload("./sprites/cowboy.png");
