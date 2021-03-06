@@ -62,6 +62,7 @@ class DynamicDrawable {
         Object.assign(this, { camera, sx, sy, sdx, sdy, dx, dy, tileSprite });
         // this.spritesheet = ASSET_MANAGER.getAsset(tileSprite);
         this.BB = null;
+        this.hasCollision = false;
         this.rotations = [];
         this.xPos;
         this.yPos
@@ -72,14 +73,17 @@ class DynamicDrawable {
         if(this.BB != null)
         {
             this.updateBB()
-            var that = this;
-            gameEngine.entities.forEach(function (entity) 
+            if(this.hasCollision)
             {
-                if (entity.BB && that.BB.collide(entity.BB)) 
+                var that = this;
+                gameEngine.entities.forEach(function (entity) 
                 {
-                    that.collision(entity);
-                }
-            });
+                    if (entity.BB && that.BB.collide(entity.BB)) 
+                    {
+                        that.collision(entity);
+                    }
+                });
+            }
         }
     }
 

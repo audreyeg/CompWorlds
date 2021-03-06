@@ -29,7 +29,7 @@ class npc{
                 this.EndPoint = 92;
                 this.wide = 69;
                 this.tall = 181;
-                 this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloongirl.png");
+                this.spritesheet = ASSET_MANAGER.getAsset("./sprites/saloongirl.png");
                 // this.dancingAnimation = new Animator(this.spritesheet, 94, 2, 44, 66, 7, 0.15, 2.5, false, true);
         }
         else if (this.location == "bartender"){
@@ -88,28 +88,16 @@ class npc{
             this.tall = 93;
             this.spritesheet = ASSET_MANAGER.getAsset("./sprites/random.png");
         }
+        this.firstLoad = true;
     };
 
     update()
-    {
-        //this.velocity.y += this.gravity;
-        if(this.dead)
+    {         
+        if(this.firstLoad)   
         {
-            this.removeFromWorld = true;
+            this.game.entities.push(new Boundry(gameEngine,this.x,this.y,50,60));
+            this.firstLoad = false;
         }
-        var that = this;
-        this.game.entities.forEach(function (entity) {
-            if (entity.BB && that.BB2.collide(entity.BB)) 
-            {
-                if(entity instanceof OverWorldPlayer)
-                {
-                    entity.push(1);
-                }
-            }
-        });
-        this.y += this.velocity.y;
-        this.updateBB();
-                  
     }
     draw(ctx)
     {
@@ -119,12 +107,10 @@ class npc{
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-            ctx.strokeRect(this.BB2.x - this.game.camera.x, this.BB2.y, this.BB2.width, this.BB2.height);
         }
     }
     updateBB()
     {
-        this.BB2 = new BoundingBox(this.x, this.y ,50,60);
         this.BB = new BoundingBox(this.x-15,this.y-15,80,90);
         if(this.location == "bartender")
         {
