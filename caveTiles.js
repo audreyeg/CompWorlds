@@ -37,6 +37,22 @@ class caveOutside extends Drawable
 {
     constructor(game,x,y,camera)
     {
-        super(x, y, camera, 96, 49, 14, 14, 64,64, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        super(x, y, camera, 97, 49, 14, 14, 64,64, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+    }
+}
+class caveExit extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 48, 56, 48, 46, 48*2,48*2, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        this.BB = new BoundingBox(x,y,48*2,48*2);
+    }
+    collision(entity)
+    {
+        if(entity instanceof OverWorldPlayer && entity.facingState == 3)
+        {
+            entity.y -= 20;
+            gameEngine.camera.loadScene("desert");
+        }
     }
 }

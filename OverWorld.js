@@ -16,6 +16,15 @@ class Cave extends Drawable
     constructor(game,x,y,camera)
     {
         super(x, y, camera, 383, 0, 64, 96, 64 * 3.5, 96 * 2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"));
+        this.BB = new BoundingBox(x,y,64 * 3.5, 96 * 2 + 20);
+    }
+    collision(entity)
+    {
+        if(entity instanceof OverWorldPlayer && entity.facingState == 2)
+        {
+            entity.y += 20;
+            gameEngine.camera.loadScene("cave");
+        }
     }
 }
 class CaveSideLeft extends Drawable
@@ -112,7 +121,7 @@ class TopGate extends Drawable
             entity.spawner.currentEnemies--;
             entity.removeFromWorld = true;
         }
-        else if(!(entity instanceof TopGate) && !(entity instanceof SideGate))
+        else if(!(entity instanceof TopGate) && !(entity instanceof SideGate) && !(entity instanceof Cave))
         {
             entity.removeFromWorld = true;
         }
@@ -136,7 +145,7 @@ class SideGate extends Drawable
             entity.spawner.currentEnemies--;
             entity.removeFromWorld = true;
         }
-        else if(!(entity instanceof TopGate) && !(entity instanceof SideGate))
+        else if(!(entity instanceof TopGate) && !(entity instanceof SideGate) && !(entity instanceof Cave))
         {
             entity.removeFromWorld = true;
         }
@@ -246,38 +255,6 @@ class TownZone extends Drawable
         else if(entity instanceof DesertWell)
         {
             entity.removeFromWorld = true;
-        }
-    }
-}
-class DesertZone extends Drawable
-{
-    constructor(game,x,y,camera)
-    {
-        super(x,y,camera,48, 239, 32, 64, 32 * 2, 64 * 2, ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"))
-        this.BB = new BoundingBox(x,y,32 * 2,64 * 2);
-    }
-    collision(entity)
-    {
-        if(entity instanceof OverWorldPlayer)
-        {
-            entity.x += 10;
-            gameEngine.camera.loadScene("desert");
-        }
-    }
-}
-class CaveZone extends Drawable
-{
-    constructor(game,x,y,camera)
-    {
-        super(x,y,camera,48, 239, 32, 64, 32 * 2, 64 * 2 , ASSET_MANAGER.getAsset("./sprites/DesertTileSet.png"))
-        this.BB = new BoundingBox(x,y,32 * 2,64 * 2);
-    }
-    collision(entity)
-    {
-        if(entity instanceof OverWorldPlayer)
-        {
-            entity.y += 10;
-            gameEngine.camera.loadScene("cave");
         }
     }
 }
