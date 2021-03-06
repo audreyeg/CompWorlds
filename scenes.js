@@ -99,6 +99,7 @@ class BankScene extends Scene {
         this.entities.push(new npc(gameEngine, 410, 290, "banker"));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
+        this.entities.push(new Exit(gameEngine,350,750,false));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
     }
 }
@@ -152,6 +153,7 @@ class SheriffScene extends Scene {
         this.entities.push(new npc(gameEngine, 384, 300, "cop"));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new OverWorldPlayer(gameEngine,384,700,this.character));
+        this.entities.push(new Exit(gameEngine,350,750,false));
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
         //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
@@ -215,6 +217,7 @@ class SaloonScene extends Scene {
         this.entities.push(this.inventory);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new OverWorldPlayer(gameEngine,350,700,this.character));
+        this.entities.push(new Exit(gameEngine,350,750,false))
         this.entities.push(new townLZ(gameEngine,350,750,50,25));
         //this.entities.push(new bgImageForObjective(gameEngine,-25,-190));
     }
@@ -271,7 +274,7 @@ class TownScene extends Scene {
         this.entities.push(new Coin(gameEngine, 500, 400));
         this.entities.push(new Coin(gameEngine, 100, 400));
         this.entities.push(this.inventory);
-        this.entities.push(new npc(gameEngine, 120, 430, "guide"));
+        this.entities.push(new npc(gameEngine, 80, 350, "guide"));
         this.entities.push(new Ring(gameEngine, 900, 700, 40, 40));
         this.entities.push(new npc(gameEngine, 350, 700, "rake"));
         this.entities.push(new npc(gameEngine, 950, 100, "shovel"));
@@ -282,6 +285,7 @@ class TownScene extends Scene {
         this.entities.push(new Door(gameEngine, 514, 706, 17 * 2, 23 * 2));
         this.entities.push(new Building1(gameEngine, 650, 545, 63*3.5, 64*3));
         this.entities.push(new Building3(gameEngine, 1100, 545, 63 * 3, 64 * 3));
+        this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new Door(gameEngine, 1145, 668, 17 * 3, 23 * 3));
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
         this.entities.push(new saloonLZ(gameEngine,170,355,55,25));
@@ -347,23 +351,10 @@ class Desert extends Scene {
             var thing = new DesertWell(gameEngine, x * 128, y * 128, this.camera);
             this.entities.push(thing);
 
-            var thing = new EnemySpawner(gameEngine,x * 128,2000,y * 128,2000,5,1,this.camera);
+            var thing = new EnemySpawner(gameEngine,x * 128,500,y * 128,500,5,1,this.camera);
         
             this.entities.push(thing);
             things[JSON.stringify(x) + JSON.stringify(y)] = thing;
-        }
-        for (var i = 0; i < 3; i++) {
-            // Add Well
-            var x = Math.random() * 40 - 20;
-            var y = Math.random() * 40 - 20;
-            while (things[JSON.stringify(x) + JSON.stringify(y)] != undefined) {
-                x = Math.random() * 39 - 20;
-                y = Math.random() * 39 - 20;
-            }
-            // Add enemy spawner
-            var thing = new Camp(gameEngine, x * 128, y * 128, this.camera);
-            this.entities.push(thing);
-            this.entities.push(new EnemySpawner(gameEngine,x * 128,2000,y * 128,2000,5,2,this.camera))
         }
         for(var i = 0; i < 27; i++)
         {
@@ -383,7 +374,12 @@ class Desert extends Scene {
         {
             this.entities.push(new WalkWay(gameEngine,-2642 - (i * 32),0,this.camera));
         }
-       //this.entities.push(new Camp(gameEngine,-2500,0,20,20,this.camera));
+        this.entities.push(new Camp(gameEngine,2000,-2000,this.camera));
+        this.entities.push(new EnemySpawner(gameEngine,1800,400,-2200,400,5,2,this.camera));
+        this.entities.push(new Camp(gameEngine,0,-1800,this.camera));
+        this.entities.push(new EnemySpawner(gameEngine,-200,400,-2000,400,5,2,this.camera));
+        this.entities.push(new Camp(gameEngine,2200,-1000,this.camera));
+        this.entities.push(new EnemySpawner(gameEngine,2000,400,-1200,400,5,2,this.camera));
         this.entities.push(new CaveSideLeft(gameEngine,2358,-2590,this.camera));
         this.entities.push(new CaveSideLeftMid(gameEngine,2365,-2686,this.camera));
         this.entities.push(new CaveSideRight(gameEngine,2678,-2590,this.camera));

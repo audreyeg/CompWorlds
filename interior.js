@@ -236,3 +236,12 @@ class Chest extends InteriorTile {
     }
 
 }; 
+class Exit extends InteriorTile
+{
+    constructor(game, x, y, rotate180) {
+        super(game, x, y, rotate180, "./sprites/exits.png", 50);
+    };
+    draw(ctx) {
+        ctx.drawImage((this.rotate180) ? this.offscreenCanvas : this.spritesheet,3,3,77,52,this.x,this.y,this.spriteWidth,this.spriteWidth);
+    }
+}

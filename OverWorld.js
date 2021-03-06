@@ -277,7 +277,7 @@ class DesertPlant extends Drawable
                 document.getElementById("chat").innerHTML = "What exactly were you trying to do to that cactus?";
             }
         }
-        else if(entity instanceof overWorldCoyote)
+        else if(entity instanceof overWorldCoyote || entity instanceof overWorldBandit)
         {
             entity.spawner.currentEnemies--;
             entity.removeFromWorld = true;
@@ -301,6 +301,10 @@ class DesertWell extends Drawable
         {
             entity.spawner.currentEnemies--;
             entity.removeFromWorld = true;
+        }
+        else if(entity instanceof Camp)
+        {
+            that.removeFromWorld = true;
         }
     }
 }
@@ -594,6 +598,7 @@ class Camp {
     this.BB = new BoundingBox(x,y,20,20);
 }
 update() {
+    this.updateBB();
 }
 draw(ctx) {
     var xPos = this.x;
@@ -612,5 +617,13 @@ draw(ctx) {
         ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
     }
 
+}
+updateBB()
+{
+    var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+    var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+    var xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+    var yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
+    this.BB = new BoundingBox(xPos, yPos, 40, 80);
 }
 }
