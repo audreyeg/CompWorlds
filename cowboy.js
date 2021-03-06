@@ -190,10 +190,6 @@ class OverWorldPlayer {
           playerInventory.use("beer");
           this.cooldown = 60;
         }
-         if (this.game.Four) {
-          playerInventory.use("armor");
-          this.cooldown = 60;
-        }
       }
       else {
         this.cooldown--;
@@ -221,7 +217,7 @@ class OverWorldPlayer {
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
-        if(entity instanceof Boundry)
+        if(entity instanceof Boundry ||entity instanceof  DrawBoundry)
         {
           if((gameEngine.left || gameEngine.right || gameEngine.up || gameEngine.down) && that.curIn == that.lastIn)
           {
@@ -982,9 +978,6 @@ Item("beer", "Beer", function () {
 });
 
 Item("armor", "Armor Plate", function () {
-  if (playerInventory.hasItem("armor", 0) && gameEngine.camera.fight) {
-    playerInventory.removeItem("armor", 1);
-  }
 });
 
 //right now coins will be dropped if clicked on 

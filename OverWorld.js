@@ -75,19 +75,15 @@ class TopGate extends Drawable
     constructor(game,x,y,camera)
     {
         super(x, y, camera, 99, 271, 97, 33, 97 * 2, 33 * 2, ASSET_MANAGER.getAsset("./sprites/gates.png"));
-        this.BB = new BoundingBox(x,y,97 * 2, 33 * 2);
-        this.hasCollision = true;
+        //this.BB = new BoundingBox(x,y,97 * 2, 33 * 2);
+        this.game = game;
+        this.firstLoad = true;
     }
-    collision(entity)
-    {
-        if(entity instanceof overWorldCoyote)
+    update() {
+        if(this.firstLoad)   
         {
-            entity.spawner.currentEnemies--;
-            entity.removeFromWorld = true;
-        }
-        else if(!(entity instanceof TopGate) && !(entity instanceof SideGate) && !(entity instanceof Cave))
-        {
-            entity.removeFromWorld = true;
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,97 * 2, 33 * 2,this.camera));
+            this.firstLoad = false;
         }
     }
 }
@@ -96,23 +92,15 @@ class SideGate extends Drawable
     constructor(game,x,y,camera)
     {
         super(x, y, camera, 99, 308, 9, 97, 9*2, 97*2, ASSET_MANAGER.getAsset("./sprites/gates.png"));
-        this.BB = new BoundingBox(x,y,9*2, 97 * 2);
-        this.hasCollision = true;
+        //this.BB = new BoundingBox(x,y,9*2, 97 * 2);
+        this.game = game;
+        this.firstLoad = true;
     }
-    collision(entity)
-    {
-        if(entity instanceof OverWorldPlayer)
+    update() {
+        if(this.firstLoad)   
         {
-            entity.push(2);
-        }
-        else if(entity instanceof overWorldCoyote)
-        {
-            entity.spawner.currentEnemies--;
-            entity.removeFromWorld = true;
-        }
-        else if(!(entity instanceof TopGate) && !(entity instanceof SideGate) && !(entity instanceof Cave))
-        {
-            entity.removeFromWorld = true;
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,9*2,97 * 2,this.camera));
+            this.firstLoad = false;
         }
     }
 }
@@ -463,10 +451,14 @@ class Camp {
     Object.assign(this, {game, x, y,camera});
     this.spritesheet = ASSET_MANAGER.getAsset("./sprites/campsite.png");
     this.animate = new Animator(this.spritesheet, 5, 3, 22, 29, 3, .33, 14, false, true,this.camera);
-    this.BB = new BoundingBox(x,y,20,20);
+    this.firstLoad = true;
 }
 update() {
-    this.updateBB();
+    if(this.firstLoad)   
+    {
+        this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y + 20,40,40,this.camera));
+        this.firstLoad = false;
+    }
 }
 draw(ctx) {
     var xPos = this.x;
@@ -479,20 +471,6 @@ draw(ctx) {
       yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
     }
     this.animate.drawFrame(this.game.clockTick, ctx, this.x, this.y, 2);
-    if (PARAMS.DEBUG) 
-    {
-        ctx.strokeStyle = 'Red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-    }
-
-}
-updateBB()
-{
-    var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
-    var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
-    var xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
-    var yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
-    this.BB = new BoundingBox(xPos, yPos, 40, 80);
 }
 }
 class Boundry
@@ -506,6 +484,34 @@ class Boundry
     }
     update()
     {
+    }
+    draw(ctx) {
+        if (PARAMS.DEBUG) 
+        {
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
+        }
+    }
+}
+class DrawBoundry
+{
+    constructor(game,x,y,w,h,camera)
+    {
+        this.camera = camera;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.game = game;
+        this.BB = new BoundingBox(x,y,w,h);
+    }
+    update()
+    {
+        var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+        var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+        var xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+        var yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
+        this.BB = new BoundingBox(xPos, yPos, this.w, this.h);
     }
     draw(ctx) {
         if (PARAMS.DEBUG) 

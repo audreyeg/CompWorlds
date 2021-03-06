@@ -302,10 +302,10 @@ class TownScene extends Scene {
 class Desert extends Scene {
     constructor(game, character) {
         super(game, character);
-        this.xMin = -2560;
-        this.xMax = 2620;
-        this.yMin = -2500;
-        this.yMax = 2600;
+        this.xMin = -2700;
+        this.xMax = 2700;
+        this.yMin = -2700;
+        this.yMax = 2700;
         // this.camera.pixelScale = 128;
 
         //this.camera.setEntityToFollow(character);
