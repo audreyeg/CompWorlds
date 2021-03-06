@@ -14,7 +14,7 @@ class saloonLZ
         {
             if (entity.BB && that.BB.collide(entity.BB)) 
             {
-                if (entity instanceof OverWorldPlayer) 
+                if (entity instanceof OverWorldPlayer && entity.facingState == 2) 
                 {
                     entity.y += 10;
                     that.game.camera.loadScene("saloon");
@@ -49,7 +49,7 @@ class sheriffLZ
         {
             if (entity.BB && that.BB.collide(entity.BB)) 
             {
-                if (entity instanceof OverWorldPlayer) 
+                if (entity instanceof OverWorldPlayer && entity.facingState == 2) 
                 {
                     entity.y += 10;
                     that.game.camera.loadScene("sheriff");
@@ -82,7 +82,7 @@ class bankLZ
         {
             if (entity.BB && that.BB.collide(entity.BB)) 
             {
-                if (entity instanceof OverWorldPlayer) 
+                if (entity instanceof OverWorldPlayer && entity.facingState == 2) 
                 {
                     entity.y += 10;
                     that.game.camera.loadScene("bank");
@@ -114,7 +114,7 @@ class desertLZ
         {
             if (entity.BB && that.BB.collide(entity.BB)) 
             {
-                if (entity instanceof OverWorldPlayer) 
+                if (entity instanceof OverWorldPlayer && entity.facingState == 0) 
                 {
                     entity.x -= 20;
                     that.game.camera.loadScene("desert");
@@ -147,7 +147,7 @@ class townLZ
         {
             if (entity.BB && that.BB.collide(entity.BB)) 
             {
-                if (entity instanceof OverWorldPlayer) 
+                if (entity instanceof OverWorldPlayer && entity.facingState == 3) 
                 {
                     entity.y -= 10;
                     that.game.camera.loadScene("town");
@@ -167,43 +167,4 @@ class townLZ
     }
 
 }
-/*
-class fightLZ
-{
-    constructor(game,x,y,w,h,enemy)
-    {
-        Object.assign(this, { game, x, y,w,h,enemy});
-        this.game = game;
-        this.BB = new BoundingBox(x,y,w,h);
-        this.enemy = enemy
-    }
-    update()
-    {
-        var that = this;
-        this.game.entities.forEach(function (entity) 
-        {
-            if (entity.BB && that.BB.collide(entity.BB)) 
-            {
-                if (entity instanceof OverWorldPlayer) 
-                {
-                    that.game.camera.enemySpawner.currentEnemies--;
-                    that.game.camera.createFightSceneWithEnemy(that.enemy,that.x,that.y);
-                    document.getElementById("townAudio").pause();
-                    document.getElementById("fightAudio").play();
-                    that.enemy.parent.removeFromWorld = true;
-                }
-            }
-        });
-    }
-    draw(ctx)
-    {
-        if (PARAMS.DEBUG) 
-        {
-            ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
-        }
-    }
-
-}
-*/
 
