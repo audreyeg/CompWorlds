@@ -46,6 +46,7 @@ class caveExit extends Drawable
     {
         super(x, y, camera, 48, 56, 48, 46, 48*2,48*2, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
         this.BB = new BoundingBox(x,y,48*2,48*2);
+        this.hasCollision = true;
     }
     collision(entity)
     {

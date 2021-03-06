@@ -263,8 +263,8 @@ class OverWorldPlayer {
           gameEngine.camera.createFightSceneWithEnemy(new Bandit(gameEngine,600,450,entity,entity.lvl));
           document.getElementById("townAudio").pause();
           document.getElementById("fightAudio").play();
-          this.spawner.currentEnemies--;
-          this.removeFromWorld = true;
+          entity.spawner.currentEnemies--;
+          entity.removeFromWorld = true;
           entity.BB = null;
         }
         if (entity instanceof Heal) {
