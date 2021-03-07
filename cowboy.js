@@ -278,6 +278,14 @@ class OverWorldPlayer {
             ringFound = true;
           }
         }
+         if (entity instanceof MoneyCave) {
+          if (that.game.camera.missions.missions["FindMoney"].state == 1) {
+            playerInventory.addItem("moneybag", 1);
+            entity.removeFromWorld = true;
+            moneyFound = true;
+          }
+        }
+
         if (entity instanceof npc && entity.rake) {
           that.talking = true;
           changeChat("Bandits everywhere... Coyotes everywhere... Yet happiness nowhere to be found.")
@@ -592,36 +600,79 @@ class OverWorldPlayer {
           var stateResponse = 0;
           //npc line
           changeChat("1..2...3... AH! When did you get here?");
-          changeChat1("Literally just now. ");
-          changeChat2(" What are you doing?");
+
+           if (that.game.camera.missions.missions["FindMoney"].state == 1) {
+          	changeChat("Well! Aren't you going to go find my money?!?!")
+          	changeChat1("");
+          	changeChat2("");
+          }
+          else if (that.game.camera.missions.missions["FindMoney"].state == 2) {
+            changeChat1("I found your money bag in the cave.");
+            changeChat2("");
+          }
+          else if (that.game.camera.missions.missions["FindMoney"].state == 3) {
+          	changeChat("I don't care what the bandits take, as long as it's not stolen from me.");
+          	changeChat1("");
+          	changeChat2("");
+          }
+          else {
+          	changeChat1("Literally just now. ");
+          	changeChat2("You seem jumpy.");
+     	 }	
           //gets from index file the response (1 or 2) that user selected based on which button was pushed
           var user = response;
           //set the state to determine dialogue options
           //LEVEL 1 of conversation
-          if (user == 1 && userCount == 1) {
+
+          if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindMoney"].state == 2)) {
+            stateResponse = 5;
+          }
+          else if (user == 1 && userCount == 1) {
             stateResponse = 1;
           }
           else if (user == 2 && userCount == 1) {
             stateResponse = 2;
           }
-          else if (userCount >= 2) {
-            changeChat("");
-            changeChat1("");
-            changeChat2("");
+          else if (user == 1 && userCount == 2) {
+          	stateResponse = 3;
+          }
+          else if (user == 2 && userCount == 2) {
+          	stateResponse = 4;
           }
           switch (stateResponse) {
             //LEVEL 1 of conversation
             //if user selected option 1 ("Literally just now.")
             case 1:
               changeChat("You should really announce yourself, instead of speaking up.");
-              changeChat1("Sorry");
-              changeChat2("...");
+              changeChat1("");
+              changeChat2("");
               break;
             //if user selected option 1 ("What are you doing?")
             case 2:
-              changeChat("Counting my coins of course.");
+              changeChat("Well of course I'm jumpy! There are bandits amuck, and I'm missing a money bag!");
+              changeChat1("Do you think a bandit stole it?");
+              changeChat2("Welp, sounds like a personal problem.");
+              break;
+            case 3:
+              changeChat("Of course a bandit stole it! I'll bet it's sitting in that cave right now...");
               changeChat1("");
               changeChat2("");
+              if (that.game.camera.missions.missions["FindMoney"].state == 0) {
+                that.game.camera.missions.missions["FindMoney"].state = 1;
+              }
+              break;
+            case 4:
+              changeChat("Sad but true.");
+              changeChat1("");
+              changeChat2("");
+              break;
+        	case 5:
+              changeChat("So nice to see my money safe and sound... and you too, I guess. Here is 10 coins, generous I know.");
+              changeChat1("");
+              changeChat2("");
+              playerInventory.removeItem("moneybag", 1);
+              giveCoin = true;
+              endMission = true;
               break;
           }
         }
@@ -699,8 +750,16 @@ class OverWorldPlayer {
                 that.game.camera.missions.missions["FindRing"].state = 3;
                 endMission = false;
         }
+      if (that.game.camera.missions.missions["FindMoney"].state == 2 && (endMission)) {
+                that.game.camera.missions.missions["FindMoney"].state = 3;
+                endMission = false;
+        }
       if (that.game.camera.missions.missions["FindRing"].state == 3 && (giveCoin)) {
       	  	playerInventory.addItem("coin", 50);
+      	  	giveCoin = false;
+      }
+      if (that.game.camera.missions.missions["FindMoney"].state == 3 && (giveCoin)) {
+      	  	playerInventory.addItem("coin", 10);
       	  	giveCoin = false;
       }
       if (that.game.camera.missions.missions["KillCoyote"].state == 3 && (giveArmor)) {
@@ -966,6 +1025,12 @@ Item("medpac", "MedPac", function () {
 Item("ring", "Ring", function () {
   if (playerInventory.hasItem("ring", 0)) {
     playerInventory.removeItem("ring", 1);
+  }
+}, true);
+
+Item("moneybag", "Money Bag", function () {
+  if (playerInventory.hasItem("moneybag", 0)) {
+    playerInventory.removeItem("moneybag", 1);
   }
 }, true);
 

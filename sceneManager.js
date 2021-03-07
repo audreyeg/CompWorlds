@@ -47,6 +47,7 @@ class SceneManager {
         this.missions.missions["KillCoyote"].update();
         this.missions.missions["Bank"].update();
         this.missions.missions["FindRing"].update();
+        this.missions.missions["FindMoney"].update();
         this.cowboy.update();
     }
     draw(ctx) 
@@ -54,6 +55,7 @@ class SceneManager {
        this.missions.missions["KillCoyote"].draw(ctx);
         this.missions.missions["Bank"].draw(ctx);
         this.missions.missions["FindRing"].draw(ctx);
+        this.missions.missions["FindMoney"].draw(ctx);
        this.cowboy.draw(ctx);
     }
 

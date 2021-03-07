@@ -146,6 +146,16 @@ class TownSign extends Drawable
         }
     }
 }
+
+class MoneyCave extends Drawable 
+{ 
+    constructor(game, x, y, camera) 
+    {
+        super(x, y, camera, 0, 0, 128, 128, 60, 60, ASSET_MANAGER.getAsset("./sprites/png/Separate/128/Static Objects/Other/Money (1).png"));
+        this.BB = new BoundingBox(x,y,60, 60);
+    }
+}
+
 class DesertSign 
 {
     constructor(game,x,y)

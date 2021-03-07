@@ -7,6 +7,8 @@
 
 
 
+
+
   <!-- 
   		CHAT SYSTEM
 
@@ -161,6 +163,7 @@
     <div id="quests" style = "color: black; font-family: Papyrus">
         <p id = "ringQuest"></p>
         <p id = "sheriffQuest"></p>
+        <p id = "bankerQuest"></p>
     </div>
 
     <!-- Where player response options are. On click, sends to below function-->
@@ -184,6 +187,7 @@
 
         var coyotesKilled = 0;
         var ringFound = false;
+        var moneyFound = false;
         var playGame = false;
         var killCoyoteMissionActive = false;
         playerInventory = new Inventory();
@@ -206,7 +210,12 @@
             if (quest == "coyote killed") {
                 document.getElementById("sheriffQuest").innerHTML = "Return to sheriff";
             }
-
+                if (quest == "find money") {
+                document.getElementById("bankerQuest").innerHTML = "Find the stolen money";
+            }
+            if (quest == "return money") {
+                 document.getElementById("bankerQuest").innerHTML = "Return the stolen money";
+            }
         }
         function clearQuests(quest) {
             if (quest == "ring") {
@@ -214,6 +223,9 @@
             }
             if (quest == "coyote") {
                   document.getElementById("sheriffQuest").innerHTML = "";
+            }
+           if (quest == "money") {
+                  document.getElementById("bankerQuest").innerHTML = "";
             }
         }
         //function to change what npc says 
