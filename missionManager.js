@@ -7,6 +7,7 @@ class MissionManager
         this.missions["Bank"] = new BankerMission(this.game);
         this.missions["KillCoyote"] = new KillCoyoteMission(this.game);
         this.missions["FindRing"] = new findStolenRing(this.game);
+        this.missions["FindMoney"] = new findMoney(this.game);
     }
 }
 class Missions
@@ -128,3 +129,38 @@ class findStolenRing extends Missions
         }
     }
 }
+
+class findMoney extends Missions 
+{
+    constructor(game)
+    {
+        super(game,"Find Money");
+        this.flags["found"] = false;
+        this.state = 0;
+    }
+    update()
+    {
+        if(this.state == 1)
+        {
+            if(moneyFound)
+            {
+                  this.state = 2;
+            }
+        }
+    }
+    draw(ctx)
+    {
+        if(this.state == 1)
+        {
+            addQuests("find money");
+        }
+        if (this.state == 2)
+        {
+            addQuests("return money");
+        }
+        if (this.state == 3) {
+            clearQuests("money");
+        }
+    }
+}
+
