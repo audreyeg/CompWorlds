@@ -30,7 +30,7 @@ class SceneManager {
 
     update() {
         if (playGame) {
-             this.loadScene("town");
+             this.loadScene("cave");
             playGame = false;
         }
         PARAMS.DEBUG = document.getElementById("debug").checked;
