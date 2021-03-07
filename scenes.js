@@ -470,6 +470,7 @@ class CaveScene extends Scene {
         }
         var cowboys = new OverWorldPlayer(gameEngine,-500,950,this.character, this.camera);
         this.entities.push(new caveExit(gameEngine,-500, 1015,this.camera));
+        this.entities.push(new MoneyCave(gameEngine, 4 * 128, 1 * 128, this.camera));
         // Add beep bop boop bep cowboy
         this.entities.push(this.inventory);
         this.camera.setEntityToFollow(cowboys, 700, 384);
