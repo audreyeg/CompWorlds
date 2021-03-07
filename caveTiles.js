@@ -33,6 +33,139 @@ class caveFloor extends Drawable
         super(x, y, camera, 0, 144, 31, 31, 64,64, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
     }
 }
+class cavePillar extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 204, 49, 40, 62, 40 * 3,62 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        this.game = game;
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
+        {
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,40 * 3,62 * 3,this.camera));
+            this.firstLoad = false;
+        }
+    }
+}
+class cavePillarREdge extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 237, 49, 19, 62, 19 * 3,62 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        this.game = game;
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
+        {
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,19 * 3,62 * 3,this.camera));
+            this.firstLoad = false;
+        }
+    }
+}
+class cavePillarLEdge extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 193, 49, 19, 62, 19 * 3,62 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        this.game = game;
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
+        {
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,19 * 3,62 * 3,this.camera));
+            this.firstLoad = false;
+        }
+    }
+}
+class cavePillarVertical extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 211, 324, 27, 39, 27 * 3,39 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        this.game = game;
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
+        {
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,27 * 3,39 * 3,this.camera));
+            this.firstLoad = false;
+        }
+    }
+}
+class cavePillarTEdge extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 211, 311, 28, 15, 28 * 3,15 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        this.game = game;
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
+        {
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,28 * 3,15 * 3,this.camera));
+            this.firstLoad = false;
+        }
+    }
+}
+class cavePillarBEdge extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 211, 358, 28, 15, 28 * 3,15 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        this.game = game;
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
+        {
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,28 * 3,15 * 3,this.camera));
+            this.firstLoad = false;
+        }
+    }
+}
+class Boulder extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x, y, camera, 0, 0, 255, 255, 80,80, ASSET_MANAGER.getAsset("./sprites/boulder.png"));
+        this.game = game;
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
+        {
+            //this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,80,80,this.camera));
+            this.firstLoad = false;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class caveOutside extends Drawable
 {
     constructor(game,x,y,camera)

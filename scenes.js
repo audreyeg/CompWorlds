@@ -435,6 +435,19 @@ class CaveScene extends Scene {
         {
             this.entities.push(new bCaveWall(gameEngine,-993 + (120 * i),1015,this.camera));
         }
+        for(var i = 0; i < 5; i++)
+        {
+            this.entities.push(new cavePillar(gameEngine,-1000 + (i * 120),500,this.camera));
+            this.entities.push(new cavePillar(gameEngine,-145 + (i * 120),500,this.camera));
+        }
+        this.entities.push(new cavePillarREdge(gameEngine,-400,500,this.camera));
+        this.entities.push(new cavePillarLEdge(gameEngine,-200,500,this.camera));
+        for(var i = 0; i < 4; i++)
+        {
+            this.entities.push(new cavePillarVertical(gameEngine,376,570 + (117 * i),this.camera));
+        }
+        this.entities.push(new Boulder(gameEngine,-350,600,this.camera));
+        this.entities.push(new Boulder(gameEngine,-270,600,this.camera));
         for (var i = -27; i < -16; i++) {
             for (var j = -22; j < 22; j++) {
                 this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
@@ -455,9 +468,9 @@ class CaveScene extends Scene {
                 this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
             }
         }
+        var cowboys = new OverWorldPlayer(gameEngine,-500,950,this.character, this.camera);
         this.entities.push(new caveExit(gameEngine,-500, 1015,this.camera));
         // Add beep bop boop bep cowboy
-        var cowboys = new OverWorldPlayer(gameEngine,-500,950,this.character, this.camera);
         this.entities.push(this.inventory);
         this.camera.setEntityToFollow(cowboys, 700, 384);
         this.entities.push(new bgImageForChat(gameEngine,-40,650));
