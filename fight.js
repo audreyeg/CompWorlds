@@ -32,14 +32,30 @@ class Fight {
         ctx.strokeStyle = "Black";
         ctx.strokeRect(500, 110, 200, 20);
         ctx.fillRect(500, 110, this.enemy.specialMeter * 2, 20);
-        ctx.fillText("Special (Not yet implemented)", 5, 75);
+        ctx.fillText("Special", 5, 75);
         ctx.strokeStyle = "Black";
         ctx.strokeRect(5, 110, 200, 20);
-        ctx.fillRect(5, 110, this.player.specialMeter * 2, 20);
+        ctx.fillRect(5, 110, this.player.stats.specialMeter * 2, 20);
 
     }
     update() {
         if (this.player.turn && this.delay == 0 && !this.end) {
+            if(this.sAttack)
+            {
+                this.sAttack = false;
+                this.delay = 60;
+                this.player.turn = false;
+                this.enemy.turn = true;
+                this.enemy.health -= this.player.stats.sDamage;
+                if(this.enemy.health <= 0)
+                {
+                    this.enemy.health = 0;
+                }
+                changeChat("You hit the enemy for " + this.player.stats.sDamage + " damage");
+
+            }
+            else
+            {
             changeChat("Z) Attack" + '<br>' + "X) Defend (Requires and consumes 1 armor piece)" + '<br>' + "C) Heal (Requires and consumes 1 medpac)" + '<br>' + "V) Special Attack (Requires and consumes full special meter)");
             if (this.game.one) {
                 this.player.attack();
@@ -51,6 +67,7 @@ class Fight {
                 changeChat("You hit the enemy for " + this.player.stats.damage + " damage");
                 this.enemy.specialMeter += 10;
                 this.delay = 120;
+                this.player.stats.specialMeter += 10;
                 this.player.turn = false;
                 this.enemy.turn = true;
             }
@@ -98,8 +115,12 @@ class Fight {
                 else {
                     this.player.special();
                     changeChat("You used bullet barrage!");
+                    this.delay = 300;
+                    this.player.stats.specialMeter = 0;
+                    this.sAttack = true;
                 }
             }
+        }
             if(this.enemy.health == 0)
             {
                 this.end = true;
@@ -152,7 +173,7 @@ class Fight {
                     }
                     var dam = Math.floor(this.damage * ((10 - (this.player.stats.lvl - this.enemy.lvl))/10))
                     changeChat("You were hit for " + dam + " damage");
-                    console.log(dam);
+                    this.player.stats.specialMeter += dam
                     this.player.stats.takeDamage(dam);
                     this.delay = 120;
                     this.enemy.turn = false;
