@@ -8,6 +8,7 @@ class MissionManager
         this.missions["KillCoyote"] = new KillCoyoteMission(this.game);
         this.missions["FindRing"] = new findStolenRing(this.game);
         this.missions["FindMoney"] = new findMoney(this.game);
+        this.missions["FinalFight"] = new finalFight(this.game);
     }
 }
 class Missions
@@ -164,3 +165,36 @@ class findMoney extends Missions
     }
 }
 
+class finalFight extends Missions 
+{
+    constructor(game)
+    {
+        super(game,"Fight the bandid King in the cave.");
+        this.flags["Killed"] = false;
+        this.state = 0;
+    }
+    update()
+    {
+        if(this.state == 1)
+        {
+            if(bossKilled > 0)
+            {
+                  this.state = 2;
+            }
+        }
+    }
+    draw(ctx)
+    {
+        if(this.state == 1)
+        {
+            addQuests("fight boss");
+        }
+        if (this.state == 2)
+        {
+            addQuests("boss beat");
+        }
+        if (this.state == 3) {
+            clearQuests("final");
+        }
+    }
+}
