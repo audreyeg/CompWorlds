@@ -141,6 +141,9 @@ class OverWorldPlayer {
 
   }
   update() {
+    if (questsCompleted == 3) {
+      document.getElementById("finalQuest").innerHTML = "Talk to the guide outside of the saloon.";
+  }
     if (this.stun == 0) {
       if (this.talking && this.cooldown <= 0) {
         if (this.game.response1) {
