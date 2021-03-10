@@ -385,7 +385,7 @@ class Boss {
     this.attacking = false;
     this.turn;
     this.healthMax = (lvl * 12);
-    this.health = 15;// this.healthMax;
+    this.health = this.healthMax;
     this.parent = parent;
     this.baseXP = 30;
     this.lvl = lvl;
