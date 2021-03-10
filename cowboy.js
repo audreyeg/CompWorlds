@@ -275,6 +275,14 @@ class OverWorldPlayer {
           entity.removeFromWorld = true;
           entity.BB = null;
         }
+        if(entity instanceof overWorldBoss)
+        {
+          gameEngine.camera.createFightSceneWithEnemy(new Boss(gameEngine,600,450,entity,entity.lvl));
+          document.getElementById("townAudio").pause();
+          document.getElementById("fightAudio").play();
+          entity.removeFromWorld = true;
+          entity.BB = null;
+        }
         if (entity instanceof Heal) {
           playerInventory.addItem("medpac", 1);
           entity.removeFromWorld = true;

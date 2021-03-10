@@ -405,8 +405,8 @@ class CaveScene extends Scene {
     constructor(game, character) {
         super(game, character);
         this.xMin = -1000;
-        this.xMax = 970;
-        this.yMin = -1000;
+        this.xMax = 870;
+        this.yMin = -950;
         this.yMax = 970;
         // this.camera.pixelScale = 128;
 
@@ -421,30 +421,34 @@ class CaveScene extends Scene {
         }
         for(var i = 0; i < 15; i++)
         {
-            this.entities.push(new tCaveWall(gameEngine,-1040 + (153 * (i - 1)),-1100,this.camera));
-            this.entities.push(new lCaveWall(gameEngine,-1040,50 +(i*64) ,this.camera));
-            this.entities.push(new lCaveWall(gameEngine,-1040,-200 - (i*64) ,this.camera));
-            this.entities.push(new rCaveWall(gameEngine,1000,50 +(i*64) ,this.camera));
-            this.entities.push(new rCaveWall(gameEngine,1000,-200 - (i*64) ,this.camera));
+            this.entities.push(new tCaveWall(gameEngine,-1040 + (153 * (i - 1)),-1050,this.camera));  // Top cave wall
+            this.entities.push(new lCaveWall(gameEngine,-1040,50 +(i*64) ,this.camera));  // Lower left cave wall
+            
+
+            this.entities.push(new lCaveWall(gameEngine,-1040,-200 - (i*64) ,this.camera));  // Upper left cave wall
+            this.entities.push(new rCaveWall(gameEngine,900,50 +(i*64) ,this.camera));  // Lower right cave wall
+            this.entities.push(new rCaveWall(gameEngine,900,-200 - (i*64) ,this.camera));  // Upper right cave wall
         }
-        this.entities.push(new rCaveWall(gameEngine,1000,-42 ,this.camera));
-        this.entities.push(new rCaveWall(gameEngine,1000,-110 ,this.camera));
+        
+        // Middle two right and left walls
+        this.entities.push(new rCaveWall(gameEngine,900,-42 ,this.camera));
+        this.entities.push(new rCaveWall(gameEngine,900,-110 ,this.camera)); 
         this.entities.push(new lCaveWall(gameEngine,-1040,-42 ,this.camera));
         this.entities.push(new lCaveWall(gameEngine,-1040,-110 ,this.camera));
         for(var i = 0; i < 17; i++)
         {
-            this.entities.push(new bCaveWall(gameEngine,-993 + (120 * i),1015,this.camera));
+            this.entities.push(new bCaveWall(gameEngine,-993 + (120 * i),1015,this.camera));  // Bottom cave wall
         }
         for(var i = 0; i < 5; i++)
         {
-            this.entities.push(new cavePillar(gameEngine,-1000 + (i * 120),500,this.camera));
-            this.entities.push(new cavePillar(gameEngine,-145 + (i * 120),500,this.camera));
+            this.entities.push(new cavePillar(gameEngine,-1000 + (i * 120),500,this.camera));  // Gating wall left of boulders
+            this.entities.push(new cavePillar(gameEngine,-145 + (i * 120),500,this.camera));  // Gating wall right of boulders
         }
-        this.entities.push(new cavePillarREdge(gameEngine,-400,500,this.camera));
+        this.entities.push(new cavePillarREdge(gameEngine,-400,500,this.camera));  // Gates next to boulders
         this.entities.push(new cavePillarLEdge(gameEngine,-200,500,this.camera));
         for(var i = 0; i < 4; i++)
         {
-            this.entities.push(new cavePillarVertical(gameEngine,376,570 + (117 * i),this.camera));
+            this.entities.push(new cavePillarVertical(gameEngine,376,570 + (117 * i),this.camera));  // Right gating wall
         }
         this.Boulder1 = new Boulder(gameEngine,-350,600,this.camera)
         this.Boulder2 = new Boulder(gameEngine,-270,600,this.camera);
@@ -474,6 +478,7 @@ class CaveScene extends Scene {
         var cowboys = new OverWorldPlayer(gameEngine,-500,950,this.character, this.camera);
         this.entities.push(new caveExit(gameEngine,-500, 1015,this.camera));
         this.entities.push(new MoneyCave(gameEngine, 4 * 128, 1 * 128, this.camera));
+        this.entities.push(new overWorldBoss(game,4.7 * 128, 6.2 * 128,1,this.camera,null));
         // Add beep bop boop bep cowboy
         this.entities.push(this.inventory);
         this.camera.setEntityToFollow(cowboys, 700, 384);

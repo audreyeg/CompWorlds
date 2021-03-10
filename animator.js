@@ -30,6 +30,10 @@ class Animator {
         
         // Don't ask me, ask Sam
         if (this.camera == null) {
+            // console.log("this.xStart + frame * (this.width + this.framePadding)");
+            // console.log(this.xStart + frame * (this.width + this.framePadding));
+            // console.log("this.width");
+            // console.log(this.width);
             ctx.drawImage(this.spritesheet,
                 this.xStart + frame * (this.width + this.framePadding), this.yStart, //source from sheet
                 this.width, this.height,
