@@ -446,8 +446,11 @@ class CaveScene extends Scene {
         {
             this.entities.push(new cavePillarVertical(gameEngine,376,570 + (117 * i),this.camera));
         }
-        this.entities.push(new Boulder(gameEngine,-350,600,this.camera));
-        this.entities.push(new Boulder(gameEngine,-270,600,this.camera));
+        this.Boulder1 = new Boulder(gameEngine,-350,600,this.camera)
+        this.Boulder2 = new Boulder(gameEngine,-270,600,this.camera);
+        this.entities.push(this.Boulder1);
+        this.entities.push(this.Boulder2);
+        this.entities.push(new Explodable(gameEngine, -350,600,150,100,this.Boulder1,this.Boulder2, this.camera));
         for (var i = -27; i < -16; i++) {
             for (var j = -22; j < 22; j++) {
                 this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));

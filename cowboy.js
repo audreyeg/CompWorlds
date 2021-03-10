@@ -230,6 +230,18 @@ class OverWorldPlayer {
             that.y = that.lastY;
           }
         }
+        if(entity instanceof Explodable && entity.interactable && playerInventory.hasItem("dynamite", 0))
+        {
+          that.talking = true;
+          changeChat("Press Space To Place Dynamite!");
+          if(that.game.interact) 
+          {
+            playerInventory.removeItem("dynamite", 1)
+            that.game.entities.push(new Dynamite(gameEngine, that.x,that.y - 10, that.camera));
+            entity.timer = 300;
+            entity.interactable = false;
+          }
+        }
         if(entity instanceof Horse)
         {
           that.talking = true;
@@ -859,6 +871,7 @@ class Character {
     playerInventory.addItem("medpac", 0);
     playerInventory.addItem("beer", 0);
     playerInventory.addItem("armor", 1);
+    playerInventory.addItem("dynamite", 1);
     this.setDamage(this.baseDamage);
   }
   takeDamage(amt) {
@@ -1031,6 +1044,11 @@ Item("ring", "Ring", function () {
 Item("moneybag", "Money Bag", function () {
   if (playerInventory.hasItem("moneybag", 0)) {
     playerInventory.removeItem("moneybag", 1);
+  }
+}, true);
+Item("dynamite", "Dynamite", function () {
+  if (playerInventory.hasItem("dynamite", 0)) {
+    playerInventory.removeItem("dynamite", 1);
   }
 }, true);
 
