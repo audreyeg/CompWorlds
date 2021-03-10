@@ -305,7 +305,10 @@ class OverWorldPlayer {
           gameEngine.camera.createFightSceneWithEnemy(new Bandit(gameEngine,600,450,entity,entity.lvl));
           document.getElementById("townAudio").pause();
           document.getElementById("fightAudio").play();
-          entity.spawner.currentEnemies--;
+          if(entity.spawner != null)
+          {
+            entity.spawner.currentEnemies--;
+          }
           entity.removeFromWorld = true;
           entity.BB = null;
         }
@@ -572,6 +575,7 @@ class OverWorldPlayer {
 
               if (that.game.camera.missions.missions["KillCoyote"].state == 0) {
                 that.game.camera.missions.missions["KillCoyote"].state = 1;
+                that.game.camera.missions.missions["KillCoyote"].killed = coyotesKilled;
               }
 
               break;
@@ -606,7 +610,7 @@ class OverWorldPlayer {
           //npc line
 
           if (questsCompleted == 3 && that.game.camera.missions.missions["FinalFight"].state == 0) {
-            changeChat("You have helped all the town folk. I think you are ready for the final boss fight with the Bandid King.");
+            changeChat("You have helped all the town folk. I think you are ready for the final boss fight with the Bandit King.");
             changeChat1("I'm ready");
             changeChat2("I'm not ready yet.");
           }
@@ -927,7 +931,6 @@ class OverWorldPlayer {
     {
       this.dismount--;
     }
-
   }
 
 
@@ -1005,7 +1008,7 @@ class Character {
     this.health = this.maxHealth;
     this.x = 0;
     this.y = 0;
-    this.speed = 3 * 5;
+    this.speed = 3;// * 5;
     this.facing;
     this.drunk = 0;
     this.lvl = 0;

@@ -462,11 +462,11 @@ class CaveScene extends Scene {
         }
         this.entities.push(new cavePillarREdge(gameEngine,-400,468,this.camera));  // Gates next to boulders
         this.entities.push(new cavePillarLEdge(gameEngine,-200,468,this.camera));
-        this.Boulder1 = new Boulder(gameEngine,-350,570,this.camera)
-        this.Boulder2 = new Boulder(gameEngine,-270,570,this.camera);
+        this.Boulder1 = new Boulder(gameEngine,-550,170,this.camera)
+        this.Boulder2 = new Boulder(gameEngine,-470,170,this.camera);
         this.entities.push(this.Boulder1);
         this.entities.push(this.Boulder2);
-        this.entities.push(new Explodable(gameEngine, -350,600,150,100,this.Boulder1,this.Boulder2, this.camera));
+        this.entities.push(new Explodable(gameEngine,-550,190,150,100,this.Boulder1,this.Boulder2, this.camera));
         // this.entities.push(new Boulder(gameEngine,-350,600,this.camera));  // Boulders
         // this.entities.push(new Boulder(gameEngine,-270,600,this.camera));
         
@@ -548,8 +548,15 @@ class CaveScene extends Scene {
         }
         var cowboys = new OverWorldPlayer(gameEngine,-500,950,this.character, this.camera);
         this.entities.push(new caveExit(gameEngine,-500, 1015,this.camera));
-        this.entities.push(new MoneyCave(gameEngine, -800, 700, this.camera));
-        // this.entities.push(new MoneyCave(gameEngine, 4 * 128, 6.2 * 128, this.camera));
+        this.entities.push(new MoneyCave(gameEngine, 220, -640, this.camera));
+        this.entities.push(new overWorldBandit(this.game,-290,-160,4,this.camera,null))
+        this.entities.push(new overWorldBandit(this.game,175,-475,4,this.camera,null))
+        this.entities.push(new overWorldBandit(this.game,240,-475,4,this.camera,null))
+        this.entities.push(new overWorldBandit(this.game,-620,-55,4,this.camera,null))
+        this.entities.push(new overWorldBandit(this.game,-965,-520,4,this.camera,null))
+        this.entities.push(new overWorldBandit(this.game,-380,-905,4,this.camera,null))
+        this.entities.push(new overWorldBandit(this.game,685,-905,4,this.camera,null))
+        this.entities.push(new overWorldBandit(this.game,-230,-145,4,this.camera,null))
         this.entities.push(new overWorldBoss(game,4.7 * 128, 6.2 * 128,5,this.camera,null));
         // Add beep bop boop bep cowboy
         this.entities.push(this.inventory);
