@@ -16,6 +16,7 @@ class tCaveWall extends Drawable
 {
     constructor(game,x,y,camera)
     {
+        // Note: Width should be 32 but squishes things
         super(x, y, camera, 199, 65, 51, 46, 51*3,47*3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
     }
 }

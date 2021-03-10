@@ -17,6 +17,7 @@ ASSET_MANAGER.queueDownload("./sprites/dialoug.png");
 ASSET_MANAGER.queueDownload("./sprites/health.png");
 ASSET_MANAGER.queueDownload("./sprites/cowboy.png");
 ASSET_MANAGER.queueDownload("./sprites/bandit.png");
+ASSET_MANAGER.queueDownload("./sprites/boss.png");
 ASSET_MANAGER.queueDownload("./sprites/crit.png");
 ASSET_MANAGER.queueDownload("./sprites/gates.png");
 ASSET_MANAGER.queueDownload("./sprites/TownSign.png");

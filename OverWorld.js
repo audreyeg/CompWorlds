@@ -60,13 +60,24 @@ class overWorldCoyote extends Drawable
         this.spawner = spawner;
     }
 
-}class overWorldBandit extends Drawable
+}
+class overWorldBandit extends Drawable
 {
     constructor(game,x,y,lvl, camera,spawner)
     {
         super(x, y, camera, 9, 9, 62, 90, 44, 60, ASSET_MANAGER.getAsset("./sprites/bandit.png"));
         this.lvl = lvl
         this.BB = new BoundingBox(x,y,44,60);
+        this.spawner = spawner;
+    }
+}
+class overWorldBoss extends Drawable
+{
+    constructor(game,x,y,lvl, camera,spawner)
+    {
+        super(x, y, camera, 9, 9, 90, 90, 60, 60, ASSET_MANAGER.getAsset("./sprites/boss.png"));
+        this.lvl = lvl
+        this.BB = new BoundingBox(x,y,60,60);
         this.spawner = spawner;
     }
 }
