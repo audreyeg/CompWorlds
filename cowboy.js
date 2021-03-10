@@ -221,6 +221,13 @@ class OverWorldPlayer {
     var that = this;
     this.game.entities.forEach(function (entity) {
       if (entity.BB && that.BB.collide(entity.BB)) {
+        if(entity instanceof Dynamite)
+        {
+          that.stats.health = 1;
+          that.talking = true;
+          changeChat("Didnt your mother ever tell you not to stand so close to an explosion!?!?");
+
+        }
         if(entity instanceof Boundry ||entity instanceof  DrawBoundry)
         {
           if((gameEngine.left || gameEngine.right || gameEngine.up || gameEngine.down) && that.curIn == that.lastIn)
@@ -234,7 +241,7 @@ class OverWorldPlayer {
             that.y = that.lastY;
           }
         }
-        if(entity instanceof Explodable && entity.interactable && playerInventory.hasItem("dynamite", 0) && that.game.camera.missions.missions["FinalFight"].state == 1)
+        if(entity instanceof Explodable && entity.interactable && playerInventory.hasItem("dynamite", 0))// && that.game.camera.missions.missions["FinalFight"].state == 1)
         {
           that.talking = true;
           changeChat("Press Space To Place Dynamite!");
@@ -866,17 +873,17 @@ class OverWorldPlayer {
                 that.game.camera.missions.missions["FinalFight"].state = 3;
                 endMission = false;
         }
-      if (that.game.camera.missions.missions["FindRing"].state == 3 && (giveCoin)) {
-            questsCompleted++;
-      	  	playerInventory.addItem("coin", 50);
-      	  	giveCoin = false;
-            that.game.camera.missions.missions["FindRing"].state = 4
-      }
       if (that.game.camera.missions.missions["FindMoney"].state == 3 && (giveCoin)) {
         questsCompleted++;
         playerInventory.addItem("coin", 10);
         giveCoin = false;
-  }
+      } 
+      else if (that.game.camera.missions.missions["FindRing"].state == 3 && (giveCoin)) {
+        questsCompleted++;
+      	playerInventory.addItem("coin", 50);
+      	giveCoin = false;
+        that.game.camera.missions.missions["FindRing"].state = 4
+      }
       if (that.game.camera.missions.missions["KillCoyote"].state == 3 && (giveArmor)) {
             questsCompleted++;
             playerInventory.addItem("armor", 2);
