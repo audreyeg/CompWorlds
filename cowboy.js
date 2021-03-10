@@ -241,7 +241,7 @@ class OverWorldPlayer {
             that.y = that.lastY;
           }
         }
-        if(entity instanceof Explodable && entity.interactable && playerInventory.hasItem("dynamite", 0))// && that.game.camera.missions.missions["FinalFight"].state == 1)
+        if(entity instanceof Explodable && entity.interactable && playerInventory.hasItem("dynamite", 0) && that.game.camera.missions.missions["FinalFight"].state == 1)
         {
           that.talking = true;
           changeChat("Press Space To Place Dynamite!");
