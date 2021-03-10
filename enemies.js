@@ -371,6 +371,8 @@ class Boss {
     this.game = game;
     //this.game.animation = this;
 
+    this.spritesheet = ASSET_MANAGER.getAsset("./sprites/boss.png");
+
     this.facing = 1; //0 = right, 1 = left
     this.state = 0; //0 = idle, 1 = running
     this.fire = 0; //0 = not shooting, 1 = shooting, 2 = dead
