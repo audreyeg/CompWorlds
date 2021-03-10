@@ -38,7 +38,7 @@ class cavePillar extends Drawable
 {
     constructor(game,x,y,camera)
     {
-        super(x, y, camera, 204, 49, 40, 62, 40 * 3,62 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        super(x, y, camera, 204, 52, 40, 59, 40 * 3,62 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
         this.game = game;
         this.firstLoad = true;
     }
@@ -86,14 +86,14 @@ class cavePillarVertical extends Drawable
 {
     constructor(game,x,y,camera)
     {
-        super(x, y, camera, 211, 324, 27, 39, 27 * 3,39 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
+        super(x, y, camera, 211, 324, 27, 39, 27 * 3,62 * 3, ASSET_MANAGER.getAsset("./sprites/CaveTileset.png"));
         this.game = game;
         this.firstLoad = true;
     }
     update() {
         if(this.firstLoad)   
         {
-            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,27 * 3,39 * 3,this.camera));
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,27 * 3,62 * 3,this.camera));
             this.firstLoad = false;
         }
     }
