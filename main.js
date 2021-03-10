@@ -3,6 +3,8 @@ var gameEngine = new GameEngine();
 var ASSET_MANAGER = new AssetManager();
 
 ASSET_MANAGER.queueDownload("./sprites/coyote.png");
+ASSET_MANAGER.queueDownload("./sprites/dynimite.png");
+ASSET_MANAGER.queueDownload("./sprites/Explosion.png");
 ASSET_MANAGER.queueDownload("./sprites/boulder.png");
 ASSET_MANAGER.queueDownload("./sprites/Player.png");
 ASSET_MANAGER.queueDownload("./sprites/horse-brown.png");

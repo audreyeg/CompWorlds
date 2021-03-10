@@ -136,12 +136,19 @@ class Boulder extends Drawable
         super(x, y, camera, 0, 0, 255, 255, 80,80, ASSET_MANAGER.getAsset("./sprites/boulder.png"));
         this.game = game;
         this.firstLoad = true;
+        this.destroyed = false;
+        this.boundry = new DrawBoundry(gameEngine,this.x,this.y,80,80,this.camera)
     }
     update() {
         if(this.firstLoad)   
         {
-            //this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,80,80,this.camera));
+            this.game.entities.push(this.boundry);
             this.firstLoad = false;
+        }
+        if(this.destroyed)
+        {
+            this.boundry.removeFromWorld = true;
+            this.removeFromWorld = true;
         }
     }
 }
