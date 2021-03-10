@@ -376,7 +376,6 @@ class Boss {
     this.facing = 1; //0 = right, 1 = left
     this.state = 0; //0 = idle, 1 = running
     this.fire = 0; //0 = not shooting, 1 = shooting, 2 = dead
-    this.health = 200;
     this.name = "Boss";
     this.stall = true;
     this.dead = false;
@@ -386,7 +385,7 @@ class Boss {
     this.attacking = false;
     this.turn;
     this.healthMax = (lvl * 12);
-    this.health =  this.healthMax;
+    this.health = 15;// this.healthMax;
     this.parent = parent;
     this.baseXP = 30;
     this.lvl = lvl;
