@@ -1,6 +1,6 @@
 class npc{
 
-    constructor(game, x, y, place) {
+    constructor(game, x, y, place,camera = null) {
         Object.assign(this, { game, x, y });
         this.game.npc = this;
         // spritesheet
@@ -8,6 +8,7 @@ class npc{
         //this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
         this.x = x;
         this.y = y;
+        this.camera = camera;
         this.updateBB();
         this.number = 0;
         this.dead = false
@@ -88,6 +89,14 @@ class npc{
             this.tall = 93;
             this.spritesheet = ASSET_MANAGER.getAsset("./sprites/random.png");
         }
+        else if (this.location == "secret"){
+            this.secret = true;
+            this.startPoint = 27;
+            this.EndPoint = 33;
+            this.wide = 19;
+            this.tall = 24;
+            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/npc.png");
+        }
         this.firstLoad = true;
     };
 
@@ -95,14 +104,30 @@ class npc{
     {         
         if(this.firstLoad)   
         {
-            this.game.entities.push(new Boundry(gameEngine,this.x,this.y,50,60));
+            if(this.camera == null)
+            {
+                this.game.entities.push(new Boundry(gameEngine,this.x,this.y,50,60));
+            }
+            else
+            {
+                this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,50,60,this.camera));
+            }
             this.firstLoad = false;
         }
+        this.updateBB();
     }
     draw(ctx)
     {
-        ctx.drawImage(this.spritesheet,this.startPoint,this.EndPoint,this.wide,this.tall,this.x,this.y,50,60);
-        //this.dancingAnimation.drawFrame(this.game.clockTick,ctx,this.x,this.y,1);
+        var xPos = this.x;
+        var yPos = this.y;
+        if(this.camera != null)
+        {      
+            var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+            var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+            xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+            yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
+        }
+        ctx.drawImage(this.spritesheet,this.startPoint,this.EndPoint,this.wide,this.tall,xPos,yPos,50,60);
         ctx.restore();
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = 'Red';
@@ -111,10 +136,19 @@ class npc{
     }
     updateBB()
     {
-        this.BB = new BoundingBox(this.x-15,this.y-15,80,90);
+        var xPos = this.x;
+        var yPos = this.y;
+        if(this.camera != null)
+        {      
+            var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+            var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+            xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+            yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
+        }
+        this.BB = new BoundingBox(xPos-15,yPos-15,80,90);
         if(this.location == "bartender")
         {
-            this.BB = new BoundingBox(this.x,this.y,150,60);
+            this.BB = new BoundingBox(xPos,yPos,150,60);
         }
     }
 }

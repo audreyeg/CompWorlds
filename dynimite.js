@@ -62,7 +62,10 @@ class Explodable
         if(this.timer == 0)
         {
             this.object1.destroyed = true;
-            this.object2.destroyed = true;
+            if(this.object2 != null)
+            {
+                this.object2.destroyed = true;
+            }
             this.removeFromWorld = true;
         }
         if(this.timer > 0)

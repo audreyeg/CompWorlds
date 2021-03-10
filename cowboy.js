@@ -138,6 +138,7 @@ class OverWorldPlayer {
     this.active = true;
     this.curIn;
     this.lastIn;
+    this.reward = true;
 
   }
   update() {
@@ -340,7 +341,7 @@ class OverWorldPlayer {
             changeChat2("");
 
           }
-          else if (that.game.camera.missions.missions["FindRing"].state == 3) {
+          else if (that.game.camera.missions.missions["FindRing"].state == 4) {
           	changeChat1("Can I buy a medpac?");
           	changeChat2("Just stopping by");
           }
@@ -356,14 +357,14 @@ class OverWorldPlayer {
           if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 2)) {
             stateResponse = 5;
           }
-          else if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 3) && (playerInventory.check("coin", 10))) {
+          else if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 4) && (playerInventory.check("coin", 10))) {
           	buyMedpac = true;
           	stateResponse = 6;
           }
-	  else if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 3) && !(playerInventory.check("coin", 10))) {
+	  else if (user == 1 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 4) && !(playerInventory.check("coin", 10))) {
             stateResponse = 7;
           }
-          else if (user == 2 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 3)) {
+          else if (user == 2 && userCount == 1 && (that.game.camera.missions.missions["FindRing"].state == 4)) {
           	stateResponse = 4;
           }
           else if (user == 1 && userCount == 1) {
@@ -744,6 +745,45 @@ class OverWorldPlayer {
               break;
           }
         }
+        if (entity instanceof npc && entity.secret) {
+          //user is now in conversation
+          that.talking = true;
+          //this will determine which dialogue options to show in switch statement
+          var stateResponse = 0;
+          //npc line
+          changeChat("You know this used to be my game before you came along.");
+          //user response options
+          changeChat1("Sucks to suck.");
+          changeChat2("Well ill do you proud!");
+          //gets from index file the response (1 or 2) that user selected based on which button was pushed
+          var user = response;
+          //set the state to determine dialogue options
+          //LEVEL 1 of conversation
+          if (user == 1) {
+            stateResponse = 1;
+          }
+          else if (user == 2 ) {
+            stateResponse = 2;
+          }
+
+          switch (stateResponse) {
+            case 1:
+              changeChat("Psshh, why did they replace me with your ugly ass!");
+              changeChat1("");
+              changeChat2("");
+              break;
+            case 2:
+              changeChat("You Better!");
+              changeChat1("");
+              changeChat2("");
+              if(that.reward)
+              {
+                changeChat("Thank you. I suppose i dont need these anymore so you can have them.");
+                that.giveSecret = true;
+              }
+              break;
+          }
+        }
 
       }
     });
@@ -830,16 +870,26 @@ class OverWorldPlayer {
             questsCompleted++;
       	  	playerInventory.addItem("coin", 50);
       	  	giveCoin = false;
+            that.game.camera.missions.missions["FindRing"].state = 4
       }
       if (that.game.camera.missions.missions["FindMoney"].state == 3 && (giveCoin)) {
-            questsCompleted++;
-      	  	playerInventory.addItem("coin", 10);
-      	  	giveCoin = false;
-      }
+        questsCompleted++;
+        playerInventory.addItem("coin", 10);
+        giveCoin = false;
+  }
       if (that.game.camera.missions.missions["KillCoyote"].state == 3 && (giveArmor)) {
             questsCompleted++;
             playerInventory.addItem("armor", 2);
             giveArmor = false;
+      }
+      if(that.giveSecret)
+      {
+        that.reward = false;
+        that.giveSecret = false;
+        playerInventory.addItem("armor", 10);
+        playerInventory.addItem("coin", 100);
+        playerInventory.addItem("medpac", 10);
+        playerInventory.addItem("dynamite", 1);
       }
 
     }
