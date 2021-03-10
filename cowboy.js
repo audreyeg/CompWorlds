@@ -59,6 +59,23 @@ class CowBoy {
     this.BB = new BoundingBox(this.x, this.y, 62 * 2, 90 * 2);
   }
   update() {
+    if(this.specialAttack){
+    if (this.wait > 0) {
+      this.wait--;
+    }
+    else if (this.barrage > 0) {
+      this.barrage--;
+      this.state = 0;
+      this.facing = 0;
+      this.fire = 1;
+    }
+    else {
+      this.specialAttack = false;
+      this.timer = 0;
+    }
+  }
+  else
+  {
     if (!this.dead) {
       if (this.timer == 0) {
         this.state = 0;
@@ -90,6 +107,7 @@ class CowBoy {
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
+  }
   attack() {
     this.state = 0;
     this.facing = 0;
@@ -109,6 +127,11 @@ class CowBoy {
     this.state = 2;
     this.BB = new BoundingBox(this.x, this.y, 62 * 2, 90);
     this.y += 90;
+  }
+  special() {
+    this.specialAttack = true;
+    this.wait = 60;
+    this.barrage = 300;
   }
 }
 
@@ -976,6 +999,7 @@ class Character {
     this.game = game;
     this.baseDamage = 5;
     this.damage;
+    this.sDamage;
     this.armor = 5;
     this.maxHealth = 100;
     this.health = this.maxHealth;
@@ -987,7 +1011,7 @@ class Character {
     this.lvl = 0;
     this.exp = 0;
     this.nextLvl = 50;
-    this.specialMeter = 0;
+    this.specialMeter = 100;
     playerInventory.addItem("coin", 0);
     playerInventory.addItem("medpac", 0);
     playerInventory.addItem("beer", 0);
@@ -1018,6 +1042,7 @@ class Character {
   }
   setDamage(amt) {
     this.damage = Math.ceil(amt);
+    this.sDamage =  Math.ceil(amt * 5);
   }
   setX(x) {
     this.x = x;
@@ -1039,6 +1064,10 @@ class Character {
     if(this.health > this.maxHealth)
     {
       this.health = this.maxHealth;
+    }
+    if(this.specialMeter > 100)
+    {
+      this.specialMeter = 100;
     }
   }
   draw(ctx) {
