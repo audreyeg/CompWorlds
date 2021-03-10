@@ -71,8 +71,6 @@ class KillCoyoteMission  extends Missions
             {
                   this.state = 2;
             }
-            console.log(this.state);
-            console.log("coyotes killed:" + coyotesKilled);
         }
     }
     draw(ctx)
@@ -125,7 +123,7 @@ class findStolenRing extends Missions
         {
             addQuests("return ring");
         }
-        if (this.state == 3) {
+        if (this.state == 4) {
             clearQuests("ring");
         }
     }

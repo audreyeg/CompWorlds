@@ -303,7 +303,7 @@ class Desert extends Scene {
     constructor(game, character) {
         super(game, character);
         this.xMin = -2700;
-        this.xMax = 2700;
+        this.xMax = 3500;
         this.yMin = -2700;
         this.yMax = 2700;
         // this.camera.pixelScale = 128;
@@ -312,6 +312,13 @@ class Desert extends Scene {
         this.entities.push(this.camera);
 
         for (var i = -26; i < 25; i++) {
+            for (var j = -26; j < 25; j++) {
+                this.entities.push(new DesertGround(gameEngine, i * 128, j * 128, this.camera));
+
+            }
+        }
+        for(var i =25 ; i < 32; i++)
+        {
             for (var j = -26; j < 25; j++) {
                 this.entities.push(new DesertGround(gameEngine, i * 128, j * 128, this.camera));
 
@@ -363,8 +370,17 @@ class Desert extends Scene {
         {
             this.entities.push(new TopGate(gameEngine, -2560 + (i * 194),-2560, this.camera));
             this.entities.push(new TopGate(gameEngine, -2560 + (i * 194), 2660, this.camera))
-            this.entities.push(new SideGate(gameEngine, 2660 ,-2560 + (i * 194), this.camera));
+            if(i < 26)
+            {
+                this.entities.push(new SideGate(gameEngine, 2660 ,-2560 + (i * 194), this.camera));
+            }
         }
+        this.entities.push(new DrawBoundry(gameEngine,2660,2400,1000,10,this.camera));
+        this.breakableGate = new SideGate(gameEngine, 2660 ,-2560 + (26 * 194), this.camera)
+        this.entities.push(this.breakableGate);
+        this.entities.push(new Explodable(gameEngine, 2635,2484,25,194,this.breakableGate,null, this.camera));
+        this.entities.push(new SecretSign(gameEngine,3250,2450,this.camera));
+        this.entities.push(new npc(gameEngine,3350,2550, "secret",this.camera));
         for(var i = 0; i < 13; i++)
         {
             this.entities.push(new SideGate(gameEngine, -2560 ,-2560 + (i * 194), this.camera));

@@ -105,13 +105,20 @@ class SideGate extends Drawable
         super(x, y, camera, 99, 308, 9, 97, 9*2, 97*2, ASSET_MANAGER.getAsset("./sprites/gates.png"));
         //this.BB = new BoundingBox(x,y,9*2, 97 * 2);
         this.game = game;
+        this.Boundry = new DrawBoundry(gameEngine,this.x,this.y,9*2,97 * 2,this.camera)
         this.firstLoad = true;
+        this.destroyed = false;
     }
     update() {
         if(this.firstLoad)   
         {
-            this.game.entities.push(new DrawBoundry(gameEngine,this.x,this.y,9*2,97 * 2,this.camera));
+            this.game.entities.push(this.Boundry);
             this.firstLoad = false;
+        }
+        if(this.destroyed)
+        {
+            this.Boundry.removeFromWorld = true;
+            this.removeFromWorld = true;
         }
     }
 }
@@ -156,6 +163,24 @@ class TownSign extends Drawable
             entity.removeFromWorld = true;
         }
     }
+}
+class SecretSign extends Drawable
+{
+    constructor(game,x,y,camera)
+    {
+        super(x,y,camera,0, 0, 84, 86, 84, 86, ASSET_MANAGER.getAsset("./sprites/Sign (3).png"));
+        this.game = game;
+        this.camera = camera;
+        this.hasCollision = false;
+        this.firstLoad = true;
+    }
+    update() {
+        if(this.firstLoad)   
+        {
+            this.game.entities.push(new DrawBoundry(gameEngine,this.x + 35,this.y,10,86,this.camera));
+            this.firstLoad = false;
+        }
+    }   
 }
 
 class MoneyCave extends Drawable 
