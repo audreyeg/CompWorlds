@@ -8,14 +8,28 @@ class Dynamite
         this.game = game;
         this.timer = 420;
         this.spritesheet = ASSET_MANAGER.getAsset("./sprites/dynimite.png");
-        this.explosion = new Animator(ASSET_MANAGER.getAsset("./sprites/Explosion.png"), 148, 55, 84, 70,7, .15, 1, false, false, camera);
+        this.explosion = new Animator(ASSET_MANAGER.getAsset("./sprites/Explosion.png"), 148, 55, 84, 70,7, .15, 1, false,false, camera);
+        this.BB = null;
     }
     update() 
     {
         this.timer--;
-        if(this.timer == 0)
+        if(this.timer == -120)
         {
             this.removeFromWorld = true;
+        }
+        if(this.timer < 120)
+        {
+            var xPos = this.x;
+            var yPos = this.y;
+            if(this.camera != null)
+            {      
+              var tileWidth = this.camera.pixelScale * this.camera.linearScale[0];
+              var tileHeight = this.camera.pixelScale * this.camera.linearScale[1];
+              xPos = (this.x - this.camera.x) * tileWidth * Math.cos(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.sin(this.camera.angle);
+              yPos = (this.x - this.camera.x) * tileWidth * Math.sin(this.camera.angle) - (this.camera.y - this.y) * tileHeight * Math.cos(this.camera.angle);
+            }
+            this.BB = new BoundingBox(xPos, yPos - 50,150, 140);
         }
     }
     draw(ctx) 
@@ -36,6 +50,11 @@ class Dynamite
           else
           {
             this.explosion.drawFrame(this.game.clockTick, ctx, this.x, this.y - 50,2);
+          }
+          if (PARAMS.DEBUG && this.BB != null) 
+          {
+              ctx.strokeStyle = 'Red';
+              ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
           }
     }
 }
