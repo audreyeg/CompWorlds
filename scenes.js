@@ -455,6 +455,48 @@ class CaveScene extends Scene {
         this.entities.push(this.Boulder1);
         this.entities.push(this.Boulder2);
         this.entities.push(new Explodable(gameEngine, -350,600,150,100,this.Boulder1,this.Boulder2, this.camera));
+        // this.entities.push(new Boulder(gameEngine,-350,600,this.camera));  // Boulders
+        // this.entities.push(new Boulder(gameEngine,-270,600,this.camera));
+
+        // Maze:
+        for(var i = 0; i < 2; i++)
+        {
+            this.entities.push(new cavePillar(gameEngine,-145 + ((i + 5) * 120), 186 * 0 + 500,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * 3) - 1000, (186 * (i + 6)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * 9) - 1000, (186 * (i + 6)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * 13) - 1000, (186 * (i + 6)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * 1) - 1000, (186 * (i + 1)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * 7) - 1000, (186 * (i + 3)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (i + 6)) - 1000, (186 * (6)) - 939,this.camera));
+            for(var j = 0; j < 3; j++)
+            {
+                this.entities.push(new cavePillar(gameEngine, (120 * (j + 12)) - 1000, (186 * (i + 1)) - 939,this.camera));
+            }
+        }
+        for(var i = 0; i < 6; i++)
+        {
+            this.entities.push(new cavePillar(gameEngine, (120 * 5) - 1000, (186 * (i + 1)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * 11) - 1000, (186 * (i + 1)) - 939,this.camera));
+        }
+        for(var i = 0; i < 3; i++)
+        {
+            this.entities.push(new cavePillar(gameEngine, (120 * 1) - 1000, (186 * (i + 4)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * 3) - 1000, (186 * (i)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (i + 2)) - 1000, (186 * (4)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (i + 8)) - 1000, (186 * (4)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (i + 13)) - 1000, (186 * (4)) - 939,this.camera));
+        }
+        for(var i = 0; i < 5; i++)
+        {
+            this.entities.push(new cavePillar(gameEngine, (120 * (i + 6)) - 1000, (186 * (1)) - 939,this.camera));
+        }
+        this.entities.push(new cavePillar(gameEngine, (120 * (2)) - 1000, (186 * (2)) - 939,this.camera));
+        this.entities.push(new cavePillar(gameEngine, (120 * (9)) - 1000, (186 * (2)) - 939,this.camera));
+        this.entities.push(new cavePillar(gameEngine, (120 * (12)) - 1000, (186 * (6)) - 939,this.camera));
+
+
+
+
         for (var i = -27; i < -16; i++) {
             for (var j = -22; j < 22; j++) {
                 this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
