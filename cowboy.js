@@ -230,7 +230,7 @@ class OverWorldPlayer {
             that.y = that.lastY;
           }
         }
-        if(entity instanceof Explodable && entity.interactable && playerInventory.hasItem("dynamite", 0))
+        if(entity instanceof Explodable && entity.interactable && playerInventory.hasItem("dynamite", 0) && that.game.camera.missions.missions["FinalFight"].state == 1)
         {
           that.talking = true;
           changeChat("Press Space To Place Dynamite!");
@@ -570,15 +570,47 @@ class OverWorldPlayer {
           //this will determine which dialogue options to show in switch statement
           var stateResponse = 0;
           //npc line
-          changeChat("Welcome newcomer! The Wild West can be a daunting place, come to me if you need guidance.");
-          //user response options
-          changeChat1("I'm okay for now");
-          changeChat2("What should I do?");
+
+          if (questsCompleted == 3 && that.game.camera.missions.missions["FinalFight"].state == 0) {
+            changeChat("You have helped all the town folk. I think you are ready for the final boss fight with the Bandid King.");
+            changeChat1("I'm ready");
+            changeChat2("I'm not ready yet.");
+          }
+          
+          else if (that.game.camera.missions.missions["FinalFight"].state == 1) {
+              changeChat("The final boss will be hard, make sure you are ready!");
+              changeChat1("");
+              changeChat2("");
+          }
+          else if (that.game.camera.missions.missions["FinalFight"].state == 2) {
+              changeChat("You killed the Bandit King and saved the town! Thank you so much, Cowboy!");
+              changeChat1("");
+              changeChat2("");
+              endMission = true;
+          }
+          else if (that.game.camera.missions.missions["FinalFight"].state == 3) {
+              changeChat("I hope you go on many more adventures!");
+              changeChat1("");
+              changeChat2("");
+          }
+          else {
+              changeChat("Welcome newcomer! The Wild West can be a daunting place, come to me if you need guidance.");
+              //user response options
+              changeChat1("I'm okay for now");
+              changeChat2("What should I do?");
+            }
+
           //gets from index file the response (1 or 2) that user selected based on which button was pushed
           var user = response;
           //set the state to determine dialogue options
           //LEVEL 1 of conversation
-          if (user == 1) {
+          if (user == 2 && userCount == 1 && questsCompleted == 3) {
+            stateResponse = 4;
+          }
+          else if (user == 1 && userCount == 1 && questsCompleted == 3) {
+            stateResponse = 5;
+          }
+          else if (user == 1) {
             stateResponse = 1;
           }
           else if (user == 2 && userCount == 1) {
@@ -609,6 +641,19 @@ class OverWorldPlayer {
               changeChat1("");
               changeChat2("");
               break;
+            case 4:
+                changeChat("Self-awareness is good. Come back when you're ready.");
+                 changeChat1("");
+                changeChat2("");
+            break;
+            case 5:
+                changeChat("Blow up the boulders in the cave with dynamite and you'll find the bandit King in there.");
+                 changeChat1("");
+                changeChat2("");
+                 if (that.game.camera.missions.missions["FinalFight"].state == 0) {
+                that.game.camera.missions.missions["FinalFight"].state = 1;
+              }
+            break;
           }
         }
 
@@ -774,18 +819,26 @@ class OverWorldPlayer {
                 that.game.camera.missions.missions["FindMoney"].state = 3;
                 endMission = false;
         }
+      if (that.game.camera.missions.missions["FinalFight"].state == 2 && (endMission)) {
+                that.game.camera.missions.missions["FinalFight"].state = 3;
+                endMission = false;
+        }
       if (that.game.camera.missions.missions["FindRing"].state == 3 && (giveCoin)) {
+            questsCompleted++;
       	  	playerInventory.addItem("coin", 50);
       	  	giveCoin = false;
       }
       if (that.game.camera.missions.missions["FindMoney"].state == 3 && (giveCoin)) {
+            questsCompleted++;
       	  	playerInventory.addItem("coin", 10);
       	  	giveCoin = false;
       }
       if (that.game.camera.missions.missions["KillCoyote"].state == 3 && (giveArmor)) {
+            questsCompleted++;
             playerInventory.addItem("armor", 2);
             giveArmor = false;
       }
+
     }
     if(this.dismount > 0)
     {
