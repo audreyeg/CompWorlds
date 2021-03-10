@@ -14,7 +14,7 @@ class Dynamite
     update() 
     {
         this.timer--;
-        if(this.timer == -120)
+        if(this.timer == 60)
         {
             this.removeFromWorld = true;
         }
