@@ -203,10 +203,6 @@
         var userLine1 = "";
         var userLine2 = "";
 
-            if (questsCompleted == 3) {
-                document.getElementById("finalQuest").innerHTML = "Talk to the guide outside of the saloon.";
-            }
-
         function addQuests(quest) {  
             if (quest == "find ring") {
                 document.getElementById("ringQuest").innerHTML = "Find the stolen ring";
@@ -236,15 +232,12 @@
         function clearQuests(quest) {
             if (quest == "ring") {
                   document.getElementById("ringQuest").innerHTML = "";
-                  console.log(questsCompleted);
             }
             if (quest == "coyote") {
                   document.getElementById("sheriffQuest").innerHTML = "";
-                  console.log(questsCompleted);
             }
            if (quest == "money") {
                   document.getElementById("bankerQuest").innerHTML = "";
-                  console.log(questsCompleted);
             }
            if (quest == "final") {
                   document.getElementById("finalQuest").innerHTML = "";
