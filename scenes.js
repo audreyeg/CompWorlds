@@ -426,13 +426,13 @@ class CaveScene extends Scene {
             
 
             this.entities.push(new lCaveWall(gameEngine,-1040,-200 - (i*64) ,this.camera));  // Upper left cave wall
-            this.entities.push(new rCaveWall(gameEngine,900,50 +(i*64) ,this.camera));  // Lower right cave wall
-            this.entities.push(new rCaveWall(gameEngine,900,-200 - (i*64) ,this.camera));  // Upper right cave wall
+            this.entities.push(new rCaveWall(gameEngine,915,50 +(i*64) ,this.camera));  // Lower right cave wall
+            this.entities.push(new rCaveWall(gameEngine,915,-200 - (i*64) ,this.camera));  // Upper right cave wall
         }
         
         // Middle two right and left walls
-        this.entities.push(new rCaveWall(gameEngine,900,-42 ,this.camera));
-        this.entities.push(new rCaveWall(gameEngine,900,-110 ,this.camera)); 
+        this.entities.push(new rCaveWall(gameEngine,915,-42 ,this.camera));
+        this.entities.push(new rCaveWall(gameEngine,915,-110 ,this.camera)); 
         this.entities.push(new lCaveWall(gameEngine,-1040,-42 ,this.camera));
         this.entities.push(new lCaveWall(gameEngine,-1040,-110 ,this.camera));
         for(var i = 0; i < 17; i++)
@@ -441,73 +441,86 @@ class CaveScene extends Scene {
         }
         for(var i = 0; i < 5; i++)
         {
-            this.entities.push(new cavePillar(gameEngine,-1000 + (i * 120),500,this.camera));  // Gating wall left of boulders
-            this.entities.push(new cavePillar(gameEngine,-145 + (i * 120),500,this.camera));  // Gating wall right of boulders
+            this.entities.push(new cavePillar(gameEngine,-1000 + (i * 120),468,this.camera));  // Gating wall left of boulders
+            this.entities.push(new cavePillar(gameEngine,-145 + (i * 120),468,this.camera));  // Gating wall right of boulders
         }
-        this.entities.push(new cavePillarREdge(gameEngine,-400,500,this.camera));  // Gates next to boulders
-        this.entities.push(new cavePillarLEdge(gameEngine,-200,500,this.camera));
-        for(var i = 0; i < 4; i++)
-        {
-            this.entities.push(new cavePillarVertical(gameEngine,376,570 + (117 * i),this.camera));  // Right gating wall
-        }
-        this.Boulder1 = new Boulder(gameEngine,-350,600,this.camera)
-        this.Boulder2 = new Boulder(gameEngine,-270,600,this.camera);
+        this.entities.push(new cavePillarREdge(gameEngine,-400,468,this.camera));  // Gates next to boulders
+        this.entities.push(new cavePillarLEdge(gameEngine,-200,468,this.camera));
+        this.Boulder1 = new Boulder(gameEngine,-350,570,this.camera)
+        this.Boulder2 = new Boulder(gameEngine,-270,570,this.camera);
         this.entities.push(this.Boulder1);
         this.entities.push(this.Boulder2);
         this.entities.push(new Explodable(gameEngine, -350,600,150,100,this.Boulder1,this.Boulder2, this.camera));
         // this.entities.push(new Boulder(gameEngine,-350,600,this.camera));  // Boulders
         // this.entities.push(new Boulder(gameEngine,-270,600,this.camera));
-
-        // Maze:
-        for(var i = 0; i < 2; i++)
+        
+        // Maze v2:
+        var CPVWidth = 27 * 3;  // CPV = cavePillarVertical
+        var CPWidth = 40 * 3;  // CPV = cavePillarVertical
+        this.entities.push(new cavePillarVertical(gameEngine, (120 * 3) - 1000 + CPWidth - CPVWidth, (186 * (0)) - 1020,this.camera));
+        this.entities.push(new cavePillarVertical(gameEngine, (120 * 3) - 1000 + CPWidth - CPVWidth, (186 * (1)) - 1020,this.camera));
+        this.entities.push(new cavePillar(gameEngine, (120 * 3) - 1000, (186 * (2)) - 1020,this.camera));
+        this.entities.push(new cavePillar(gameEngine, (120 * 2) - 1000, (186 * (2)) - 1020,this.camera));
+        this.entities.push(new cavePillar(gameEngine, (120 * 1) - 1000, (186 * (2)) - 1020,this.camera));
+        for(var i = 0; i < 7; i++)
         {
-            this.entities.push(new cavePillar(gameEngine,-145 + ((i + 5) * 120), 186 * 0 + 500,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * 3) - 1000, (186 * (i + 6)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * 9) - 1000, (186 * (i + 6)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * 13) - 1000, (186 * (i + 6)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * 1) - 1000, (186 * (i + 1)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * 7) - 1000, (186 * (i + 3)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * (i + 6)) - 1000, (186 * (6)) - 939,this.camera));
-            for(var j = 0; j < 3; j++)
-            {
-                this.entities.push(new cavePillar(gameEngine, (120 * (j + 12)) - 1000, (186 * (i + 1)) - 939,this.camera));
-            }
+            this.entities.push(new cavePillar(gameEngine, (120 * (i + 5)) - 1000, (186 * (1)) - 1020,this.camera));
         }
-        for(var i = 0; i < 6; i++)
+        for(var i = 0; i < 5; i++) {
+            this.entities.push(new cavePillarVertical(gameEngine, (120 * 5) - 1000, (186 * (1 + i)) - 1020,this.camera));
+            this.entities.push(new cavePillarVertical(gameEngine, (120 * 11) - 1000, (186 * (1 + i)) - 1020,this.camera));
+        }
+        for(var i = 0; i < 4; i++)
         {
-            this.entities.push(new cavePillar(gameEngine, (120 * 5) - 1000, (186 * (i + 1)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * 11) - 1000, (186 * (i + 1)) - 939,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (1 + i)) - 1000, (186 * (4)) - 1020,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (7 + i)) - 1000, (186 * (4)) - 1020,this.camera));
         }
         for(var i = 0; i < 3; i++)
         {
-            this.entities.push(new cavePillar(gameEngine, (120 * 1) - 1000, (186 * (i + 4)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * 3) - 1000, (186 * (i)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * (i + 2)) - 1000, (186 * (4)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * (i + 8)) - 1000, (186 * (4)) - 939,this.camera));
-            this.entities.push(new cavePillar(gameEngine, (120 * (i + 13)) - 1000, (186 * (4)) - 939,this.camera));
+            this.entities.push(new cavePillarVertical(gameEngine, (120 * (1)) - 1000, (186 * (4 + i)) - 1020,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (11 + i)) - 1000, (186 * (6)) - 1020,this.camera));
         }
-        for(var i = 0; i < 5; i++)
+        for(var i = 0; i < 2; i++)
         {
-            this.entities.push(new cavePillar(gameEngine, (120 * (i + 6)) - 1000, (186 * (1)) - 939,this.camera));
+            this.entities.push(new cavePillarVertical(gameEngine, (120 * (3)) - 1000, (186 * (6 + i)) - 1020,this.camera));
+            this.entities.push(new cavePillarVertical(gameEngine, (120 * (9)) - 1000 + CPWidth - CPVWidth, (186 * (6 + i)) - 1020,this.camera));
+            this.entities.push(new cavePillarVertical(gameEngine, (120 * (13)) - 1000 + CPWidth - CPVWidth, (186 * (6 + i)) - 1020,this.camera));
+            this.entities.push(new cavePillarVertical(gameEngine, (120 * (9)) - 1000, (186 * (i + 1)) - 1020,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (12 + i)) - 1000, (186 * (8)) - 1020,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (12 + i)) - 1000, (186 * (1)) - 1020,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (14 + i)) - 1000, (186 * (3)) - 1020,this.camera));
+            this.entities.push(new cavePillar(gameEngine, (120 * (5 + i)) - 1000, (186 * (6)) - 1020,this.camera));
         }
-        this.entities.push(new cavePillar(gameEngine, (120 * (2)) - 1000, (186 * (2)) - 939,this.camera));
-        this.entities.push(new cavePillar(gameEngine, (120 * (9)) - 1000, (186 * (2)) - 939,this.camera));
-        this.entities.push(new cavePillar(gameEngine, (120 * (12)) - 1000, (186 * (6)) - 939,this.camera));
+        this.entities.push(new cavePillarVertical(gameEngine, (120 * (7)) - 1000, (186 * (3)) - 1020,this.camera));
 
+        for(var i = 0; i < 3; i++)
+        {
+            this.entities.push(new cavePillarVertical(gameEngine,376,540 + (186 * i),this.camera));  // Right gating wall
+        }
 
-
-
+        // End caps
+        this.entities.push(new cavePillarBEdge(gameEngine, (120 * (1)) - 1000, (186 * (7)) - 1020,this.camera));
+        this.entities.push(new cavePillarTEdge(gameEngine, (120 * (3)) - 1000, (186 * (5.33)) - 939,this.camera));
+        this.entities.push(new cavePillarTEdge(gameEngine, (120 * (1)) - 1000, (186 * (1.33)) - 939,this.camera));
+        this.entities.push(new cavePillarTEdge(gameEngine, (120 * (9)) - 1000 + CPWidth - CPVWidth, (186 * (5.33)) - 939,this.camera));
+        this.entities.push(new cavePillarTEdge(gameEngine, (120 * (7)) - 1000, (186 * (2.33)) - 939,this.camera));
+        this.entities.push(new cavePillarBEdge(gameEngine, (120 * (9)) - 1000, (186 * (3)) - 1020,this.camera));
+        this.entities.push(new cavePillarREdge(gameEngine, (120 * (7)) - 1000, (186 * (6)) - 1020,this.camera));
+        this.entities.push(new cavePillarREdge(gameEngine, (120 * (14)) - 1000, (186 * (1)) - 1020,this.camera));
+        this.entities.push(new cavePillarLEdge(gameEngine, (120 * (13.52)) - 1000, (186 * (3)) - 1020,this.camera));
+        
+        
         for (var i = -27; i < -16; i++) {
             for (var j = -22; j < 22; j++) {
                 this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
             }
         }
         for (var i = -16; i < 16; i++) {
-            for (var j = -22; j < -17; j++) {
+            for (var j = -22; j < -16; j++) {
                 this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
             }
         }
-        for (var i = 16; i < 27; i++) {
+        for (var i = 15; i < 27; i++) {
             for (var j = -22; j < 22; j++) {
                 this.entities.push(new caveOutside(gameEngine, i * 64, j * 64, this.camera));
             }
@@ -520,6 +533,7 @@ class CaveScene extends Scene {
         var cowboys = new OverWorldPlayer(gameEngine,-500,950,this.character, this.camera);
         this.entities.push(new caveExit(gameEngine,-500, 1015,this.camera));
         this.entities.push(new MoneyCave(gameEngine, -800, 700, this.camera));
+        // this.entities.push(new MoneyCave(gameEngine, 4 * 128, 6.2 * 128, this.camera));
         this.entities.push(new overWorldBoss(game,4.7 * 128, 6.2 * 128,5,this.camera,null));
         // Add beep bop boop bep cowboy
         this.entities.push(this.inventory);
