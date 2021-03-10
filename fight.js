@@ -32,7 +32,7 @@ class Fight {
         ctx.strokeStyle = "Black";
         ctx.strokeRect(500, 110, 200, 20);
         ctx.fillRect(500, 110, this.enemy.specialMeter * 2, 20);
-        ctx.fillText("Special (Not yet implimented)", 5, 75);
+        ctx.fillText("Special (Not yet implemented)", 5, 75);
         ctx.strokeStyle = "Black";
         ctx.strokeRect(5, 110, 200, 20);
         ctx.fillRect(5, 110, this.player.specialMeter * 2, 20);
@@ -173,6 +173,10 @@ class Fight {
                 if(this.enemy instanceof coyote)
                 {
                     coyotesKilled++;
+                }
+                if(this.enemy instanceof Boss)
+                {
+                    bossKilled++;
                 }
                 if(this.print)
                 {
